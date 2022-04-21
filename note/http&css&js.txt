@@ -1,0 +1,575 @@
+HTML筆記：
+<!DOCTYPE html>(宣告程式碼類型)
+
+<meta chatset="字型編碼"></meta>
+    e.g.<meta chatset="UTF-8"></meta>
+<title>標題</title>
+    e.g.<title>HI</title>
+
+<P>(內文)</p>:內文(通常一行不換)
+<b>(愈粗體文字)</b>:粗體(通常一行不換)
+<i>(愈斜文字)</i>:斜體(通常一行不換)
+<br>(空包)</br>:換行(簡寫成<br/>)
+<hr>(空包)</hr>:水平分隔線(簡寫成<hr/>)
+
+<#></#> == <#/>
+
+<a href="連結">連結顯示文字</a>:超連結
+<img src="圖片鏈接" width="寬" height="長"(二選一即可等比壓縮)/>:顯示圖片(簡寫成<img src.../>)
+<!--註解-->:註解
+<video src="影片檔.副檔名" controls width="影片寬度"/>:影片
+<iframe width="寬(預942)" height="長(預480)" src="網址" title="標題(預YouTube video player)" frameborder="?(預0)" allow="accelerometer(?); autoplay(自動播放); clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+
+(列表:)
+<ul>(條列)
+    <li>第一項</li>
+    <li>第二項...</li>
+</ul>
+
+<ol>(阿拉伯數字排列)
+    <li>第一項</li>
+    <li>第二項...</li>
+</ol>
+~此外~
+<ol type="A">(大寫字母排列)
+<ol type="a">(小寫字母排列)
+<ol type="I">(羅馬數字排列)
+
+<table width="寬">
+    <tr>(行/橫排)
+        <td>(列/直排)</td>
+    </tr>
+</table>
+
+(容器:(即群組))
+<div>(內容程式碼)</div>(無視寬度)
+<span>(內容程式碼)</span>(可調整寬度並排)
+
+e.g.:
+span1 span2
+div1
+div2
+
+(輸入欄:)
+<input type="text" />:文字
+<input type="password" />:密碼
+<input type="date" />:日期選擇器
+<input type="range" />:滑桿
+<input type="file" />:檔案
+<input type="checkbox" />:勾選框
+<input placeholder="醒目文字"/>
+<textarea placeholder="醒目文字">(預設內文)</textarea>:長文輸入區域
+
+(meta 標籤:)#正如網頁開頭寫的<meta charset.../>#
+charset="(文字編碼)"
+name="description" content="(網頁標籤)" (搜尋引擎方便查詢)
+name="author" content="(作者名)"
+name="keywords" content="關鍵字1, 關鍵字2 ..." (關鍵字) (搜尋引擎方便查詢)
+name="viewport" content="width=device-width(網頁寬度=裝置寬度), initial-scale=1.0(預設縮放)" (視口)
+
+CSS筆記：
+(基本語法 #內層覆蓋外層)
+style="(在這裡面輸入:接值的話要冒號，結束用分號; 兩種內容:以空格分開;)"
+color:red;(顏色)
+font-size:20px;(字體大小)
+border:1px solid/dashed blue;(外框:厚度 實/虛線 顏色)
+    width:200px;(寬度)
+    height:200px;(高度)
+    max-width:800px;(最大寬度)
+    max-height:200px;(最大高度，一般不會設定此項)
+background-color:gold(背景顏色)
+
+(padding & margin)
+padding:20px;(內部與邊緣保持之距離)
+    padding-top:20px;(內部上方與邊緣保持之距離)
+    padding-bottom:20px;(內部下方與邊緣保持之距離)
+    padding-left:20px;(內部左方與邊緣保持之距離)
+    padding-right:20px;(內部右方與邊緣保持之距離)
+margin:20px(外部與邊緣保持之距離)
+    (同上)
+
+假設這樣寫
+padding:1px 2px 3px 4px;
+其實等同(由上方順時針:上-右-下-左)
+padding-top:1px;
+padding-right:2px;
+padding-bottom:3px;
+padding-left:4px;
+
+float:left/right(上移一層往左/右靠)
+
+https://www.youtube.com/watch?v=k4s6ynrkw6A
+position:fixed/relative(固定/相對)
+([定位到距離畫面邊框(獨立一層)/從自己原本位置(位置仍在原位，僅顯示偏移結果)]遠離某方向若干像素)
+position:absolute(絕對定位)
+(以最外層具有相對定位標籤的容器作為邊界做位置偏移)
+
+top:20px(固定在距離畫面上方20px的位置(向左靠))
+bottom:20px(固定在距離畫面下方20px的位置(向左靠))
+left:20px(固定在距離畫面左方20px的位置(向左靠))
+right:20px(固定在距離畫面右方20px的位置)
+
+opacity:1(0~1，不透明度)
+border-radius:20px(將角落裁切成半徑為20px的1/4圓弧)
+border-radius:20px 30px 40px 50px(從左上開始順時針旋轉依序裁切成半徑為20px,30px,40px,50px的1/4圓弧)
+
+在<head></head>中間可以插入<style></style>並直接在裡面輸入css標籤
+e.g.
+<head>
+    <style>
+        p{
+            color:red;
+        }
+    </style>
+</head>
+
+<p>HI</p>
+
+=>HI(red)
+
+上述方法會使head很大一坨，所以也可以改成獨立檔案：
+style.css
+並在<head></head>加入以下代碼
+<link rel="stylesheet" href="style.css" />
+
+在style.css中輸入:
+p{
+    color:red;
+}
+如此一來，文檔中帶有p標籤的字皆會是紅色的
+但這樣不就毫無差別了嗎?
+別擔心，還有class和id可以用
+先是class，他算是一個標籤，類似「綽號」
+在style.css中寫入:
+.cat{
+    color:red;
+}
+然後在想要分類到一組的p標籤全部加上class="cat"標籤即可!像是:
+<p class="cat">HI</p>
+<p class="wolf">Goodbye</p>
+結果如下
+=>HI(red)
+=>Goodbye(default color)
+也可以使用id，但是屬於唯一識別名稱，就像自己的「身分證字號」，不可能有另一個人與你相同
+使用方法如下:
+在style.css中寫入:
+#no-1{
+    color:gold;
+}
+然後在想要唯一識別的物件加上id="no1"標籤即可!像是:
+<p id="no-1">Xiang990293</p>
+<p id="no-2">Jhon</p>
+結果如下
+=>Xiang990293(gold)
+=>Jhon(default color)
+假設我想讓no-1和cat都要相同格式，可以在style.css中：
+#no-1, .cat{
+    color:gold;
+}
+*表示所有標籤，即：
+*{
+    color:gold;
+}
+將會把所有標籤轉為金色，
+如果是要p裡面的a標籤，則無需逗點：
+<p> <a>HI</a> </p>
+p a{
+    color:gold;
+}
+又如果，想要為所有包含type屬性標籤(就是在"<p "後面，" />"前面接的一串，如：<input type="password" />)的物件添加藍色，則可以：
+[type]{
+    color:gold;
+}
+另外，也可以利用標籤，在無需javascript的情況下，在滑鼠停留於物件上方時改變型態，如：
+.cat:hover{
+    color:gold;
+}
+這時，擁有cat標籤的物件在滑鼠懸停時都會變成金色的
+
+陳列方式有分很多種，其中最常用到的如下：
+display:block-佔據頁面的一整行
+display:flex指定並排顯示，若這時在style內添加:
+    flex:1則會完全填滿(為填滿等分數，只有在兩個以上時才有用)(放在容器內的物件style中)(https://www.youtube.com/watch?v=jXvIfyVG494)
+    order:(整數)則會改變由左至右將數字由小排到大的順序(放在容器內的物件style中)
+    flex-wrap:wrap會在寬度不足時自動換行(放在容器的style中)
+    flex-direction:column(垂直排列-上到下)/column-reverse(反向垂直排列-下到上)/row(預設值，水平排列-由左往右)/raw-reverse(反向水平排列-由右往左)
+
+flex的排版方式如下(將隨著direction(主軸方向)不同而發生變化)
+justify-content:center;(水平置中)
+justify-content:flex-start;(主軸起點對齊)
+justify-content:space-around;(物件和空隙平均的排列，如[abc_-_-_-]=>[-a_-b_-c_](_-都是空格，為方便理解"平均分配空格的概念"))
+justify-content:space-between;(物件平均分散，如[abc_-_-_-]=>[a-_-b_-_c])
+justify-content:space-evenly;(將剩餘空格均分到物件空隙中，如[abc_-_-]=>[-a-b_c_])
+justify-content:flax-end;(主軸終點對齊)
+align-items:center;(次軸置中對齊)
+(align-content:用法同上)
+總結：
+justify-content:屬於主軸方向對齊
+align-items:屬於次軸方向對齊(不適合多行)
+align-content:屬於次軸方向對齊(適合多行)
+
+如果要把多個物件重疊在一起，該怎麼辦呢?
+這時，可以利用z-index做上下分層的動作，但該物件必須要以absolute定位
+
+做動畫囉~
+首先，定義動畫名稱及內容，在style.css中輸入：
+@keyframes change-color{
+    from {background-color:blue;}
+    to {background-color:red;}
+}
+以上就是漸變色動畫，然後套用到物件上(假設該物件擁有標籤coloring)
+.coloring {
+    animation-name:change-color;
+    animation-duration:2s;(動畫持續時間)
+    animation-iteration-count:infinite;(動畫重複次數)
+    animation-delay:2s;(動畫播放延遲)
+}
+也能改成彩虹漸變色
+@keyframes change-color{
+    0% {background-color:red;}
+    20% {background-color:orange;}
+    40% {background-color:yellow;}
+    60% {background-color:green;}
+    80% {background-color:blue;}
+    100% {background-color:purple;}
+}
+.coloring {
+    animation-name:change-color;
+    animation-duration:10s;
+    animation-iteration-count:infinite;
+    animation-delay:2s;
+不只有顏色，連位置都能更改
+@keyframes change-color{
+    from {top:10px; left:10px}
+    to {bottom:10px; right:10px}
+}
+如此便可從左上跑到右下
+也能設定成滑鼠移上去才會動起來，結合前述的:hover
+.coloring:hover {
+    animation-name:change-color;
+    animation-duration:10s;
+    animation-iteration-count:infinite;
+    animation-delay:2s;
+
+
+JavaScript 筆記~~
+
+從現在起，所記載內容將針對網頁設計做延伸，而與JavaScript有關
+如何引入JavaScript？很簡單，一樣在html檔中的<body></body>內，加入<script></script>，並在中間輸入程式碼即可
+<script>
+    document.write("aaa");
+    document.write("<h1>aaa</h1>");
+</script>
+或是引入.js檔案
+<script src="example.js" />
+
+example.js:
+document.write("aaa");
+document.write("<h1>aaa</h1>");
+
+兩者皆可達到相同效果~
+
+基本型態 和 變數
+//註解
+/*123多行
+456
+789註解*/
+
+"字串"
+'字串'
+
+數字
+87
+1.2
+
+布林值
+true
+false
+
+變數
+var name = "字串型態";
+var age = 17;
+var isAdult = false;
+**命名規則:僅限 數字 或 英文大小寫 或 $ 或 _**
+**不可以數字做開頭**
+**資料型態可隨時更動**
+
+"\"可以做為避開字符，用以避開字串中想出現特殊字符卻無法編譯成功的困境
+當然"\"自身也是特殊字符，所以愈輸出\字符，需要打兩個"\\"
+"\"也可以引入特殊字符，例如換行\n、unicode編碼 \u0000 等
+document.write("123456789"); => 123456789
+document.write("123456789".length); => 9 (字串長度)
+document.write("abcDEFG".toUpperCase()); => ABCDEFG (字串轉換成大寫)
+document.write("abcDEFG".tolowerCase()); => abcdefg (字串轉換成小寫)
+document.write("123456789".charAt(2)); => 3 (輸出指定位置的字符，從0開始記數)
+document.write("1234567892".indexOf(2)); =>1 (字符第一次出現位置，從0開始記數，若不存在則回傳-1)
+document.write("123456789".substring(2,7)); => 34567 (擷取從第2位到第6位的數，含前不含後)
+
+document.write(123456789); => 123456789
+document.write(1234.6789); => 1234.6789
+document.write(-23456789); => -23456789
+document.write(1+9); => 10
+document.write(16-9); => 7
+document.write(12*3); => 36
+document.write(123/3); => 41
+document.write(2+3*5); => 2+15 => 17
+document.write((2+3)*5); => 5*5 => 25
+document.write(123%2); => 1 (取餘數)
+document.write(Math.abs(-32)); => 32 (取絕對值)
+document.write(Math.Max(100,201,302,-32,50,205,203,200)); => 302
+document.write(Math.Min(100,201,302,-32,50,205,203,200)); => -32
+document.write(Math.round(2.3)); => 2 (四捨五入)
+document.write(Math.pow(2,3)); => 2^3 => 8
+document.write(Math.sqrt(64)); => 8
+document.write(Math.random()); => 0~1的隨機小數
+
+彈出式對話框prompt
+prompt("顯示文字")
+會顯示"顯示文字"外，還會有輸入欄位，即可輸入變數(字串形式)
+
+將字串換成"整數"
+parseInt("1.32") => 1
+將字串換成"浮點數"
+parseFloat("1.32") => 1.32
+
+陣列array
+var scores = [80,60,20,50,30];
+var me = [male,17,leo,Xiang990293];
+
+函式function
+分成定義和呼叫兩步驟，
+首先是定義:
+function sayhi(){
+    document.write(hi);
+}
+再來是呼叫:
+sayhi();
+其實就等同把函式內的程式碼複製一遍
+
+條件if(和C++、Java、Python皆相同)
+var andy = false;
+if(a>b && true || andy){
+    document.write(Math.random());
+}
+else if(a=b){
+    document.write(":)");
+}
+else{
+    document.write(":(");
+}
+
+&& 且
+|| 或
+else if(條件) 否則如果
+else 否則
+!非
+(e.g.:
+當is_male=true
+!is_male=false)
+!=不相等
+==相等
+
+新資料型態 物件Object
+var person = {
+    name:"Xiang990293",
+    age:17,
+    is_male:true
+    print_name:function(){
+        document.write(this.name);
+    }
+};
+值得一提的是，裡面可以存放函式，而在其中提到的"this"全部都式此物件的代稱
+
+而且可以進行呼叫
+person.print_name();
+=>Xiang990293
+
+while迴圈
+var i = 1;
+while(i<=3){
+    i++;
+}
+另外，可以在執行結束時偵測條件
+var i = 1;
+do{
+    i++;
+}while(i<=3)
+
+for迴圈
+for(var i=0;i<10;i++){
+    
+}
+
+二維陣列 如果陣列中的每個值也都是陣列
+如:
+var a = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9],
+    [0,]
+]
+取值時，若我要取第一行陣列[1,2,3]中的2
+我們可以這樣寫:
+a[0][1]
+
+巢狀迴圈(多重迴圈)
+如果我們要取上述二微陣列中的每個值，我們可以利用巢狀迴圈
+for(var i=0; i<a.length; i++){
+    for(var j=0; j<a[i].length; j++){
+        document.write(a[i][j]);
+    }
+}
+
+class 物件模板，和css中的不太相同
+假設有很多台手機，我們要把型號、出廠年份、是否防水和手機年齡等資訊一一列出，以下是最直接的方法：
+var phone1 = {
+    number = 123;
+    year = 2002;
+    is_waterproof = false;
+    phone_age:function(){
+        return 2022 - this.year;
+    }
+}
+
+var phone2 = {
+    number = 245;
+    year = 2020;
+    is_waterproof = true;
+    phone_age:function(){
+        return 2022 - this.year;
+    }
+
+}
+但總不可能將現有100台手機一一列出，所以有了先創建模板，再將物件透過模板創建
+class Phone{               //首字母通常大寫
+    constructor(number, year, is_waterproof){
+        this.number = number;
+        this.year = year;
+        this.is_waterproof = is_waterproof;
+    }
+    phone_age(){
+        return 2022 - this.year;
+    }
+}
+如此可以將這些手機，透過模板快速創建
+var phone1 = new Phone(123, 2002, false);
+var phone2 = new Phone(245, 2020, true);
+我們要分別取值phone1的各個資料，我們可以
+document.write(phone1.year);
+document.write(phone1.number);
+document.write(phone1.is_waterproof);
+document.write(phone1.phone_age());
+=>2002
+=>123
+=>false
+=>20
+當然，phone_age仍有待趕進的地方，例如假如今年已經2023，總不可能每年都改模板對嗎
+所以可以利用時間函數取的現在年分，再將值帶入運算
+getTime()方法可以取得時間，例如
+var today = new Date();
+傳入的參數是從1970-01-01 00:00:00(UTC)開始計算的毫秒數，
+你會發現，其實Date()也是一個class
+接著開始計算現在(2022-02-28 08:02:44(UTC)代表多少)
+一天24小時，一小時60分鐘，一分鐘60秒，一秒1000毫秒
+所以一天24*60*60*1000毫秒=864000000毫秒
+......太麻煩啦，所以以下是另一種傳入方式
+當然，也可以建立特定時間點的Date物件，傳入多個數字指定、年、月、日、時、分、秒、毫秒
+new Date(year, month[,date[,hours[,minutes[,seconds[,milliseconds]]]]])
+假如我生日在2022-02-28 08:02:44(UTC)
+則
+var birthday = new Date(2022, 1, 28, 8, 2, 44)
+仔細看會發現我的月份-1了，這是因為月份在輸入時以0表示1月，11表示12月
+還有小時採24小時制
+假如輸入值超出正常範圍，如
+Date(2022, 13, 28)
+則會變成
+Date(2023, 1, 28)
+
+但是，我們的目標是取得現在時間，所以請看以下
+Date 物件提供的方法 (Methods)
+將時間字串轉成從 1970-01-01 00:00:00 UTC 開始累計到現在的毫秒數 (milliseconds)：
+
+parse()
+
+取得日期和時間相關的方法：
+
+方法	用途
+getFullYear()	取得是幾年 (yyyy)
+getMonth()	取得是幾月 (0-11)
+getDate()	取得是幾日 (1-31)
+getHours()	取得是幾時 (0-23)
+getMinutes()	取得是幾分 (0-59)
+getSeconds()	取得是幾秒 (0-59)
+getMilliseconds()	取得是幾毫秒 (0-999)
+getDay()	取得是星期幾 (0-6)
+getTime()	取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
+設定日期和時間相關的方法：
+
+方法	用途
+setFullYear()	設定是幾年
+setMonth()	設定是幾月 (0-11)
+setDate()	設定是幾日 (1-31)
+setHours()	設定是幾時 (0-23)
+setMinutes()	設定是幾分 (0-59)
+setSeconds()	設定是幾秒 (0-59)
+setMilliseconds()	設定是幾毫秒 (0-999)
+setTime()	用 timestamp milliseconds 設定是什麼日期時間
+
+所以我們可以在設定模板時，利用getFullYear()取得現在的年分
+參考資料:https://www.fooish.com/javascript/date/
+
+
+如何取得html元素
+其實我們之前寫的document是window的一個方法
+而且變數a也是創建在window底下的物件
+那們為何能夠省略呢?
+因為我們全域物件都是window底下，所以不需要每個都宣告
+
+至於如何取得？以下是一個方法
+var h1 = document.getElementById("header")
+console.log(h1);
+console是瀏覽器中，按F12中的一個功能
+也能夠將已經創建好的html修改
+h1.innerText = "123456";
+h1.style.backgroundColor = "green";
+h1.style.color = "blue";
+同樣，a標籤中的超連結也可以更改
+var link = document.getElementById("link");
+link.href = "https://facebook.com"
+
+event listener 事件監聽器
+有兩種方法書寫event listener
+1.直接寫在html檔案內
+(html環境)
+<button id="btn" onclick="handle_click(this)" >按我</buttom>
+
+(javascript環境)(alert是彈出式視窗)
+function handle_click(element){
+    alert("你按了我");
+    element.innerText = "痛!";
+    element.style.color = "red";
+}
+
+2.先給ID，然後用javascript監聽
+var btn = document.getElementById("btn");
+btn.addEventListener("click", function(){
+    this.innerText = "痛!";
+    this.style.color = "red";
+})
+
+btn.addEventListener("mouseover", function(){
+    this.style.color = "red";
+})
+btn.addEventListener("mouseout", function(){
+    this.style.color = "white";
+})
+
+模板語法``
+e.g.:
+`<div class="article">
+    <h2>${title.value}</h2>
+    <p>${content.value}</p>
+</div>
+`;
+
+
