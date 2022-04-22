@@ -5,7 +5,7 @@ function contentFinder(file){
         if(err){
             data = '';
         }else{
-            
+            console.log(data)
         }
     });
 }
