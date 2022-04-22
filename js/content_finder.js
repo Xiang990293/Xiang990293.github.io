@@ -1,8 +1,16 @@
-﻿function content_finder(file){
+﻿function content_finder(){
     var path = document.location.pathname;
-    const filename = path.substr(1,path.length-6);
+    
+    var textname;
+    for (i = 0; i < path.length; i++){
+        if (a.indexOf('/',i) === -1){
+            textname = path.substr(i);
+            textname = textname.substr(0, b.length-5)
+            break;
+        }
+    }
+    
+    const file = `web_constent/${textname}.txt`;
 
-    var data = blob.text(`./web_content/${file}.txt`);
-    console.log(data);
-    console.log(1);
+    document.getElementById("content").innerHTML = text(file);
 }
