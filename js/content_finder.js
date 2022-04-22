@@ -3,14 +3,16 @@
     
     var textname;
     for (i = 0; i < path.length; i++){
-        if (a.indexOf('/',i) === -1){
+        if (path.indexOf('/',i) === -1){
             textname = path.substr(i);
-            textname = textname.substr(0, b.length-5)
+            textname = textname.substr(0, textname.length-5)
             break;
         }
     }
+    console.log(textname);
     
     const file = `web_constent/${textname}.txt`;
+    console.log(file);
 
-    document.getElementById("content").innerHTML = text(file);
+    document.getElementById("content").innerHTML = new text(file);
 }
