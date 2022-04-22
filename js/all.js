@@ -1,5 +1,3 @@
-// const fs = require("fs");
-
 var headerPage = document.getElementById("headerPage");
 headerPage.innerHTML = `
 <div id="head">
