@@ -38,9 +38,22 @@ for(var i = 0; i < do_count; i++){
 var footerPage = document.getElementById("footerPage");
 footerPage.innerHTML = `
 <span>
-    
+    <div style="display:flex; background-color:lightgray;">
+    <ul style="list-style-type: none;">
+        <h3>瞭解詳情</h3>
+        <li>
+            <a href="team intro.html" style="text-decoration: none;">關於團隊</a>
+        </li>
+    </ul>
+    <ul style="list-style-type: none;">
+        <h3>解決問題</h3>
+        <li>
+            <a href="" style="text-decoration: none;">聯絡我們</a>
+        </li>
+    </ul>
+    </div>
 </span>
-`
+`;
 
 //current time
 function ShowTime(){
@@ -63,21 +76,3 @@ function ShowTime(){
     setTimeout('ShowTime()',100);
 }
 var timer = document.getElementById("time");
-
-var footerPage = document.getElementById("footerPage")
-footerPage.innerHTML = `
-<div style="display:flex; background-color:lightgray;">
-<ul style="list-style-type: none;">
-    <h3>瞭解詳情</h3>
-    <li>
-        <a href="team intro.html" style="text-decoration: none;">關於團隊</a>
-    </li>
-</ul>
-<ul style="list-style-type: none;">
-    <h3>解決問題</h3>
-    <li>
-        <a href="" style="text-decoration: none;">聯絡我們</a>
-    </li>
-</ul>
-</div>
-`;
