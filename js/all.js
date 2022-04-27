@@ -16,7 +16,8 @@ headerPage.innerHTML = `
         <button class="導航欄-btn" onclick="window.location.href='contect_to_us.html';">聯絡我們</button>
     </div>
 </div>
-`;
+`
+console.log(document.location.pathname);;
 
 var footerPage = document.getElementById("footerPage");
 footerPage.innerHTML = `
@@ -59,3 +60,4 @@ function ShowTime(){
     setTimeout('ShowTime()',100);
 }
 var timer = document.getElementById("time");
+
