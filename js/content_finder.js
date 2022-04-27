@@ -16,3 +16,4 @@
 
     document.getElementById("content").innerHTML = new text(file);
 }
+0

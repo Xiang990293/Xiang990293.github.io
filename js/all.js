@@ -18,6 +18,8 @@ headerPage.innerHTML = `
 </div>
 `;
 
+var content = content_finder();
+
 var siderPage = document.getElementById("siderPage");
 siderPage.innerHTML = `<ul id="側導航欄"></ul>`;
 var ul_in_siderPage = siderPage.getElementsByTagName("ul");
