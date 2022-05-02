@@ -1,4 +1,7 @@
-﻿function content_finder(){
+﻿var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var xhr = new XMLHttpRequest();
+
+function content_finder(){
     var path = document.location.pathname;
     
     var textname;
@@ -9,12 +12,14 @@
             break;
         }
     }
-    console.log(textname);
     
-    const file = `web_constent/${textname}.txt`;
-    console.log(file);
-
-    document.getElementById("content").innerHTML = document.location.pathname;
+    const file = `web_content/${textname}.txt`;
+    var getText = new XMLHttpRequest();
+    getText.addEventListener("load", () => {
+        document.getElementById("content").innerHTML = this.responseText;
+    })
+    getText.open("GET", file);
+    getText.send();
 
     var siderPage = document.getElementById("siderPage");
     siderPage.innerHTML = `<ul id="側導航欄"></ul>`;

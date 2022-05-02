@@ -17,7 +17,6 @@ headerPage.innerHTML = `
     </div>
 </div>
 `
-console.log(document.location.pathname);;
 
 var footerPage = document.getElementById("footerPage");
 footerPage.innerHTML = `
