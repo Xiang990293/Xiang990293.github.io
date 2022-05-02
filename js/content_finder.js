@@ -1,7 +1,4 @@
-﻿var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-var xhr = new XMLHttpRequest();
-
-function content_finder(){
+﻿function content_finder(){
     var path = document.location.pathname;
     
     var textname;
