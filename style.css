@@ -155,11 +155,15 @@ body{
     width:200px;
 }
 
-#content{
+#content_text{
     scroll-behavior: auto;
     padding:5px;
     width:max;
     flex:1;
+}
+
+#content{
+    visibility: hidden;
 }
 
 #footerPage{

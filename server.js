@@ -5,6 +5,7 @@ const ip = "127.0.0.1";
 const qs = require("querystring");
 const express = require("express");
 const app = express();
+const jquary = require("jquery");
 
 //宣告響應函數
 const sendResponse = (pathname, statusCode, response) => {
@@ -39,9 +40,11 @@ const sendResponse = (pathname, statusCode, response) => {
                 }else if (pathname.substr(-3) === "css"){
                     response.setHeader("Content-Type", "text/css; charset=UTF-8");
                 }else if (pathname.substr(-2) === "js"){
-                    response.setHeader("Content-Type", "text/js; charset=UTF-8");
+                    response.setHeader("Content-Type", "text/javascript; charset=UTF-8");
+                }else if (pathname.substr(-3) === "txt"){
+                    response.setHeader("Content-Type", "text/plain; charset=UTF-8");
                 }else{
-                    response.setHeader("Content-Type", "text/txt");
+                    response.setHeader("Content-Type", "text/plain; charset=UTF-8");
                 }
 
                 response.write(``);
@@ -53,7 +56,7 @@ const sendResponse = (pathname, statusCode, response) => {
 };
 
 
-
+//請求起點
 const server = http.createServer((request, response) => {
     
     // console.log(request.url, request.method);
@@ -73,6 +76,10 @@ const server = http.createServer((request, response) => {
 
         }else if (pathname.substr(-3) === "ico"){
             //ico
+            sendResponse(pathname, 200, response);
+
+        }else if (pathname.substr(-3) === "txt"){
+            //txt
             sendResponse(pathname, 200, response);
 
         }else{

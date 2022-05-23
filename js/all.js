@@ -1,3 +1,5 @@
+
+
 var headerPage = document.getElementById("headerPage");
 headerPage.innerHTML = `
 <div id="head">
@@ -25,13 +27,13 @@ footerPage.innerHTML = `
     <ul style="list-style-type: none;">
         <h3>瞭解詳情</h3>
         <li>
-            <a href="team intro.html" style="text-decoration: none;">關於團隊</a>
+            <a href="team_intro.html" style="text-decoration: none;">關於團隊</a>
         </li>
     </ul>
     <ul style="list-style-type: none;">
         <h3>解決問題</h3>
         <li>
-            <a href="" style="text-decoration: none;">聯絡我們</a>
+            <a href="contect_to_us.html" style="text-decoration: none;">聯絡我們</a>
         </li>
     </ul>
     </div>
@@ -44,7 +46,7 @@ function ShowTime(){
     const d = new Date();
 
     function trans_num_to_ChineseDay(x){
-        var word=["日","一","二","三","四","五","六"];
+        const word=["日","一","二","三","四","五","六"];
         return word[x];
     }
 

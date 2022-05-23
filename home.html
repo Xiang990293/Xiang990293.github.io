@@ -5,16 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title id="title"></title>
         <link rel="stylesheet" href="style.css" />
-        <link rel="icon" href="favicon.png">
-        <link rel="content" type="txt" herf="web_content/home.txt">
+        <link rel="icon" href="favicon.png" />
     </head>
-    <body onload="ShowTime()">
+    <body onload="ShowTime();content_finder();">
         <div>
             <div id="headerPage"></div>
             <span id="middle">
                 <div id="siderPage"></div>
-                <!--以下是內文-->
-                <div id="content" onload="content_finder();"></div>
+                <div id="content_text"></div>
+                <object id="content" title="content of website" type="text/plain" data="web_content/home.txt"></object>
             </span>
             <div id="footerPage"></div>
         </div>
@@ -22,6 +21,5 @@
         <script src="js/content_finder.js"></script>
         <script src="js/all.js"></script>
         <script src="js/home.js"></script>
-        
     </body>
 </html>
