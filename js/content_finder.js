@@ -28,7 +28,9 @@ function content_finder(){
         }else if(TextArray[i].startsWith("----")){
             returnText += "<hr/>";
         }else{
+            returnText += "<p>";
             returnText += TextArray[i];
+            returnText += "</p>";
         }
     }
 
