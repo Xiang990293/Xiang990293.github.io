@@ -3,7 +3,6 @@
 var headerPage = document.getElementById("headerPage");
 headerPage.innerHTML = `
 <div id="head">
-    <button id="showbox"></button>
     <div class="頁首">
         <h1 class="big-title">麥快研究團隊</h1>
         <h2 id="subtitle" class="big-title"></h2>
@@ -23,6 +22,7 @@ headerPage.innerHTML = `
 var footerPage = document.getElementById("footerPage");
 footerPage.innerHTML = `
 <span>
+<button id="showbox"></button>
     <div style="display:flex; background-color:lightgray;">
     <ul style="list-style-type: none;">
         <h3>瞭解詳情</h3>
@@ -42,7 +42,6 @@ footerPage.innerHTML = `
 
 //current time
 function ShowTime(){
-    var x;
     const d = new Date();
 
     function trans_num_to_ChineseDay(x){
@@ -57,7 +56,7 @@ function ShowTime(){
         return x;
     }
 
-    document.getElementById('showbox').innerHTML = d.getFullYear() + "/" + timefix(d.getMonth()+1) + "/" + timefix(d.getDate()) + "(" + trans_num_to_ChineseDay(d.getDay()) + ") " + timefix(d.getHours()) + ":" + timefix(d.getMinutes()) + ":" + timefix(d.getSeconds()) + " UTC+8";
+    document.getElementById('showbox').innerHTML = "⏰" + d.getFullYear() + "/" + timefix(d.getMonth()+1) + "/" + timefix(d.getDate()) + "(" + trans_num_to_ChineseDay(d.getDay()) + ") " + timefix(d.getHours()) + ":" + timefix(d.getMinutes()) + ":" + timefix(d.getSeconds()) + " (UTC+8)";
     setTimeout('ShowTime()',100);
 }
 var timer = document.getElementById("time");

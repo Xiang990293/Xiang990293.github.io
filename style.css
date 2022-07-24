@@ -2,32 +2,32 @@ body{
     margin:0px;
 }
 
-@keyframes timer-slide-in{
+@keyframes timer{
     from {
-        position:absolute; 
-        right:-80px;
-        top:0px;
-        opacity:0
+        position: relative; 
+        right: 0px;
+        bottom: 0px;
+        opacity: 1
         }
     to {
-        position:absolute; 
-        right:0px;
-        top:0px;
-        opacity:1
+        position: relative; 
+        right: 0px;
+        bottom: 0px;
+        opacity: 1
     }
 }
 
 #showbox{
     border: 0px solid gold;
     background-color: gold;
-    border-radius:0 0 0 10px;
-    animation-name:timer-slide-in;
-    animation-duration:1s;
-    animation-iteration-count:1;
-    position:absolute; 
+    border-radius: 0 0 0 0px;
+    animation-name: timer;
+    animation-duration: 5s;
+    animation-iteration-count: 1;
+    position: relative; 
     font-size: 15px;
-    top:0px;
-    right:0px;
+    bottom: 0px;
+    right: 0px;
 }
 
 @keyframes big-circle{
@@ -56,7 +56,7 @@ body{
 
 .big-title{
     animation-name:title-slide-in;
-    animation-duration:1s;
+    animation-duration:3s;
     animation-iteration-count:1;
     position:relative; left:20px;
     width:400px;
