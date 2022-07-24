@@ -43,6 +43,8 @@ const sendResponse = (pathname, statusCode, response) => {
                     response.setHeader("Content-Type", "text/javascript; charset=UTF-8");
                 }else if (pathname.substr(-3) === "txt"){
                     response.setHeader("Content-Type", "text/plain; charset=UTF-8");
+                }else if (pathname.substr(-3) === "png"){
+                    response.setHeader("Content-Type", "image/ico;");
                 }else{
                     response.setHeader("Content-Type", "text/plain; charset=UTF-8");
                 }
@@ -79,6 +81,10 @@ const server = http.createServer((request, response) => {
             sendResponse(pathname, 200, response);
 
         }else if (pathname.substr(-3) === "txt"){
+            //txt
+            sendResponse(pathname, 200, response);
+
+        }else if (pathname.substr(-3) === "png"){
             //txt
             sendResponse(pathname, 200, response);
 
