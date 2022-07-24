@@ -7,22 +7,19 @@
         <link rel="stylesheet" href="style.css" />
         <link rel="icon" href="favicon.png" />
     </head>
-    <body onload="ShowTime()">
-        <div style="display:block">
+    <body onload="ShowTime();content_finder();">
+        <div>
             <div id="headerPage"></div>
             <span id="middle">
                 <div id="siderPage"></div>
-                <!--以下是內文-->
-                <div id="content" onload="content_finder();">
-                    
-                </div>
+                <div id="content_text"></div>
+                <object id="content" title="content of website" type="text/plain" data="web_content/tools.txt"></object>
             </span>
             <div id="footerPage"></div>
-
         </div>
 
+        <script src="js/content reader.js"></script>
         <script src="js/all.js"></script>
         <script src="js/tools.js"></script>
-        <script src="js/content reader.js"></script>
     </body>
 </html>

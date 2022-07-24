@@ -22,18 +22,21 @@ function content_finder(){
     var TextArray = content_text.split("\n");
 
     for(i=0; i<TextArray.length; i++){
-        if(TextArray[i].startsWith(">>>>")){
-            returnText += TextArray[i].replace(">>>>", "<h6>");
+        if(TextArray[i].startsWith(">>>>>")){
+            returnText += TextArray[i].replace(">>>>>", "<h6>");
             returnText += "</h6>";
-        }else if(TextArray[i].startsWith(">>>")){
-            returnText += TextArray[i].replace(">>>", "<h5>");
+        }else if(TextArray[i].startsWith(">>>>")){
+            returnText += TextArray[i].replace(">>>>", "<h5>");
             returnText += "</h5>";
-        }else if(TextArray[i].startsWith(">>")){
-            returnText += TextArray[i].replace(">>", "<h4>");
+        }else if(TextArray[i].startsWith(">>>")){
+            returnText += TextArray[i].replace(">>>", "<h4>");
             returnText += "</h4>";
-        }else if(TextArray[i].startsWith(">")){
-            returnText += TextArray[i].replace(">", "<h3>");
+        }else if(TextArray[i].startsWith(">>")){
+            returnText += TextArray[i].replace(">>", "<h3>");
             returnText += "</h3>";
+        }else if(TextArray[i].startsWith(">")){
+            returnText += TextArray[i].replace(">", "<h2>");
+            returnText += "</h2>";
         }else if(TextArray[i].startsWith("----")){
             returnText += "<hr/>";
         }else{
