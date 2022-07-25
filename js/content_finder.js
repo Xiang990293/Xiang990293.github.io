@@ -23,31 +23,31 @@ function content_finder(){
 
     for(i=0; i<TextArray.length; i++){
         if(TextArray[i].startsWith(">>>>\\")){
-            returnText += TextArray[i].replace(">>>>\\", `<h5 id="${TextArray[i].replace(">>>>\\", "")}">`);
+            returnText += TextArray[i].replace(">>>>\\", `<h5 class="from_txt" id="${TextArray[i].replace(">>>>\\", "")}">`);
             returnText += "</h5>";
         }else if(TextArray[i].startsWith(">>>\\")){
-            returnText += TextArray[i].replace(">>>\\", `<h4 id="${TextArray[i].replace(">>>\\", "")}">`);
+            returnText += TextArray[i].replace(">>>\\", `<h4 class="from_txt" id="${TextArray[i].replace(">>>\\", "")}">`);
             returnText += "</h4>";
         }else if(TextArray[i].startsWith(">>\\")){
-            returnText += TextArray[i].replace(">>\\", `<h3 id="${TextArray[i].replace(">>\\", "")}">`);
+            returnText += TextArray[i].replace(">>\\", `<h3 class="from_txt" id="${TextArray[i].replace(">>\\", "")}">`);
             returnText += "</h3>";
         }else if(TextArray[i].startsWith(">\\")){
-            returnText += TextArray[i].replace(">\\", `<h2 id="${TextArray[i].replace(">\\", "")}">`);
+            returnText += TextArray[i].replace(">\\", `<h2 class="from_txt" id="${TextArray[i].replace(">\\", "")}">`);
             returnText += "</h2>";
         }else if(TextArray[i].startsWith(">>>>>")){
-            returnText += TextArray[i].replace(">>>>>", `<h6 id="${TextArray[i].replace(">>>>>", "")}">`);
+            returnText += TextArray[i].replace(">>>>>", `<h6 class="from_txt" id="${TextArray[i].replace(">>>>>", "")}">`);
             returnText += "</h6>";
         }else if(TextArray[i].startsWith(">>>>")){
-            returnText += TextArray[i].replace(">>>>", `<h5 id="${TextArray[i].replace(">>>>", "")}">`);
+            returnText += TextArray[i].replace(">>>>", `<h5 class="from_txt" id="${TextArray[i].replace(">>>>", "")}">`);
             returnText += "</h5>";
         }else if(TextArray[i].startsWith(">>>")){
-            returnText += TextArray[i].replace(">>>", `<h4 id="${TextArray[i].replace(">>>", "")}">`);
+            returnText += TextArray[i].replace(">>>", `<h4 class="from_txt" id="${TextArray[i].replace(">>>", "")}">`);
             returnText += "</h4>";
         }else if(TextArray[i].startsWith(">>")){
-            returnText += TextArray[i].replace(">>", `<h3 id="${TextArray[i].replace(">>", "")}">`);
+            returnText += TextArray[i].replace(">>", `<h3 class="from_txt" id="${TextArray[i].replace(">>", "")}">`);
             returnText += "</h3>";
         }else if(TextArray[i].startsWith(">")){
-            returnText += TextArray[i].replace(">", `<h2 id="${TextArray[i].replace(">", "")}">`);
+            returnText += TextArray[i].replace(">", `<h2 class="from_txt" id="${TextArray[i].replace(">", "")}">`);
             returnText += "</h2>";
         }else if(TextArray[i].startsWith("----")){
             returnText += "<hr/>";
@@ -65,19 +65,48 @@ function content_finder(){
     document.getElementById("content").style.visibility = false;
 
     var siderPage = document.getElementById("siderPage");
-    siderPage.innerHTML = `<ul id="側導航欄"><h3>章節列表</h3></ul>`;
+    siderPage.innerHTML = `<ul id="側導航欄"><li><h3>章節列表</h3></li></ul>`;
 
     var ul_in_siderPage = siderPage.getElementsByTagName("ul");
     var content = document.getElementById("content_text");
-    var h3_in_content = content.getElementsByTagName("h3");
-    var do_count = content.getElementsByTagName("h3").length;
+    var title_in_content = content.getElementsByClassName("from_txt");
+    var do_count = title_in_content.length;
+    var layer = 0;
 
     for(var i = 0; i < do_count; i++){
-        ul_in_siderPage[0].innerHTML = ul_in_siderPage[0].innerHTML + `
-        <li>
-            <button onclick="window.location.href='#${h3_in_content[i].innerHTML}';">${h3_in_content[i].innerHTML}</button>
-        </li>
-        `;
+        ul_in_siderPage = siderPage.getElementsByTagName("ul");
+        if(i == 0){
+            ul_in_siderPage[0].innerHTML = ul_in_siderPage[0].innerHTML + `
+            <li>
+                <button onclick="window.location.href='#${title_in_content[i].innerHTML}';">${title_in_content[i].innerHTML}</button>
+            </li>
+            `;
+        }else if(title_in_content[i].tagName == title_in_content[i-1].tagName){
+            ul_in_siderPage[layer].innerHTML = ul_in_siderPage[layer].innerHTML + `
+            <li>
+                <button onclick="window.location.href='#${title_in_content[i].innerHTML}';">${title_in_content[i].innerHTML}</button>
+            </li>
+            `;
+        }else if(title_in_content[i].tagName != title_in_content[i-1].tagName){
+            if(title_in_content[i].tagName.substring(1,2) > title_in_content[i-1].tagName.substring(1,2)){
+                ul_in_siderPage[layer].innerHTML = ul_in_siderPage[layer].innerHTML + `
+                <li><ul>
+                    <li>
+                        <button onclick="window.location.href='#${title_in_content[i].innerHTML}';">${title_in_content[i].innerHTML}</button>
+                    </li>
+                </ul></li>
+                `
+                layer++;
+            }else{
+                layer--;
+                ul_in_siderPage[layer].innerHTML = ul_in_siderPage[layer].innerHTML + `
+                    <li>
+                        <button onclick="window.location.href='#${title_in_content[i].innerHTML}';">${title_in_content[i].innerHTML}</button>
+                    </li>
+                `
+            }
+        }
+        
     }
 }
 

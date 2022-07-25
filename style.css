@@ -120,16 +120,26 @@ body{
     overflow: auto; /* Enable scrolling if the sidenav has too much content */
 }
 
-#側導航欄 h3{
+#側導航欄 li h3{
     margin: 0px;
     width:200px;
     background-color:rgb(109, 146, 226);
+    color:black;
     text-align: center;
 }
 
 #側導航欄 li{
+    position: relative;
     color: rgb(8, 209, 216);
     padding: 0px;
+}
+
+#側導航欄 li ul{
+    color: rgb(8, 209, 216);
+    padding: 0px;
+    left: 5px;
+    margin-right: 0px;
+    margin-left: 10px;
 }
 
 #側導航欄 li button{
@@ -154,15 +164,6 @@ body{
         background-color:yellow;
         color:black;
     }
-}
-
-#側導航欄 li:hover{
-    animation-name:change-button-color;
-    animation-duration:0.3s;
-    animation-iteration-count:1;
-    background-color:yellow;
-    color:black;
-    cursor: pointer;
 }
 
 #側導航欄 li button:hover{
