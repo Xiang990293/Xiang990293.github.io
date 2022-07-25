@@ -120,9 +120,29 @@ body{
     overflow: auto; /* Enable scrolling if the sidenav has too much content */
 }
 
+#側導航欄 h3{
+    margin: 0px;
+    width:200px;
+    background-color:rgb(109, 146, 226);
+    text-align: center;
+}
+
 #側導航欄 li{
-    padding:10px;
+    color: rgb(8, 209, 216);
+    padding: 0px;
+}
+
+#側導航欄 li button{
     color:white;
+    border: 0px;
+    text-decoration-line: none;
+    background-color:rgb(8, 209, 216);
+    width: 100%;
+    left: 5px;
+    top: 5px;
+    bottom: 5px;
+    text-align: left;
+    height: 40px;
 }
 
 @keyframes change-button-color{
@@ -140,11 +160,20 @@ body{
     animation-name:change-button-color;
     animation-duration:0.3s;
     animation-iteration-count:1;
-    padding:10px;
+    background-color:yellow;
+    color:black;
+    cursor: pointer;
+}
+
+#側導航欄 li button:hover{
+    animation-name:change-button-color;
+    animation-duration:0.3s;
+    animation-iteration-count:1;
     border:0px solid yellow;
     background-color:yellow;
     color:black;
     cursor: pointer;
+    left: 5px;
 }
 
 #middle{

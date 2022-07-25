@@ -22,23 +22,38 @@ function content_finder(){
     var TextArray = content_text.split("\n");
 
     for(i=0; i<TextArray.length; i++){
-        if(TextArray[i].startsWith(">>>>>")){
-            returnText += TextArray[i].replace(">>>>>", "<h6>");
+        if(TextArray[i].startsWith(">>>>\\")){
+            returnText += TextArray[i].replace(">>>>\\", `<h5 id="${TextArray[i].replace(">>>>\\", "")}">`);
+            returnText += "</h5>";
+        }else if(TextArray[i].startsWith(">>>\\")){
+            returnText += TextArray[i].replace(">>>\\", `<h4 id="${TextArray[i].replace(">>>\\", "")}">`);
+            returnText += "</h4>";
+        }else if(TextArray[i].startsWith(">>\\")){
+            returnText += TextArray[i].replace(">>\\", `<h3 id="${TextArray[i].replace(">>\\", "")}">`);
+            returnText += "</h3>";
+        }else if(TextArray[i].startsWith(">\\")){
+            returnText += TextArray[i].replace(">\\", `<h2 id="${TextArray[i].replace(">\\", "")}">`);
+            returnText += "</h2>";
+        }else if(TextArray[i].startsWith(">>>>>")){
+            returnText += TextArray[i].replace(">>>>>", `<h6 id="${TextArray[i].replace(">>>>>", "")}">`);
             returnText += "</h6>";
         }else if(TextArray[i].startsWith(">>>>")){
-            returnText += TextArray[i].replace(">>>>", "<h5>");
+            returnText += TextArray[i].replace(">>>>", `<h5 id="${TextArray[i].replace(">>>>", "")}">`);
             returnText += "</h5>";
         }else if(TextArray[i].startsWith(">>>")){
-            returnText += TextArray[i].replace(">>>", "<h4>");
+            returnText += TextArray[i].replace(">>>", `<h4 id="${TextArray[i].replace(">>>", "")}">`);
             returnText += "</h4>";
         }else if(TextArray[i].startsWith(">>")){
-            returnText += TextArray[i].replace(">>", "<h3>");
+            returnText += TextArray[i].replace(">>", `<h3 id="${TextArray[i].replace(">>", "")}">`);
             returnText += "</h3>";
         }else if(TextArray[i].startsWith(">")){
-            returnText += TextArray[i].replace(">", "<h2>");
+            returnText += TextArray[i].replace(">", `<h2 id="${TextArray[i].replace(">", "")}">`);
             returnText += "</h2>";
         }else if(TextArray[i].startsWith("----")){
             returnText += "<hr/>";
+        }else if(TextArray[i].startsWith("\\>")){
+            returnText += TextArray[i].replace("\\>", "<p>>");
+            returnText += "</p>";
         }else{
             returnText += "<p>";
             returnText += TextArray[i];
@@ -50,7 +65,7 @@ function content_finder(){
     document.getElementById("content").style.visibility = false;
 
     var siderPage = document.getElementById("siderPage");
-    siderPage.innerHTML = `<ul id="側導航欄"></ul>`;
+    siderPage.innerHTML = `<ul id="側導航欄"><h3>章節列表</h3></ul>`;
 
     var ul_in_siderPage = siderPage.getElementsByTagName("ul");
     var content = document.getElementById("content_text");
@@ -60,7 +75,7 @@ function content_finder(){
     for(var i = 0; i < do_count; i++){
         ul_in_siderPage[0].innerHTML = ul_in_siderPage[0].innerHTML + `
         <li>
-            <a harf="">${h3_in_content[i].innerHTML}</a>
+            <button onclick="window.location.href='#${h3_in_content[i].innerHTML}';">${h3_in_content[i].innerHTML}</button>
         </li>
         `;
     }
