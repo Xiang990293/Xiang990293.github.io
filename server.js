@@ -6,6 +6,7 @@ const qs = require("querystring");
 const express = require("express");
 const app = express();
 const jquary = require("jquery");
+const path = require("path");
 
 //宣告響應函數
 const sendResponse = (pathname, statusCode, response) => {
@@ -98,9 +99,21 @@ const server = http.createServer((request, response) => {
                 sendResponse("/home.html", 200, response);
 
             }else if (isPathExist === false && pathname != "/"){
+                var slash_count = 0;
+                var pos_of_last_slash = 0;
+                for(i=0; i<pathname.length; i++){
+                    if(pathname[i]==="/"){
+                        slash_count++;
+                        pos_of_last_slash = i;
+                    }
+                }
+
+                var direc=".";
+                if(slash_count>1){
+                    direc="."+pathname.substring(0,pos_of_last_slash);
+                }
                 
-                fs.readdir(".", (err, data) => {
-                    
+                fs.readdir(direc, (err, data) => {
                     if (err){
                         sendResponse("/404.html", 404, response);
                     }else{
@@ -110,23 +123,23 @@ const server = http.createServer((request, response) => {
                                 files.push(data[i]);
                             }
                         }
-                        
                         for (i = 0; i < files.length; i++){
-                            if (pathname.substr(1) === files[i]){
+                            if (isPathExist === false && pathname.substring(pos_of_last_slash+1) === files[i]){
                                 isPathExist = true;
                                 sendResponse(pathname, 200, response);
                                 break;
-                            }else if (pathname.substr(1) === files[i].substring(0, files[i].length-5)){
+                            }else if (isPathExist === false && pathname.substring(pos_of_last_slash+1) === files[i].substring(0, files[i].length-5)){
                                 isPathExist = true;
                                 var repathname = `${pathname}.html`;
                                 sendResponse(repathname, 200, response);
                                 break;
                             }
                         }
+                        if (isPathExist === false){
+                            sendResponse("/404.html", 404, response);
+                        }
                     }
                 })
-            }else if (isPathExist === false){
-                sendResponse("/404.html", 404, response);
             }
         }
     }else{ //POST
