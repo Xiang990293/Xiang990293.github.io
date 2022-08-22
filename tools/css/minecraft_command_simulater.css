@@ -1,4 +1,11 @@
-﻿#command_block_ui{
+﻿@font-face {
+    font-family: Minecraft;
+    src:url(Minecraft.woff) format("woff"), /* Modern Browsers */
+        url(Minecraft.ttf) format("truetype"), /* Safari, Android, iOS */
+        url(Minecraft.svg#Minecraft) format("svg"); /* Legacy iOS */
+}
+
+#command_block_ui{
     display: flex;
     flex: 2;
     position: relative;
@@ -34,6 +41,13 @@
 .textbox{
     background: black;
     border: 2px rgb(160,160,160) solid;
+    color: rgb(160,160,160);
+    font-size: 20px;
+}
+
+.textbox:focus{
+    background: black;
+    border: 2px white solid;
     color: rgb(160,160,160);
     font-size: 20px;
 }
