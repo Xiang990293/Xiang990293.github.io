@@ -8,13 +8,13 @@ headerPage.innerHTML = `
         <h2 id="subtitle" class="big-title"></h2>
     </div>
     <div class="導航欄">
-        <button class="導航欄-btn" onclick="window.location.href='home.html';">首頁</button>
-        <button class="導航欄-btn" onclick="window.location.href='team_intro.html';">關於團隊</button>
-        <button class="導航欄-btn" onclick="window.location.href='mini_game.html';">小遊戲</button>
-        <button class="導航欄-btn" onclick="window.location.href='team_history.html';">團隊歷史</button>
-        <button class="導航欄-btn" onclick="window.location.href='tools.html';">工具</button>
-        <button class="導航欄-btn" onclick="window.location.href='mini_game.html';">小遊戲</button>
-        <button class="導航欄-btn" onclick="window.location.href='contect_to_us.html';">聯絡我們</button>
+        <button class="導航欄-btn" onclick="window.location.href='../home.html';">首頁</button>
+        <button class="導航欄-btn" onclick="window.location.href='../team_intro.html';">關於團隊</button>
+        <button class="導航欄-btn" onclick="window.location.href='../mini_game.html';">小遊戲</button>
+        <button class="導航欄-btn" onclick="window.location.href='../team_history.html';">團隊歷史</button>
+        <button class="導航欄-btn" onclick="window.location.href='../tools.html';">工具</button>
+        <button class="導航欄-btn" onclick="window.location.href='../mini_game.html';">小遊戲</button>
+        <button class="導航欄-btn" onclick="window.location.href='../contect_to_us.html';">聯絡我們</button>
     </div>
 </div>
 `
