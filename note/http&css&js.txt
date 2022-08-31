@@ -254,7 +254,7 @@ align-content:屬於次軸方向對齊(適合多行)
 
 JavaScript 筆記~~
 
-從現在起，所記載內容將針對網頁設計做延伸，而與JavaScript有關
+從現在起，所記載內容將針對網頁設計做延伸，與JavaScript有關
 如何引入JavaScript？很簡單，一樣在html檔中的<body></body>內，加入<script></script>，並在中間輸入程式碼即可
 <script>
     document.write("aaa");
@@ -382,7 +382,7 @@ var person = {
 
 而且可以進行呼叫
 person.print_name();
-=>Xiang990293
+=>"Xiang990293"
 
 while迴圈
 var i = 1;
