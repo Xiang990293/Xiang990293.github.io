@@ -8,15 +8,27 @@ function uuid_gen(){
     return random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+"-"+random_hex()+random_hex()+random_hex()+random_hex()+"-"+random_hex()+random_hex()+random_hex()+random_hex()+"-"+random_hex()+random_hex()+random_hex()+random_hex()+"-"+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex()+random_hex();
 }
 
+function hashcode(str) {
+    var hash = 0, i, chr, len;
+    if (str.length === 0) return hash;
+    for (i = 0, len = str.length; i < len; i++){
+        chr   = str.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+
+    return hash;
+}
+
 class entity_player{
     constructor(Entity, id){
         this.Entity = Entity;
-        this.uuid = uuid_gen();
+        this.uuid = hashcode(id);
         this.id = id;
         this.gamemode = 0;
-        this.nbt = {
-            
-        }
+    }
+    doReturnNBT(){
+        return `{}`;
     }
 }
 

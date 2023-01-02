@@ -1,4 +1,4 @@
-HTML筆記：
+==========HTML筆記：==========
 <!DOCTYPE html>(宣告程式碼類型)
 
 <meta chatset="字型編碼"></meta>
@@ -67,7 +67,7 @@ name="author" content="(作者名)"
 name="keywords" content="關鍵字1, 關鍵字2 ..." (關鍵字) (搜尋引擎方便查詢)
 name="viewport" content="width=device-width(網頁寬度=裝置寬度), initial-scale=1.0(預設縮放)" (視口)
 
-CSS筆記：
+==========CSS筆記：==========
 (基本語法 #內層覆蓋外層)
 style="(在這裡面輸入:接值的話要冒號，結束用分號; 兩種內容:以空格分開;)"
 color:red;(顏色)
@@ -423,18 +423,18 @@ for(var i=0; i<a.length; i++){
 class 物件模板，和css中的不太相同
 假設有很多台手機，我們要把型號、出廠年份、是否防水和手機年齡等資訊一一列出，以下是最直接的方法：
 var phone1 = {
-    number = 123;
-    year = 2002;
-    is_waterproof = false;
+    number = 123,
+    year = 2002,
+    is_waterproof = false,
     phone_age:function(){
         return 2022 - this.year;
     }
 }
 
 var phone2 = {
-    number = 245;
-    year = 2020;
-    is_waterproof = true;
+    number = 245,
+    year = 2020,
+    is_waterproof = true,
     phone_age:function(){
         return 2022 - this.year;
     }

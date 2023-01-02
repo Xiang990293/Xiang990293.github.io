@@ -19,41 +19,47 @@ function content_finder(){
     //content text
     const content_text = document.getElementById("content").contentWindow.frames.document.getElementsByTagName("pre")[0].childNodes[0].data;
     var returnText = "";
-    var TextArray = content_text.split("\n");
-    var title_type = [[">>>>\\",">>>\\",">>\\",">\\",">>>>>",">>>>",">>>",">>",">"],[5, 4, 3, 2, 6, 5, 4, 3, 2]];
-    var title_serial_num = 0;
+    var replace = "";
+    var title_type;
+    // var TextArray = content_text.split("\n");
+    // var title_type = [[">>>>\\",">>>\\",">>\\",">\\",">>>>>",">>>>",">>>",">>",">"],[5, 4, 3, 2, 6, 5, 4, 3, 2]];
+    // var title_serial_num = 0;
 
-    var describe = false;
-    for(i = 0; i<TextArray.length; i++){
-        if(TextArray[i].startsWith("```")&&describe==false){
-            returnText += TextArray[i].replace("```", "<object>");
-            describe = true;
-        }else if(TextArray[i].startsWith("```")&&describe==true){
-            returnText += TextArray[i].replace("```", "</object>");
-            describe = false;
-        }
-        for(j = 0, isTitled = false; j<title_type[0].length; j++){
-            if(TextArray[i].startsWith(title_type[0][j])){
-                returnText += TextArray[i].replace(title_type[0][j], `<h${title_type[1][j]} class="from_txt" id="${TextArray[i].replace(title_type[0][j], "")+"-"+title_serial_num}">`);
-                returnText += `</h${title_type[1][j]}>`;
-                isTitled = true;
-                title_serial_num++;
-                break;
-            }
-        }
-        if(isTitled != true){
-            if(TextArray[i].startsWith("----")){
-                returnText += "<hr/>";
-            }else if(TextArray[i].startsWith("\\")){
-                returnText += TextArray[i].replace("\\", "<p>");
-                returnText += "</p>";
-            }else{
-                returnText += "<p>";
-                returnText += TextArray[i];
-                returnText += "</p>";
-            }
-        }
-    }
+    // var describe = false;
+    returnText += content_text.replace(/```(.*?)```/gs,`<object title="1">$1</object>`)
+    // TextArray.replace(content_text.match(/```(.*?)```/gs)[0],"<object>")
+    // var regex = new RegExp(`>${title_type}`,'g');
+    // TextArray.replace()
+    // for(i = 0; i<TextArray.length; i++){
+    //     if(TextArray[i].startsWith("```")&&describe==false){
+    //         returnText += TextArray[i].replace("```", "<object>");
+    //         describe = true;
+    //     }else if(TextArray[i].startsWith("```")&&describe==true){
+    //         returnText += TextArray[i].replace("```", "</object>");
+    //         describe = false;
+    //     }
+    //     for(j = 0, isTitled = false; j<title_type[0].length; j++){
+    //         if(TextArray[i].startsWith(title_type[0][j])){
+    //             returnText += TextArray[i].replace(title_type[0][j], `<h${title_type[1][j]} class="from_txt" id="${TextArray[i].replace(title_type[0][j], "")+"-"+title_serial_num}">`);
+    //             returnText += `</h${title_type[1][j]}>`;
+    //             isTitled = true;
+    //             title_serial_num++;
+    //             break;
+    //         }
+    //     }
+    //     if(isTitled != true){
+    //         if(TextArray[i].startsWith("----")){
+    //             returnText += "<hr/>";
+    //         }else if(TextArray[i].startsWith("\\")){
+    //             returnText += TextArray[i].replace("\\", "<p>");
+    //             returnText += "</p>";
+    //         }else{
+    //             returnText += "<p>";
+    //             returnText += TextArray[i];
+    //             returnText += "</p>";
+    //         }
+    //     }
+    // }
 
     document.getElementById("content_text").innerHTML = `${returnText}`;
     document.getElementById("content").style.visibility = false;

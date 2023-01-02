@@ -1,8 +1,6 @@
 ﻿var gamemode_rule = ["生存","創造","冒險","觀察者"];
 var gamemode_serial = ["survival","creative","adventure","spectator"];
 const default_gamemode = 0;
-alert("歡迎使用");
-document.getElementById("player_id").value = prompt("請輸入玩家名稱：","Xiang990293")
 var gamemode = 0;
 
 var isRun=false;
@@ -144,6 +142,9 @@ function execute(){
 
 function if_loaded(){
     localStorage.clear;
+    alert("歡迎使用");
+    document.getElementById("player_id").value = prompt("請輸入玩家名稱：","Xiang990293");
     var player = new entity_player("minecraft:player",document.getElementById("player_id").value);
-    localStorage.setItem(player.uuid,JSON.stringify(player))
+    console.log("hi");
+    localStorage.setItem(player.uuid,JSON.stringify(player));
 }
