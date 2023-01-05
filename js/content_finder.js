@@ -64,7 +64,8 @@ function content_finder(){
         current_title_regexp = new RegExp(`^(${titles[title_index]})$`,"gm")
         title_type_find = new RegExp(`^>+`,"gm")
         title_type = titles[title_index].match(title_type_find)[0].length+1;
-        returnText = returnText.replace(current_title_regexp,`<h${title_type} class="from_txt" id="$1-${title_index}">$1</h${title_type}>`)
+        group_1_in_current_title = titles[title_index].replace(/^>+?(.+?)$/gm,"$1")
+        returnText = returnText.replace(current_title_regexp,`<h${title_type} class="from_txt" id="${group_1_in_current_title}-${title_index}">${group_1_in_current_title}</h${title_type}>`)
     }
     returnText = returnText.replace(/^----$/gm, "<hr/>");
     returnText = returnText.replace(/^(?<!<)(.+?)(?!>)$/gm, "<p>$1</p>");
