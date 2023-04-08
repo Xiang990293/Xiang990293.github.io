@@ -20,33 +20,35 @@ function content_finder(){
     const content_text = document.getElementById("content").contentWindow.frames.document.getElementsByTagName("pre")[0].childNodes[0].data;
     var returnText = content_text;
 
-    // var returnText = "";
-    // var TextArray = content_text.split("\n")
-    // var describe = false;
-    // var title_serial_num = 0;
-    // for(i = 0; i<TextArray.length; i++){
-    //         for(j = 0, isTitled = false; j<title_type[0].length; j++){
-    //             if(TextArray[i].startsWith(title_type[0][j])){
-    //                 returnText += TextArray[i].replace(title_type[0][j], `<h${title_type[1][j]} class="from_txt" id="${TextArray[i].replace(title_type[0][j], "")+"-"+title_serial_num}">`);
-    //                 returnText += `</h${title_type[1][j]}>`;
-    //                 isTitled = true;
-    //                 title_serial_num++;
-    //                 break;
-    //             }
-    //         }
-    //         if(isTitled != true){
-    //             if(TextArray[i].startsWith("----")){
-    //                 returnText += "<hr/>";
-    //             }else if(TextArray[i].startsWith("\\")){
-    //                 returnText += TextArray[i].replace("\\", "<p>");
-    //                 returnText += "</p>";
-    //             }else{
-    //                 returnText += "<p>";
-    //                 returnText += TextArray[i];
-    //                 returnText += "</p>";
-    //             }
-    //         }
-    //     }
+    /* 
+    var returnText = "";
+    var TextArray = content_text.split("\n")
+    var describe = false;
+    var title_serial_num = 0;
+    for(i = 0; i<TextArray.length; i++){
+        for(j = 0, isTitled = false; j<title_type[0].length; j++){
+            if(TextArray[i].startsWith(title_type[0][j])){
+                returnText += TextArray[i].replace(title_type[0][j], `<h${title_type[1][j]} class="from_txt" id="${TextArray[i].replace(title_type[0][j], "")+"-"+title_serial_num}">`);
+                returnText += `</h${title_type[1][j]}>`;
+                isTitled = true;
+                title_serial_num++;
+                break;
+            }
+        }
+        if(isTitled != true){
+            if(TextArray[i].startsWith("----")){
+                returnText += "<hr/>";
+            }else if(TextArray[i].startsWith("\\")){
+                returnText += TextArray[i].replace("\\", "<p>");
+                returnText += "</p>";
+            }else{
+                returnText += "<p>";
+                returnText += TextArray[i];
+                returnText += "</p>";
+            }
+        }
+    }
+    */
 
     //:new version
     returnText = returnText.replace(/```(.*?)```/gs,`<object title="1" style="background-color:gray; border: 3px solid black; border-radius: 10px; width:300px">$1</object>`)
