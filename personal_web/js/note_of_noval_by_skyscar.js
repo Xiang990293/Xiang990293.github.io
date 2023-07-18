@@ -79,4 +79,3 @@ function textReader(){
         alert(fileReader.error);
     }
 }
-
