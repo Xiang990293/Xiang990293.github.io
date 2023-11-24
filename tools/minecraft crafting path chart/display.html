@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html style="height: 100%" lang="zh-tw">
+<head>
+	<meta charset="utf-8">
+	<title id="title"></title>
+    <!-- Include the required libraries for the mind chart -->
+	<link rel="icon" href="../favicon.png" />
+    
+	<link rel="stylesheet" href="../../style.css"></link>
+	<link rel="stylesheet" href="./display.css"></link>
+</head>
+<body onload="ShowTime();">
+	
+	<section id="all">
+		<div id="headerPage"></div>
+		<div id="chart-container">
+			<div class="node root-node" draggable="true" ondragstart="drag(event)" id="oak_log" style="top: 50px;"></div>
+			<div class="node sub-node" draggable="true" ondragstart="drag(event)" id="oak_planks" style="top: 150px;"></div>
+			<div class="node" draggable="true" ondragstart="drag(event)" id="diamond_block" style="top: 150px;"></div>
+			<div class="node" draggable="true" ondragstart="drag(event)" id="node3" style="top: 250px;"></div>
+			<div class="node" draggable="true" ondragstart="drag(event)" id="node4" style="top: 350px;"></div>			
+			<svg xmlns="http://www.w3.org/2000/svg" versoin="1.1" id="connections-container">
+				<defs>
+					<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+						<path d="M0,0 L0,6 L9,3 z" fill="#000" />
+					</marker>
+				</defs>
+			</svg>
+		</div>
+		<div id="footerPage"></div>
+	</section>
+    
+	<script src="https://unpkg.com/gojs/release/go.js"></script>
+	<script src="../../js/all.js"></script>
+	<script src="./display.js"></script>
+</body>

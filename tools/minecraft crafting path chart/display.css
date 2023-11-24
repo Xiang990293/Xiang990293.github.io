@@ -1,0 +1,67 @@
+﻿#all {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#all #footerPage {
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+}
+
+#chart-container {
+	width: 100%;
+	/* display: flex; */
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+  
+  /* Style the nodes */
+.node {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 10px;
+	background-color: lightblue;
+	border-radius: 10px;
+	text-align: center;
+	min-width: 50px;
+	min-height: 50px;
+	left: 50vw;
+	cursor: pointer;
+	position: absolute;
+	background-image: url(../../favicon.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	font-size: 20px;
+	text-align: center;
+	image-rendering: pixelated;
+}
+
+#connections-container{
+	position: fixed;
+	top: 0px;
+	width: 100vw;
+	height: 100vw;
+	z-index: -1;
+}
+
+.node img {
+	height: 40px;
+	width: 40px;
+}
+
+.node span {
+	display: flex;
+	text-align: inline-center;
+}
+
+#headerPage {
+	z-index: 1000;
+}
+
+#footerPage {
+	z-index: 1000;
+}

@@ -1,22 +1,20 @@
-
-
 var headerPage = document.getElementById("headerPage");
 headerPage.innerHTML = `
-<div id="head">
+<header id="head">
     <div class="頁首">
         <h1 class="big-title">麥快研究團隊</h1>
         <h2 id="subtitle" class="big-title"></h2>
     </div>
-    <div class="導航欄">
-        <button class="導航欄-btn" onclick="window.location.href='../home.html';">首頁</button>
-        <button class="導航欄-btn" onclick="window.location.href='../team_intro.html';">關於團隊</button>
-        <button class="導航欄-btn" onclick="window.location.href='../mini_game.html';">小遊戲</button>
-        <button class="導航欄-btn" onclick="window.location.href='../team_history.html';">團隊歷史</button>
-        <button class="導航欄-btn" onclick="window.location.href='../tools.html';">工具</button>
-        <button class="導航欄-btn" onclick="window.location.href='../mini_game.html';">小遊戲</button>
-        <button class="導航欄-btn" onclick="window.location.href='../contect_to_us.html';">聯絡我們</button>
-    </div>
-</div>
+    <nav class="導航欄">
+        <button class="導航欄-btn" onclick="window.location.href='./home.html';">首頁</button>
+        <button class="導航欄-btn" onclick="window.location.href='./team_intro.html';">關於團隊</button>
+        <button class="導航欄-btn" onclick="window.location.href='./mini_game.html';">小遊戲</button>
+        <button class="導航欄-btn" onclick="window.location.href='./team_history.html';">團隊歷史</button>
+        <button class="導航欄-btn" onclick="window.location.href='./tools.html';">工具</button>
+        <button class="導航欄-btn" onclick="window.location.href='./mini_game.html';">小遊戲</button>
+        <button class="導航欄-btn" onclick="window.location.href='./contect_to_us.html';">聯絡我們</button>
+    </nav>
+</header>
 `
 
 var footerPage = document.getElementById("footerPage");
