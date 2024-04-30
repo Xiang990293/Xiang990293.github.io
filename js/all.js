@@ -2,20 +2,31 @@ var headerPage = document.getElementById("headerPage");
 headerPage.innerHTML = `
 <header id="head">
     <div class="頁首">
-        <h1 class="big-title">麥快研究團隊</h1>
+        <h1 class="big-title"><a  href="/home.html" style="color: unset; text-decoration-line: unset;">麥快研究團隊</a></h1>
         <h2 id="subtitle" class="big-title"></h2>
+		<label class="switch" id="dark-mode">
+			<input type="checkbox" onclick="darkmode()">
+			<span class="slider round"></span>
+		</label>
     </div>
     <nav class="導航欄">
-        <button class="導航欄-btn" onclick="window.location.href='./home.html';">首頁</button>
         <button class="導航欄-btn" onclick="window.location.href='./team_intro.html';">關於團隊</button>
         <button class="導航欄-btn" onclick="window.location.href='./mini_game.html';">小遊戲</button>
         <button class="導航欄-btn" onclick="window.location.href='./team_history.html';">團隊歷史</button>
         <button class="導航欄-btn" onclick="window.location.href='./tools.html';">工具</button>
         <button class="導航欄-btn" onclick="window.location.href='./mini_game.html';">小遊戲</button>
         <button class="導航欄-btn" onclick="window.location.href='./contect_to_us.html';">聯絡我們</button>
+		<button class="導航欄-btn" onclick="window.location.href='./login.html';">管理員登入</button>
     </nav>
 </header>
 `
+
+{/* <button class="導航欄-btn" onclick="window.location.href='./home.html';">首頁</button> */}
+
+function darkmode() {
+	var element = document.body;
+	element.classList.toggle("dark-mode");
+ }
 
 var footerPage = document.getElementById("footerPage");
 footerPage.innerHTML = `

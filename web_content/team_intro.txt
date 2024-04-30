@@ -1,0 +1,5 @@
+﻿>關於我們
+麥塊研究團隊致力於挖掘minecraft的各種可能性，在指令、資料包方面的研究特別突出，旨在利用原版提供的各種功能再現各種效果與物件，是一群擁有相同興趣愛好聚集在一起形成的遊戲團體。
+
+>成員簡介
+成員包含@button(https://xiang990293.github.io/personal_web/Xiang990293)(tag=a,style="color:blue;"){翔越風}、@button(http://172.28.190.238:5500/ICML/ICML-home.html)(tag=a,style="color:blue;"){天痕}、@button(http://172.28.190.238:5500/ICML/ICML-home.html)(tag=a,style="color:blue;"){家緯}、張博、瓜喵。

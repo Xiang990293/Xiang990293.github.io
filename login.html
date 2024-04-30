@@ -4,17 +4,21 @@
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title id="title"></title>
-        <link rel="stylesheet" href="../login.css" />
+        <link rel="stylesheet" href="./login.css" />
         <link rel="icon" href="../favicon.png" />
     </head>
     <body id="content">
+		<button id="back" onclick="history.back()"><</button>
+		<button id="home" onclick="window.location.href='home.html'"></button>
         <form action="server.js" class="login">
             <h3>Login 登入</h3>
             <input type="text" placeholder="Username 使用者名稱" />
             <input type="password" placeholder="Password 密碼" />
-            <input type="submit" value="Submit 提交" />
+            <input type="submit" value="Submit 提交" onclick="password_hash()"/>
+			
         </form>
-        <script src="../js/all.js"></script>
-        <script src="../js/home.js"></script>
+        <script src="./js/all.js"></script>
+        <script src="./js/home.js"></script>
+        <script src="./js/login.js"></script>
     </body>
 </html>

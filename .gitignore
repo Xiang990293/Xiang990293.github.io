@@ -1,8 +1,10 @@
 note
 advancements
 assets
-tools\lang
-tools\loot_tables
-tools\recipes
-tools\textures
+lang
+loot_tables
+recipes
+textures
 node_modules
+
+.vscode/

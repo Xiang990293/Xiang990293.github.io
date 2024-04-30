@@ -1,0 +1,57 @@
+{
+	"nodes": [
+	  {
+		"id": "oak_log",
+		"name": "Oak Log",
+		"position": { "x": 100, "y": 100 },
+		"image": "oak_log.png",
+		"description": "This is an oak log."
+	  },
+	  {
+		"id": "oak_planks",
+		"name": "Oak Planks",
+		"position": { "x": 300, "y": 150 },
+		"image": "oak_planks.png",
+		"description": "These are oak planks."
+	  },
+	  {
+		"id": "stone",
+		"name": "Stone",
+		"position": { "x": 450, "y": 150 },
+		"image": "stone.png",
+		"description": "This is a stone."
+	  },
+	  {
+		"id": "cobblestone",
+		"name": "Cobblestone",
+		"position": { "x": 600, "y": 150 },
+		"image": "cobblestone.png",
+		"description": "This is a cobblestone."
+	  },
+	  {
+		"id": "diamond_block",
+		"name": "Diamond Block",
+		"position": { "x": 750, "y": 150 },
+		"image": "diamond_block.png",
+		"description": "This is a diamond block."
+	  }
+	],
+	"paths": [
+	  {
+		"startNodeId": "oak_log",
+		"endNodeId": "oak_planks"
+	  },
+	  {
+		"startNodeId": "oak_log",
+		"endNodeId": "stone"
+	  },
+	  {
+		"startNodeId": "oak_log",
+		"endNodeId": "cobblestone"
+	  },
+	  {
+		"startNodeId": "oak_log",
+		"endNodeId": "diamond_block"
+	  }
+	]
+  }

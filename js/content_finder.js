@@ -51,7 +51,8 @@ function content_finder(){
     */
 
     //:new version
-    returnText = returnText.replace(/```(.*?)```/gs,`<object title="1" style="background-color:gray; border: 3px solid black; border-radius: 10px; width:300px">$1</object>`)
+	//content syntex analizer
+    returnText = returnText.replace(/```(.*?)```/gs,`<stoptrans><object title="1" style="background-color:gray; border: 3px solid black; border-radius: 10px; width:300px">$1</object></stoptrans>`)
     var titles = returnText.match(/^>+(.+?)$/gm)
 
     for(title_index=0; title_index<titles.length; title_index++){
@@ -65,14 +66,16 @@ function content_finder(){
 		returnText = returnText.replace(current_title_regexp,`<h${title_type} class="from_txt" id="${group_1_in_current_title}-${title_index}">${group_1_in_current_title}</h${title_type}>`)
     }
     
-	returnText = returnText.replace(/^----$/gm, "<hr/>")
-	returnText = returnText.replace(/^(?<!<)(.+?)(?!>)$/gm, "<p>$1</p>")
+	returnText = returnText.replace(/^----$/gm, "<hr/>")					// "----" -> "<hr/>"
+	returnText = returnText.replace(/(?<!\\)@color(#[0-9a-fA-F]{6}){(.+?)(?<!\\)}/gm, `<p style="color: $1">$2</p>`)	// change color "<p style></p>""
+	returnText = returnText.replace(/(?<!\\)@bold{(.+?)(?<!\\)}/gm, `<p style="font-weight: bold">$1</p>`)	// change bold "<p style></p>""
+	returnText = returnText.replace(/(?<!\\)@button\((https?:\/\/.+?)(?<!\()\)(?:\(tag=(a|p|button)(?:,(style=".+?"))?\))?(?<!\\){(.+?)(?<!\\)}/gm, `<$2 class="text-to-button" onclick="window.location.href='$1'" $3>$4</$2>`)	// add button "<$2 class="text-to-button" href="$1" $3>$4</$2>""
+	// returnText = returnText.replace(/^(?<!<)(.+?)(?!>)$/gs, "<p>$1</p>")	// put plain text into "<p></p>""
 
-
-	
 	document.getElementById("content_text").innerHTML = returnText
     document.getElementById("content").style.visibility = false;
 
+	// siderpage/navigation construct
     var siderPage = document.getElementById("siderPage");
     siderPage.innerHTML = `<ul id="側導航欄"><li><h3>章節列表</h3></li></ul>`;
 
@@ -84,7 +87,7 @@ function content_finder(){
     var layer_max = 0;
 
     for(i = 0; i < do_count; i++){
-        ul_in_siderPage = siderPage.getElementsByTagName("ul");
+        // ul_in_siderPage = siderPage.getElementsByTagName("ul");
         if(i == 0){
             ul_in_siderPage[0].innerHTML = ul_in_siderPage[0].innerHTML + `<li><button type="button" onclick="window.location.href='#${title_in_content[i].innerHTML+"-"+i}';">${title_in_content[i].innerHTML}</button></li>`;
         }else if(title_in_content[i].tagName == title_in_content[i-1].tagName){

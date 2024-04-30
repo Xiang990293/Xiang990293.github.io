@@ -1,7 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const port = 3000;
-const ip = "127.0.0.1";//"192.168.124.17";
+const ip = "172.28.246.224";//"192.168.124.17";
 const qs = require("querystring");
 const express = require("express");
 const app = express();
@@ -31,6 +31,7 @@ const sendResponse = (pathname, statusCode, response) => {
                 response.statusCode = 500;
                 response.setHeader("Content-Type", "text/plain");
                 response.end("Sorry, internet error");
+				console.log("SEND 500 - Sorry, internet error\n ERROR: "+ err)
 
             }else{
 
@@ -61,89 +62,95 @@ const sendResponse = (pathname, statusCode, response) => {
 
 //請求起點
 const server = http.createServer((request, response) => {
-    
-    // console.log(request.url, request.method);
+	console.log(request.method + " request recieved:" + request.url)
 
     if (request.method === "GET"){ //GET
-       
         const requestUrl = new URL(request.url, `http://${ip}:${port}`);
         const pathname = requestUrl.pathname;
 
         if (pathname.substr(-3) === "css"){
-            //css
-            sendResponse(pathname, 200, response);
-
-        }else if (pathname.substr(-2) === "js"){
-            //js
-            sendResponse(pathname, 200, response);
-
-        }else if (pathname.substr(-3) === "ico"){
-            //ico
-            sendResponse(pathname, 200, response);
-
-        }else if (pathname.substr(-3) === "txt"){
-            //txt
-            sendResponse(pathname, 200, response);
-
-        }else if (pathname.substr(-3) === "png"){
-            //txt
-            sendResponse(pathname, 200, response);
-
-        }else{
-            //html
-            var isPathExist = false;
-
-            if (isPathExist === false && pathname === "/"){
-
-                isPathExist = true;
-                sendResponse("/home.html", 200, response);
-
-            }else if (isPathExist === false && pathname != "/"){
-                var slash_count = 0;
-                var pos_of_last_slash = 0;
-                for(i=0; i<pathname.length; i++){
-                    if(pathname[i]==="/"){
-                        slash_count++;
-                        pos_of_last_slash = i;
-                    }
-                }
-
-                var direc=".";
-                if(slash_count>1){
-                    direc="."+pathname.substring(0,pos_of_last_slash);
-                }
-                
-                fs.readdir(direc, (err, data) => {
-                    if (err){
-                        sendResponse("/404.html", 404, response);
-                    }else{
-                        var files = [];
-                        for (i=0; i < data.length; i++){
-                            if (data[i].substr(-4) === "html"){
-                                files.push(data[i]);
-                            }
-                        }
-                        for (i = 0; i < files.length; i++){
-                            if (isPathExist === false && pathname.substring(pos_of_last_slash+1) === files[i]){
-                                isPathExist = true;
-                                sendResponse(pathname, 200, response);
-                                break;
-                            }else if (isPathExist === false && pathname.substring(pos_of_last_slash+1) === files[i].substring(0, files[i].length-5)){
-                                isPathExist = true;
-                                var repathname = `${pathname}.html`;
-                                sendResponse(repathname, 200, response);
-                                break;
-                            }
-                        }
-                        if (isPathExist === false){
-                            sendResponse("/404.html", 404, response);
-                        }
-                    }
-                })
-            }
+			console.log("GET 200 - success")
+            sendResponse(pathname, 200, response)
+			return
         }
+		
+		if (pathname.substr(-2) === "js"){
+			console.log("GET 200 - success")
+            sendResponse(pathname, 200, response)
+			return
+        }
+		
+		if (pathname.substr(-3) === "ico"){
+			console.log("GET 200 - success")
+            sendResponse(pathname, 200, response)
+			return
+        }
+		
+		if (pathname.substr(-3) === "txt"){
+			console.log("GET 200 - success")
+            sendResponse(pathname, 200, response)
+			return
+        }
+		
+		if (pathname.substr(-3) === "png"){
+			console.log("GET 200 - success")
+            sendResponse(pathname, 200, response)
+        }
+
+		//html
+
+		if (pathname === "/"){
+			console.log("GET 200 - success")
+			sendResponse("/home.html", 200, response)
+			return
+		}
+		
+		var slash_count = 0;
+		var pos_of_last_slash = 0;
+		var direc=".";
+		for(i=0; i<pathname.length; i++){
+			if(pathname[i]==="/"){
+				slash_count++;
+				pos_of_last_slash = i;
+			}
+		}
+		if(slash_count>1){
+			direc="."+pathname.substring(0,pos_of_last_slash);
+		}
+		
+		fs.readdir(direc, (err, data) => {
+			if (err){
+				console.log("GET 404 - site not found\nERROR: "+err)
+				sendResponse("/404.html", 404, response)
+				return
+			}
+			
+			var files = []
+			for (i=0; i < data.length; i++){
+				if (data[i].substr(-4) === "html"){
+					files.push(data[i]);
+				}
+			}
+			
+			for (i = 0; i < files.length; i++){
+				if (pathname.substring(pos_of_last_slash+1) === files[i]){
+					sendResponse(pathname, 200, response)
+					return
+				}
+				
+				if (pathname.substring(pos_of_last_slash+1) === files[i].substring(0, files[i].length-5)){
+					var repathname = `${pathname}.html`;
+					sendResponse(repathname, 200, response)
+					return
+				}
+			}
+
+			console.log("GET 404 - site not found")
+			sendResponse("/404.html", 404, response)
+			return
+		})
     }else{ //POST
-        if (requestUrl === "/process-login"){
+        if (request.url === "/process-login"){
             let body = [];
 
             request,on("data", (chunk) => {
