@@ -1,4 +1,5 @@
 {
     "editor.autoClosingBrackets": "always",
-    "files.encoding": "utf8bom"
+	"files.encoding": "utf8bom",
+	"code-runner.fileDirectoryAsCwd": false
 }

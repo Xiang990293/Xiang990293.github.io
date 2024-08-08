@@ -30,21 +30,26 @@ function darkmode() {
 
 var footerPage = document.getElementById("footerPage");
 footerPage.innerHTML = `
-<span>
-<button id="showbox"></button>
-    <div style="display:flex; background-color:lightgray;">
-    <ul style="list-style-type: none;">
-        <h3>瞭解詳情</h3>
-        <li>
-            <a href="team_intro.html" style="text-decoration: none;">關於團隊</a>
-        </li>
-    </ul>
-    <ul style="list-style-type: none;">
-        <h3>解決問題</h3>
-        <li>
-            <a href="contect_to_us.html" style="text-decoration: none;">聯絡我們</a>
-        </li>
-    </ul>
+<span style="display:flex; flex-direction:column;">
+	<span id="showbox">
+		<span id="showtext">
+			<p id="shownews"></p>
+			<p id="showtime"></p>
+		</span>
+	</span>
+    <div style="display:flex; background-color:lightgray; flex-grow:1">
+		<ul style="list-style-type: none;">
+			<h3>瞭解詳情</h3>
+			<li>
+				<a href="team_intro.html" style="text-decoration: none;">關於團隊</a>
+			</li>
+		</ul>
+		<ul style="list-style-type: none;">
+			<h3>解決問題</h3>
+			<li>
+				<a href="contect_to_us.html" style="text-decoration: none;">聯絡我們</a>
+			</li>
+		</ul>
     </div>
 </span>
 `;
@@ -65,7 +70,7 @@ function ShowTime(){
         return x;
     }
 
-    document.getElementById('showbox').innerHTML = "⏰" + d.getFullYear() + "/" + timefix(d.getMonth()+1) + "/" + timefix(d.getDate()) + "(" + trans_num_to_ChineseDay(d.getDay()) + ") " + timefix(d.getHours()) + ":" + timefix(d.getMinutes()) + ":" + timefix(d.getSeconds()) + " (UTC+8)";
+    document.getElementById('showtime').innerHTML = "⏰" + d.getFullYear() + "/" + timefix(d.getMonth()+1) + "/" + timefix(d.getDate()) + "(" + trans_num_to_ChineseDay(d.getDay()) + ") " + timefix(d.getHours()) + ":" + timefix(d.getMinutes()) + ":" + timefix(d.getSeconds()) + " (UTC+8)";
     setTimeout('ShowTime()',100);
 }
 var timer = document.getElementById("time");

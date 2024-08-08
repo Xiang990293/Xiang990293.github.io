@@ -1,3 +1,8 @@
+@font-face {
+	font-family: minecraft;
+	src: url(Minecraft.ttf);
+}
+
 body{
     margin:0px;
 }
@@ -18,22 +23,54 @@ body{
 }
 
 #showbox{
+	display: inline;
+	width: fit-content;
+}
+
+#showtext{
     border: 0px solid gold;
     background-color: gold;
     border-radius: 0 0 0 0px;
-    animation-name: timer;
-    animation-duration: 5s;
-    animation-iteration-count: 1;
     position: relative; 
     font-size: 15px;
     bottom: 0px;
     right: 0px;
+    animation-name:showbox_slider;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+	animation-direction: normal;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	overflow-x: hidden;
+	max-width: 100%;
+	font: Minecraft;
+	z-index: 2;
+}
+
+@keyframes showbox_slider {
+    0% {
+        position:relative; left:-10vw;
+	}
+    20% {
+        position:relative; left:14vw;
+    }
+    40% {
+        position:relative; left:38vw;
+    }
+    60% {
+        position:relative; left:62vw;
+    }
+    80% {
+        position:relative; left:86vw;
+    }
+    100% {
+        position:relative; left:110vw;
+    }
 }
 
 @keyframes big-circle{
     from{
         position:absolute;
-
     }
 }
 
@@ -179,10 +216,16 @@ body{
 
 #middle{
     display:flex;
+	height:max-content;
+	bottom: 0px;
 }
 
 #siderPage{
     width:200px;
+}
+
+#without_footer {
+	min-height: 100vb;
 }
 
 #content_text{
@@ -198,8 +241,12 @@ body{
     width: 0px;
 }
 
-#footerPage{
+#footerPage {
     background-color:gray; 
+	height: 20vh;
+	/* position: fixed; */
+	width: 100%;
+	margin: -20vh auto auto auto;
 }
 
 #footerPage p{

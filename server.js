@@ -46,6 +46,9 @@ const sendResponse = (pathname, statusCode, response) => {
                 }else if (pathname.substr(-3) === "txt"){
                     response.setHeader("Content-Type", "text/plain; charset=UTF-8");
                 }else if (pathname.substr(-3) === "png"){
+					console.log(response)
+                    response.setHeader("Content-Type", "image/ico;");
+                }else if (pathname.substr(-3) === "ico"){
                     response.setHeader("Content-Type", "image/ico;");
                 }else{
                     response.setHeader("Content-Type", "text/plain; charset=UTF-8");

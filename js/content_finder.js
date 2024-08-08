@@ -106,4 +106,3 @@ function content_finder(){
         }
     }
 }
-
