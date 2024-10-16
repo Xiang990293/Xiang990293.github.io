@@ -1,0 +1,25 @@
+/* 假設您的 CSS 檔案為 style.css，並在 HTML 中引入 */
+input[type="number"] {
+  width: 300px; /* 調整輸入框寬度，請根據您的需求修改 */
+  height: 40px; /* 調整輸入框高度，請根據您的需求修改 */
+  border-radius: 20px; /* 設置圓角半徑 */
+  text-align: center; /* 文字置中 */
+}
+
+button {
+  height: 40px; /* 與輸入框高度一致 */
+  border-radius: 20px; /* 設置圓角半徑 */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 視窗高度的 100% */
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
