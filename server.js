@@ -27,13 +27,13 @@ const sendResponse = (pathname, statusCode, response) => {
 
         fs.readFile(`${pathname.substr(1)}`, (err, data) => {
             if (err){
-
                 response.statusCode = 500;
                 response.setHeader("Content-Type", "text/plain");
                 response.end("Sorry, internet error");
 				console.log("SEND 500 - Sorry, internet error\n ERROR: "+ err)
-
             }else{
+
+                if (response.headersSent) return
 
                 response.statusCode = statusCode;
 
@@ -46,7 +46,7 @@ const sendResponse = (pathname, statusCode, response) => {
                 }else if (pathname.substr(-3) === "txt"){
                     response.setHeader("Content-Type", "text/plain; charset=UTF-8");
                 }else if (pathname.substr(-3) === "png"){
-					console.log(response)
+					// console.log(response)
                     response.setHeader("Content-Type", "image/ico;");
                 }else if (pathname.substr(-3) === "ico"){
                     response.setHeader("Content-Type", "image/ico;");
@@ -70,6 +70,8 @@ const server = http.createServer((request, response) => {
     if (request.method === "GET"){ //GET
         const requestUrl = new URL(request.url, `http://${ip}:${port}`);
         const pathname = requestUrl.pathname;
+
+        if (response.headersSent) return
 
         if (pathname.substr(-3) === "css"){
 			console.log("GET 200 - success")
@@ -98,6 +100,7 @@ const server = http.createServer((request, response) => {
 		if (pathname.substr(-3) === "png"){
 			console.log("GET 200 - success")
             sendResponse(pathname, 200, response)
+            return
         }
 
 		//html

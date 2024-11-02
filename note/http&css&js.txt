@@ -1,39 +1,7 @@
 ==========HTML筆記：==========
-<!DOCTYPE html>(宣告程式碼類型)
 
-<meta chatset="字型編碼"></meta>
-    e.g.<meta chatset="UTF-8"></meta>
-<title>標題</title>
-    e.g.<title>HI</title>
-
-<p>(內文)</p>:內文(通常一行不換)
 <b>(愈粗體文字)</b>:粗體(通常一行不換)
-<i>(愈斜文字)</i>:斜體(通常一行不換)
-<br>(空包)</br>:換行(簡寫成<br/>)
-<hr>(空包)</hr>:水平分隔線(簡寫成<hr/>)
-
-<#></#> == <#/>
-
-<a href="連結">連結顯示文字</a>:超連結
-<img src="圖片鏈接" width="寬" height="長"(二選一即可等比壓縮)/>:顯示圖片(簡寫成<img src.../>)
-<!--註解-->:註解
-<video src="影片檔.副檔名" controls width="影片寬度"/>:影片
-<iframe width="寬(預942)" height="長(預480)" src="網址" title="標題(預YouTube video player)" frameborder="?(預0)" allow="accelerometer(?); autoplay(自動播放); clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
-
-(列表:)
-<ul>(條列)
-    <li>第一項</li>
-    <li>第二項...</li>
-</ul>
-
-<ol>(阿拉伯數字排列)
-    <li>第一項</li>
-    <li>第二項...</li>
-</ol>
-~此外~
-<ol type="A">(大寫字母排列)
-<ol type="a">(小寫字母排列)
-<ol type="I">(羅馬數字排列)
+<i>(愈斜文字)</i>:斜體(通常一行不換
 
 <table width="寬">
     <tr>(行/橫排)
