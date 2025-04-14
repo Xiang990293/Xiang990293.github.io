@@ -10,8 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "art-template": "^4.13.2",
+    "art-template": "^4.1.0",
+    "ejs": "^3.1.10",
     "express": "^4.17.3",
-    "jquery": "^3.6.0"
+    "ipynb2html-core": "^0.4.0-rc.1",
+    "jquery": "^3.6.0",
+    "lucide": "^0.483.0",
+    "lucide-static": "^0.483.0",
+    "nodom": "^2.4.0"
   }
 }

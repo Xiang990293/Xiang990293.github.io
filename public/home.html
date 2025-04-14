@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title id="title">立方漣漪研究社 首頁</title>
+    <link rel="stylesheet" href="./css/entry.css" />
+    <link rel="icon" href="./favicon.png" />
+    <style>
+        header {
+            height: 100vh;
+
+            #current-image-container {
+                transition: opacity 0.5s ease-in-out;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                background-position: center;
+                background-size: cover;
+            }
+
+            #next-image-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                background-position: center;
+                background-size: cover;
+            }
+        }
+
+        .big-title {
+            z-index: 2;
+            animation-name: none;
+            background-color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            font-size: 100px;
+            width: auto;
+        }
+
+        #header-contents {
+            z-index: 2;
+            position: relative;
+            top: 50%;
+            width: 100%;
+        }
+
+        main {
+            section {
+                padding: 10px;
+                display: flex;
+                align-content: center;
+                justify-content: space-evenly;
+                /* background: var(--main-sections-ground-color); */
+                background-image: url(https://www.fractalcamo.com/uploads/5/9/0/2/5902948/s189772745713394276_p3856_i147_w750.jpeg);
+
+                .news {
+                    margin: 10px;
+                    display: flex;
+                    flex-direction: row;
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    scrollbar-width: none;
+                }
+
+                .news::-webkit-scrollbar {
+                    display: none;
+                    /* for Chrome and Safari */
+                }
+            }
+        }
+    </style>
+</head>
+
+<body onload="ShowTime();">
+    <header>
+        <div id="header-contents">
+            <h1 class="big-title"><a href="/home.html">
+                    <div>立方漣漪</div>
+                    <div>研究社</div>
+                </a></h1>
+            <label class="switch" id="dark-mode">
+                <input type="checkbox" onclick="darkmode()" title="dark mode" placeholder="" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div id="next-image-container"></div>
+        <div id="current-image-container"></div>
+    </header>
+    <main>
+        <section id="news">
+            <button href="/news1.html">新工具-人工速度計算機</button>
+            <button href="/news2.html">新工具-合成配方流程圖</button>
+        </section>
+    </main>
+    <footer>
+        <div id="showbox">
+            <a id="shownews"></a>
+            <a id="showtime"></a>
+        </div>
+        <div>
+            <span>
+                <ul>
+                    <h3>瞭解詳情</h3>
+                    <li>
+                        <a href="/team_intro.html" style="text-decoration: none;">關於團隊</a>
+                    </li>
+                </ul>
+            </span>
+            <span>
+                <ul>
+                    <h3>解決問題</h3>
+                    <li>
+                        <a href="/contect_to_us.html" style="text-decoration: none;">聯絡我們</a>
+                    </li>
+                </ul>
+            </span>
+        </div>
+    </footer>
+    <!-- <div style="display:block">
+			<div id="without_footer">
+            
+				
+				<div id="middle">
+					<nav></nav>
+					<div id="content_text"></div>
+					
+				</div>
+			</div>
+            <div>
+                
+            </div>
+        </div> -->
+
+    <script src="./js/all.js"></script>
+    <script src="./js/content_finder.js"></script>
+    <script src="album.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>
