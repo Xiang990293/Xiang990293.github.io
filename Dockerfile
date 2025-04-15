@@ -29,7 +29,6 @@ RUN npm install
 COPY . .
 
 # Copy notebooks folder into /notebooks
-COPY notebooks /notebooks
 RUN mkdir -p /notebooks
 
 
@@ -37,7 +36,7 @@ RUN mkdir -p /notebooks
 FROM base
 
 # Copy notebooks
-COPY --from=build ./notebooks /app/
+COPY ./notebooks /app/
 # Copy built application
 COPY --from=build /app /app
 
