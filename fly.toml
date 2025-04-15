@@ -4,7 +4,7 @@
 #
 
 app = 'rippou-ripple-web'
-primary_region = 'dfw'
+primary_region = 'hkg'
 
 [build]
 
