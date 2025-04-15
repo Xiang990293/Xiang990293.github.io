@@ -28,21 +28,20 @@ RUN npm install
 # Copy application code
 COPY . .
 
-# Copy notebooks folder into /notebooks
-RUN mkdir -p /notebooks
 
 
 # Final stage for app image
 FROM base
 
-# Copy notebooks
-COPY ./notebooks /app/
 # Copy built application
 COPY --from=build /app /app
 
 # Setup sqlite3 on a separate volume
 RUN mkdir -p /data
 VOLUME /data
+
+# Copy notebooks folder into /notebooks
+RUN mkdir -p /notebooks
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
