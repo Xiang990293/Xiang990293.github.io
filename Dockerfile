@@ -28,12 +28,15 @@ RUN npm install
 # Copy application code
 COPY . .
 
+# Copy notebooks folder into /notebooks
+COPY notebooks /notebooks
+
 
 # Final stage for app image
 FROM base
 
 # Copy notebooks
-COPY --from=build /notebooks /app/
+COPY --from=build ./notebooks /app/
 # Copy built application
 COPY --from=build /app /app
 
