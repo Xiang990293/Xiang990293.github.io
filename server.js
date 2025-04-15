@@ -1,6 +1,27 @@
 // # configuration and constant
 const port = 3000;
 const ip = "0.0.0.0";//"172.28.246.224" ,"192.168.124.17";
+// Map of file extensions to mime types
+const mimeTypes = {
+  ico: 'image/x-icon',
+  js: 'text/javascript',
+  css: 'text/css',
+  svg: 'image/svg+xml',
+  png: 'image/png'
+}
+
+
+
+
+// # sqlite3 setting
+const sqlite3 = require('sqlite3')
+// open database
+process.env.DATABASE_URL ||= url.pathToFileURL('production.sqlite3').toString()
+const db = new sqlite3.Database(new URL(process.env.DATABASE_URL).pathname.slice(1))
+
+// Ensure welcome table exists
+db.run('CREATE TABLE IF NOT EXISTS "welcome" ( "count" INTEGER )')
+
 
 
 
@@ -80,3 +101,83 @@ function query_handler(querys) {
 
     return result;
 }
+
+/*
+// Process requests based on pathname
+async function listener(request, response) {
+    const { pathname } = url.parse(request.url)
+
+    if (pathname === '/') {
+        await main(request, response)
+    } else if (fs.existsSync(`public${pathname}`)) {
+        try {
+            const contents = fs.readFileSync(`public${pathname}`, 'utf-8')
+            const mimeType = mimeTypes[pathname.split('.').pop()] || 'application/octet-stream'
+
+            response.writeHead(200, { 'Content-Type': mimeType })
+            response.write(contents, 'utf-8')
+        } catch (error) {
+            response.writeHead(500, { 'Content-Type': 'text/plain' })
+            response.write(error + '\n')
+        }
+
+        response.end()
+    } else {
+        response.writeHead(404)
+        response.end('Not found.')
+    }
+}
+
+// Main page
+async function main(_request, response) {
+    // increment counter in counter.txt file
+    try {
+        count = parseInt(fs.readFileSync('counter.txt', 'utf-8')) + 1
+    } catch {
+        count = 1
+    }
+
+    fs.writeFileSync('counter.txt', count.toString())
+
+    // render HTML response
+    try {
+        let contents = fs.readFileSync('views/index.tmpl', 'utf-8')
+        contents = contents.replace('@@COUNT@@', count.toString())
+
+        response.writeHead(200, { 'Content-Type': 'text/html' })
+        response.write(contents, 'utf-8')
+    } catch (error) {
+        response.writeHead(500, { 'Content-Type': 'text/plain' })
+        response.write(error + '\n')
+    }
+
+    response.end()
+}
+
+*/
+
+// access dataabase like this
+/*
+
+// get method
+db.get('SELECT "count" from "welcome"', (err, row) => {
+    let query = 'UPDATE "welcome" SET "count" = ?'
+
+    if (err) {
+        reject(err)
+        return
+    }
+    
+    if (row) {
+        count = row.count + 1
+    } else {
+        count = 1
+        query = 'INSERT INTO "welcome" VALUES(?)'
+    }
+
+    db.run(query, [count], err => {
+    err ? reject(err) : resolve()
+    })
+})
+
+*/
