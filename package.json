@@ -13,6 +13,9 @@
     "@flydotio/node-demo": "^0.2.1"
   },
   "dependencies": {
-    "sqlite3": "^5.1.7"
+    "express": "^5.1.0",
+    "ipynb2html-core": "^0.4.0-rc.1",
+    "sqlite3": "^5.1.7",
+    "url": "^0.11.4"
   }
 }

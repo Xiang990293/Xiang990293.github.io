@@ -16,11 +16,11 @@ const mimeTypes = {
 // # sqlite3 setting
 const sqlite3 = require('sqlite3')
 // open database
-process.env.DATABASE_URL ||= url.pathToFileURL('production.sqlite3').toString()
-const db = new sqlite3.Database(new URL(process.env.DATABASE_URL).pathname.slice(1))
+// process.env.DATABASE_URL ||= url.pathToFileURL('production.sqlite3').toString()
+// const db = new sqlite3.Database(new URL(process.env.DATABASE_URL).pathname.slice(1))
 
 // Ensure welcome table exists
-db.run('CREATE TABLE IF NOT EXISTS "welcome" ( "count" INTEGER )')
+// db.run('CREATE TABLE IF NOT EXISTS "welcome" ( "count" INTEGER )')
 
 
 
