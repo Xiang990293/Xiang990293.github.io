@@ -33,7 +33,7 @@ COPY . .
 FROM base
 
 # Copy notebooks
-COPY --from=build /notebooks /app/notebooks
+COPY --from=build /notebooks /app/
 # Copy built application
 COPY --from=build /app /app
 
