@@ -32,7 +32,8 @@ COPY . .
 # Final stage for app image
 FROM base
 
-COPY notebooks
+# Copy notebooks
+COPY --from=build /notebooks /app/notebooks
 # Copy built application
 COPY --from=build /app /app
 
