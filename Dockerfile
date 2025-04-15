@@ -30,6 +30,7 @@ COPY . .
 
 # Copy notebooks folder into /notebooks
 COPY notebooks /notebooks
+RUN mkdir -p /notebooks
 
 
 # Final stage for app image
