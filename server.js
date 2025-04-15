@@ -30,7 +30,6 @@ const sqlite3 = require('sqlite3')
 const ipynb = require('ipynb2html');
 const { Document } = require("nodom");
 const fs = require("fs");
-const renderer = createHtmlRenderer();
 
 fs.readdirSync('./notebooks').forEach(file => {
     if (file.endsWith('.ipynb')) {
