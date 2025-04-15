@@ -22,7 +22,7 @@ RUN apt-get update -qq && \
 
 # Install node modules
 COPY package-lock.json package.json ./
-RUN npm install
+RUN npm ci
 
 # Copy application code
 COPY . .
@@ -41,4 +41,4 @@ VOLUME /data
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 ENV DATABASE_URL="file:///data/sqlite.db"
-CMD [ "node", "server.js" ]
+CMD [ "node", "run", "start" ]
