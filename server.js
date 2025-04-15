@@ -27,13 +27,19 @@ const sqlite3 = require('sqlite3')
 
 // # ipynb to html
 // Convert all .ipynb files in /notebooks
-const { renderNotebook } = require('ipynb2html-core');
+const ipynb = require('ipynb2html');
+const { Document } = require("nodom");
 const fs = require("fs");
+const renderer = createHtmlRenderer();
+
 fs.readdirSync('./notebooks').forEach(file => {
     if (file.endsWith('.ipynb')) {
-      const notebook = JSON.parse(fs.readFileSync(`./notebooks/${file}`, 'utf8'));
-      const html = renderNotebook(notebook).outerHTML;
-      fs.writeFileSync(`./code_tutorial/${file.replace('.ipynb', '.html')}`, html);
+        // Create a DOM document instance
+        const document = new Document();
+        const renderNotebook = ipynb.createRenderer(document)
+        const notebook = JSON.parse(fs.readFileSync(`./notebooks/${file}`, 'utf8'));
+        const html = renderNotebook(notebook).outerHTML;
+        fs.writeFileSync(`./code_tutorial/${file.replace('.ipynb', '.html')}`, html);
     }
 }); 
 

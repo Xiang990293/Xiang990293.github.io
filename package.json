@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "express": "^5.1.0",
+    "ipynb2html": "^0.4.0-rc.1",
     "ipynb2html-core": "^0.4.0-rc.1",
+    "nodom": "^2.4.0",
     "sqlite3": "^5.1.7",
     "url": "^0.11.4"
   }
