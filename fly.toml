@@ -8,7 +8,7 @@ primary_region = 'hkg'
 
 [mounts]
 source="member_access"
-destination="/database
+destination="/database"
 
 [build]
 

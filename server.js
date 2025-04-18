@@ -72,19 +72,25 @@ app.get('/template_test', (req, res) => {
     res.render('general_template', data);
 });
 
-app.get('/', (req, res) => {
+app.get(['/','/home.html', '/home'], (req, res) => {
     res.render('home');
 });
 
-app.get('/home', (req, res) => {
-    res.render('home');
-});
-
-app.get('/team_intro', (req, res) => {
+app.get('/member_intro', (req, res) => {
     data = {
         title: '團隊成員 - 立方漣漪研究社',
         heading: '團隊成員',
         content: fs.readFileSync(path.join(ROOT, "public/member_intro.html"), 'utf8') //tools.html
+    }
+
+    res.render('general_template', data);
+});
+
+app.get('/team_intro', (req, res) => {
+    data = {
+        title: '關於團隊 - 立方漣漪研究社',
+        heading: '關於團隊',
+        content: fs.readFileSync(path.join(ROOT, "public/team_intro.html"), 'utf8') //tools.html
     }
 
     res.render('general_template', data);
