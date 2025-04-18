@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title id="title"><%= title %></title>
+        <link rel="stylesheet" href="/template/general_template.css" />
+        <link rel="icon" href="/favicon.png" />
+    </head>
+    <body onload="ShowTime();content_finder();">
+        <%-include('header.html')%>
+        <main>
+            <%- content %>
+        </main>
+        <%-include('footer.html')%>
+
+        <script>
+            // <button class="導航欄-btn" onclick="window.location.href='/home';">首頁</button> 
+            function darkmode() {
+                var element = document.body;
+                element.classList.toggle("dark-mode");
+            }
+
+        </script>
+    </body>
+</html>

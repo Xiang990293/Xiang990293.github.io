@@ -1,0 +1,25 @@
+r.mobirisesite.com: web/assets/jquery/jquery.min.js
+r.mobirisesite.com: bootstrap/js/bootstrap.bundle.min.js
+r.mobirisesite.com: parallax/jarallax.js
+r.mobirisesite.com: smoothscroll/smooth-scroll.js
+r.mobirisesite.com: ytplayer/index.js
+r.mobirisesite.com: dropdown/js/navbar-dropdown.js
+r.mobirisesite.com: scrollgallery/scroll-gallery.js
+r.mobirisesite.com: embla/embla.min.js
+r.mobirisesite.com: embla/script.js
+r.mobirisesite.com: vimeoplayer/player.js
+r.mobirisesite.com: theme/js/script.js
+r.mobirisesite.com: formoid.min.js
+r.mobirisesite.com: web/assets/mobirise-icons2/mobirise2.css
+r.mobirisesite.com: bootstrap/css/bootstrap.min.css
+r.mobirisesite.com: bootstrap/css/bootstrap-grid.min.css
+r.mobirisesite.com: bootstrap/css/bootstrap-reboot.min.css
+r.mobirisesite.com: parallax/jarallax.css
+r.mobirisesite.com: dropdown/css/style.css
+r.mobirisesite.com: socicon/css/styles.css
+r.mobirisesite.com: theme/css/style.css
+r.mobirisesite.com: recaptcha.css
+r.mobirisesite.com: css/mbr-additional.css
+	https://fonts.googleapis.com/css2?family=Onest:wght@400;700&amp;display=swap&amp;display=swap
+	<noscript>https://fonts.googleapis.com/css2?family=Onest:wght@400;700&display=swap&display=swap</noscript>
+

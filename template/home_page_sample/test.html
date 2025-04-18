@@ -1,0 +1,837 @@
+﻿<html class="desktop mbr-site-loaded"><head>
+  
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="shortcut icon" href="https://r.mobirisesite.com/1410520/assets/images/photo-1632406898161-6a3b767dfbe2.jpeg" type="image/x-icon">
+    <meta name="description" content="A database management system for SQLite allows users to efficiently manage and check their data with ease and precision.">
+    <title>SQLite Database Management System for Efficient Data Checking</title>
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/web/assets/mobirise-icons2/mobirise2.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/bootstrap/css/bootstrap.min.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/bootstrap/css/bootstrap-grid.min.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/bootstrap/css/bootstrap-reboot.min.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/parallax/jarallax.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/dropdown/css/style.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/socicon/css/styles.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/theme/css/style.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/recaptcha.css?rnd=1744875199411">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;700&amp;display=swap&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;700&display=swap&display=swap"></noscript>
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1410520/assets/css/mbr-additional.css?rnd=1744875199411" type="text/css">
+    
+    
+    
+    
+  
+  
+  <style>
+  .navbar-fixed-top {
+    top: auto;
+  }
+  #mobirisePromo.container-banner {
+    height: 11rem;
+    opacity: 1;
+    -webkit-animation: 11s linear animationHeight;
+    -moz-animation: 11s linear animationHeight;
+      -o-animation: 11s linear animationHeight;
+         animation: 11s linear animationHeight;
+         transition: all  0.5s;
+  }
+  #mobirisePromo.container-banner.container-banner-closing {
+    pointer-events: none;
+    height: 0;
+    opacity: 0;
+    -webkit-animation: 0.5s linear animationClosing;
+    -moz-animation:  0.5s linear animationClosing;
+      -o-animation:  0.5s linear animationClosing;
+         animation:  0.5s linear animationClosing;
+  }
+  #mobirisePromo .banner {
+    min-height: 11rem;
+    position:fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 10px;
+    opacity:1;
+    -webkit-animation: 11s linear animationBanner;
+    -moz-animation: 11s linear animationBanner;
+      -o-animation: 11s linear animationBanner;
+         animation: 11s linear animationBanner;
+    z-index: 1031;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  #mobirisePromo .banner p {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    animation: none;
+    visibility: visible;
+  }
+  #mobirisePromo .buy-license {
+    text-decoration: underline;
+  }
+  #mobirisePromo .banner .btn {
+    margin: 0.3rem 0.5rem;
+    animation: none;
+    visibility: visible;
+  }
+  .navbar.opened {
+      z-index: 1032;
+  }
+  #mobirisePromo .mbr-section-abuse-report {
+    margin-top: 0.8rem;
+    font-size: 80%;
+  }
+  #mobirisePromo .mbr-section-abuse-report a {
+    color: #aaa;
+  }
+  @-webkit-keyframes animationBanner { 0% { opacity: 0; top: -11rem; } 91% { opacity: 0; top: -11rem; } 100% { opacity: 1; top: 0; } }
+  @-moz-keyframes animationBanner { 0% { opacity: 0; top: -11rem; } 91% { opacity: 0; top: -11rem; } 100% { opacity: 1; top: 0; } }
+  @-o-keyframes animationBanner { 0% { opacity: 0; top: -11rem; } 91% { opacity: 0; top: -11rem; } 100% { opacity: 1; top: 0; } }
+     @keyframes animationBanner { 0% { opacity: 0; top: -11rem; } 91% { opacity: 0; top: -11rem; } 100% { opacity: 1; top: 0; } }
+  @-webkit-keyframes animationHeight { 0% { height: 0; } 91% { height: 0; } 100% { height: 11rem; } }
+  @-moz-keyframes animationHeight { 0% { height: 0; } 91% { height: 0; } 100% { height: 11rem; } }
+  @-o-keyframes animationHeight { 0% { height: 0; } 91% { height: 0; } 100% { height: 11rem; } }
+     @keyframes animationHeight { 0% { height: 0; } 91% { height: 0; } 100% { height: 11rem; } }
+  
+  @-webkit-keyframes animationClosing { 0% { height: 11rem; opacity: 1; } 30% { height: 11rem; opacity: 0.5;} 100% { height: 0; opacity: 0;} }
+  @-moz-keyframes animationClosing { 0% { height: 11rem; opacity: 1; } 30% { height: 11rem; opacity: 0.5;} 100% { height: 0; opacity: 0;} }
+  @-o-keyframes animationClosing { 0% { height: 11rem; opacity: 1; } 30% { height: 11rem; opacity: 0.5;} 100% { height: 0; opacity: 0;} }
+  @keyframes animationClosing { 0% { height: 11rem; opacity: 1; } 30% { height: 11rem; opacity: 0.5;} 100% { height: 0; opacity: 0;} }
+  
+  @media(max-width: 575px) {
+    #mobirisePromo.container-banner {
+      height: 14rem;
+    }
+    #mobirisePromo .banner {
+      min-height: 14rem;
+    }
+    @-webkit-keyframes animationBanner { 0% { opacity: 0; top: -14rem; } 91% { opacity: 0; top: -14rem; } 100% { opacity: 1; top: 0; } }
+    @-moz-keyframes animationBanner { 0% { opacity: 0; top: -14rem; } 91% { opacity: 0; top: -14rem; } 100% { opacity: 1; top: 0; } }
+    @-o-keyframes animationBanner { 0% { opacity: 0; top: -14rem; } 91% { opacity: 0; top: -14rem; } 100% { opacity: 1; top: 0; } }
+      @keyframes animationBanner { 0% { opacity: 0; top: -14rem; } 91% { opacity: 0; top: -14rem; } 100% { opacity: 1; top: 0; } }
+    @-webkit-keyframes animationHeight { 0% { height: 0; } 91% { height: 0; } 100% { height: 14rem; } }
+    @-moz-keyframes animationHeight { 0% { height: 0; } 91% { height: 0; } 100% { height: 14rem; } }
+    @-o-keyframes animationHeight { 0% { height: 0; } 91% { height: 0; } 100% { height: 14rem; } }
+      @keyframes animationHeight { 0% { height: 0; } 91% { height: 0; } 100% { height: 14rem; } }
+  
+    @-webkit-keyframes animationClosing { 0% { height: 14rem; opacity: 1; } 30% { height: 14rem; opacity: 0.5;} 100% { height: 0; opacity: 0;} }
+    @-moz-keyframes animationClosing { 0% { height: 14rem; opacity: 1; } 30% { height: 14rem; opacity: 0.5;} 100% { height: 0; opacity: 0;} }
+    @-o-keyframes animationClosing { 0% { height: 14rem; opacity: 1; } 30% { height: 14rem; opacity: 0.5;} 100% { height: 0; opacity: 0;} }
+    @keyframes animationClosing { 0% { height: 14rem; opacity: 1; } 30% { height: 14rem; opacity: 0.5;} 100% { height: 0; opacity: 0;} }
+  }
+  </style>
+  <script type="text/javascript" id="www-widgetapi-script" src="https://www.youtube.com/s/player/236fc64d/www-widgetapi.vflset/www-widgetapi.js" async=""></script><script async="" src="https://www.youtube.com/iframe_api"></script></head>
+  <body data-new-gr-c-s-check-loaded="14.1100.0" data-gr-ext-installed="">
+  <div class="container-banner container-banner-closing" id="mobirisePromo">
+    <div class="banner align-center">
+      <button type="button" onclick="document.getElementById('mobirisePromo').classList.add('container-banner-closing')" class="btn-close" aria-label="Close" style="position: fixed;top: 16px;right: 16px;"></button>
+      <p class="mbr-text mbr-fonts-style display-7">The site was made with <a href="https://mobirise.com/builder/ai-website-builder.html" class="">Free AI Website Builder</a></p>
+      <div class="mbr-section-btn">
+        <a class="btn btn-sm btn-primary display-4" href="https://mobirise.com/p/">Get AI Kit!</a>
+        <a class="btn btn-sm btn-secondary display-4" href="https://my.mobirise.com/buy.php?p=126&amp;u=3944401&amp;st=1410520&amp;dm=1410520.mobirisesite.com">Remove This Banner</a>
+      </div>
+      <div class="mbr-section-abuse-report">
+        <a href="mailto:support@mobirise.com?subject=Mobirise Abuse Report 1410520.mobirisesite.com">Report Abuse</a>
+      </div>
+    </div>
+  </div>
+    
+    <section data-bs-version="5.1" class="menu menu2 cid-uIBLl01Awf" once="menu" id="menu-5-uIBLl01Awf">
+      
+  
+      <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg opacityScroll">
+          <div class="container">
+              <div class="navbar-brand">
+                  <span class="navbar-logo">
+                      <a href="#">
+                          <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1632406898161-6a3b767dfbe2.jpeg" alt="" style="height: 4.3rem;">
+                      </a>
+                  </span>
+                  <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-4" href="#">DataWiz</a></span>
+              </div>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <div class="hamburger">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                  </div>
+              </button>
+              <div class="collapse navbar-collapse opacityScroll" id="navbarSupportedContent">
+                  <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                      <li class="nav-item">
+                          <a class="nav-link link text-black display-4" href="#">Home</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link link text-black display-4" href="#" aria-expanded="false">Features</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link link text-black display-4" href="#">Contact</a>
+                      </li>
+                  </ul>
+                  
+                  <div class="navbar-buttons mbr-section-btn">
+                      <a class="btn btn-primary display-4" href="#">Get Started</a>
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </section>
+  
+  <section data-bs-version="5.1" class="header16 cid-uIBLl02GbG mbr-fullscreen mbr-parallax-background" id="hero-17-uIBLl02GbG" style="z-index: 0; background-image: none; position: relative;">
+    
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="content-wrap col-12 col-md-12">
+          <h1 class="mbr-section-title mbr-fonts-style mbr-white mb-4 display-1">
+            <strong>Data Mastery</strong>
+          </h1>
+          
+          <p class="mbr-fonts-style mbr-text mbr-white mb-4 display-7">Your ultimate tool for managing SQLite databases like a pro!</p>
+          <div class="mbr-section-btn">
+            <a class="btn btn-white-outline display-7" href="#">Join Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://r.mobirisesite.com/1410520/assets/images/photo-1648459776041-cbeab708f17b.jpeg&quot;); position: absolute; top: 0px; left: 0px; width: 1850px; height: 879px; overflow: hidden; pointer-events: none; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform, opacity; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div></div></section>
+  
+  <section data-bs-version="5.1" class="features10 cid-uIBLl02RL0" id="metrics-2-uIBLl02RL0">
+    
+  
+    
+    
+    <div class="container">
+      
+      <div class="row justify-content-center">
+        <div class="item features-without-image col-12 col-md-6 col-lg-4">
+          <div class="item-wrapper">
+            <div class="card-box align-left">
+              
+              <p class="card-title mbr-fonts-style mb-3 display-1">
+                <strong>99%</strong>
+              </p>
+              <p class="card-text mbr-fonts-style mb-3 display-7">Uptime Guaranteed</p>
+              
+            </div>
+          </div>
+        </div>
+        <div class="item features-without-image col-12 col-md-6 col-lg-4">
+          <div class="item-wrapper">
+            <div class="card-box align-left">
+              
+              <p class="card-title mbr-fonts-style mb-3 display-1">
+                <strong>500+</strong>
+              </p>
+              <p class="card-text mbr-fonts-style mb-3 display-7">Happy Users</p>
+              
+            </div>
+          </div>
+        </div>
+        <div class="item features-without-image col-12 col-md-6 col-lg-4">
+          <div class="item-wrapper">
+            <div class="card-box align-left">
+              
+              <p class="card-title mbr-fonts-style mb-3 display-1">
+                <strong>1-Click</strong>
+              </p>
+              <p class="card-text mbr-fonts-style mb-3 display-7">Easy Setup</p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="video04 cid-uIBLl02ZNr" id="video-6-uIBLl02ZNr">
+    
+    
+    <div class="container">
+      <div class="mbr-section-head mb-5">
+        <h4 class="mbr-section-title mbr-fonts-style mb-0 mt-0 display-2">
+          <strong>SQLite Management Made Easy</strong>
+        </h4>
+        
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 video-block">
+          <div class="video-wrapper"><iframe class="mbr-embedded-video" src="https://www.youtube.com/embed/x3c1ih2NJEg?rel=0&amp;amp;mute=1&amp;showinfo=0&amp;autoplay=1&amp;loop=1&amp;playlist=x3c1ih2NJEg" width="1280" height="720" frameborder="0" allowfullscreen="" style="height: 601px;"></iframe></div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="gallery4 cid-uIBLl03N7I" id="gallery-12-uIBLl03N7I">
+    
+    
+    <div class="container-fluid gallery-wrapper">
+      <div class="row justify-content-center">
+        <div class="col-12 content-head">
+          
+        </div>
+      </div>
+      <div class="grid-container">
+        <div class="grid-container-1" style="transform: translate3d(-1989.07px, 0px, 0px);">
+          <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1590859808308-3d2d9c515b1a.jpeg" alt="">
+          </div>
+          <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1632406897798-e5472b4a989e.jpeg" alt="">
+          </div>
+          <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1544383835-bda2bc66a55d.jpeg" alt="">
+          </div>
+          <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1631864032142-b6b44ef28f5b.jpeg" alt="">
+          </div>
+        <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1590859808308-3d2d9c515b1a.jpeg" alt="">
+          </div><div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1632406897798-e5472b4a989e.jpeg" alt="">
+          </div><div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1544383835-bda2bc66a55d.jpeg" alt="">
+          </div><div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1631864032142-b6b44ef28f5b.jpeg" alt="">
+          </div></div>
+        <div class="grid-container-2" style="transform: translate3d(-80.9313px, 0px, 0px);">
+          <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1504639725590-34d0984388bd.jpeg" alt="">
+          </div>
+          <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1642132652859-3ef5a1048fd1.jpeg" alt="">
+          </div>
+          <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1646226343350-1ee5021e342a.jpeg" alt="">
+          </div>
+          <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1603297638322-c7a08d52966c.jpeg" alt="">
+          </div>
+        <div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1504639725590-34d0984388bd.jpeg" alt="">
+          </div><div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1642132652859-3ef5a1048fd1.jpeg" alt="">
+          </div><div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1646226343350-1ee5021e342a.jpeg" alt="">
+          </div><div class="grid-item">
+            <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1603297638322-c7a08d52966c.jpeg" alt="">
+          </div></div>
+      </div>
+    </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="people03 cid-uIBLl03RCZ" id="team-1-uIBLl03RCZ">
+      
+      
+      <div class="container-fluid">
+          <div class="row justify-content-center">
+              <div class="col-12 content-head">
+                  <div class="mbr-section-head mb-5">
+                      <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                          <strong>Our Squad</strong>
+                      </h4>
+                      
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="item features-image col-12 col-md-6 col-lg-3">
+                  <div class="item-wrapper">
+                      <div class="item-img mb-3">
+                          <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1586185018558-ea8f4b4c514f.jpeg" alt="" title="">
+                      </div>
+                      <div class="item-content align-left">
+                          <h5 class="item-title mbr-fonts-style display-5">
+                              <strong>Max</strong>
+                          </h5>
+                          <h6 class="item-subtitle mbr-fonts-style mb-3 display-7">Database Wizard</h6>
+                          
+                      </div>
+                      
+                  </div>
+              </div>
+              <div class="item features-image col-12 col-md-6 col-lg-3">
+                  <div class="item-wrapper">
+                      <div class="item-img mb-3">
+                          <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1677520338280-664ae23816eb.jpeg" alt="" title="">
+                      </div>
+                      <div class="item-content align-left">
+                          <h5 class="item-title mbr-fonts-style display-5">
+                              <strong>Lily</strong>
+                          </h5>
+                          <h6 class="item-subtitle mbr-fonts-style mb-3 display-7">Data Diva</h6>
+                          
+                      </div>
+                      
+                  </div>
+              </div>
+              <div class="item features-image col-12 col-md-6 col-lg-3">
+                  <div class="item-wrapper">
+                      <div class="item-img mb-3">
+                          <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1596646285603-e5f9bbfa524a.jpeg" alt="" title="">
+                      </div>
+                      <div class="item-content align-left">
+                          <h5 class="item-title mbr-fonts-style display-5">
+                              <strong>Jake</strong>
+                          </h5>
+                          <h6 class="item-subtitle mbr-fonts-style mb-3 display-7">Code Ninja</h6>
+                          
+                      </div>
+                      
+                  </div>
+              </div>
+              <div class="item features-image col-12 col-md-6 col-lg-3">
+                  <div class="item-wrapper">
+                      <div class="item-img mb-3">
+                         <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1676385901160-31e1b9e1c0c7.jpeg" alt="" title="" data-slide-to="3" data-bs-slide-to="3">
+                      </div>
+                      <div class="item-content align-left">
+                          <h5 class="item-title mbr-fonts-style display-5">
+                              <strong>Sophie</strong>
+                          </h5>
+                          <h6 class="item-subtitle mbr-fonts-style mb-3 display-7">Tech Guru</h6>
+                          
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="image02 cid-uIBLl03PVR mbr-fullscreen mbr-parallax-background" id="image-13-uIBLl03PVR" style="z-index: 0; background-image: none; position: relative;">
+      
+      
+      <div class="container">
+          <div class="row"></div>
+      </div>
+  <div id="jarallax-container-1" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://r.mobirisesite.com/1410520/assets/images/photo-1604403428907-673e7f4cd341.jpeg&quot;); position: absolute; top: 0px; left: 0px; width: 1850px; height: 879px; overflow: hidden; pointer-events: none; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform, opacity; margin-top: 0px; transform: translate3d(0px, -332.8px, 0px);"></div></div></section>
+  
+  <section data-bs-version="5.1" class="article12 cid-uIBLl03j38" id="about-us-12-uIBLl03j38">    
+      
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-md-12 col-lg-10">
+                  <h3 class="mbr-section-title mbr-fonts-style mb-4 mt-0 display-2">
+                  <strong>Mission Possible</strong>
+                  </h3>
+                  
+                  <p class="mbr-text mbr-fonts-style display-7">Welcome to the wild world of SQLite, where data management is as easy as pie! Our mission? To make your data dance and sing like a Broadway star. Forget the boring spreadsheets; we’re here to spice things up!</p>
+                  <p class="mbr-text mbr-fonts-style display-7">With our top-notch database management system, you can check your data like a hawk. No more guessing games or wild assumptions. We provide clarity, precision, and a sprinkle of magic to your data handling.</p>
+                  <p class="mbr-text mbr-fonts-style display-7">Join us as we turn the mundane into the extraordinary. Your data deserves the best, and we’re here to deliver it with flair!</p>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="gallery10 cid-uIBLl03yYM" id="features-69-uIBLl03yYM">
+    
+  
+  
+    <div class="container-fluid">
+  
+        <div class="loop-container" style="position: relative; display: inline-flex; white-space: nowrap; transform: translateX(-53.35%);">
+          <div class="item display-1" data-linewords="Lightning-fast data retrieval and management * User-friendly interface for effortless navigation * " data-direction="-1" data-speed="0.05">Lightning-fast data retrieval and management * User-friendly interface for effortless navigation * &nbsp;</div>
+  
+          <div class="item display-1" data-linewords="Lightning-fast data retrieval and management * User-friendly interface for effortless navigation * " data-direction="-1" data-speed="0.05" style="position: absolute; left: 100%;">Lightning-fast data retrieval and management * User-friendly interface for effortless navigation * &nbsp;</div>
+        </div>
+      
+    </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="article13 cid-uIBLl03RyQ" id="call-to-action-5-uIBLl03RyQ">
+      
+      
+      
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="card col-md-12 col-lg-10">
+                  <div class="card-wrapper">
+                      <div class="card-box align-center">
+                          <h4 class="card-title mbr-fonts-style display-2">
+                              <strong>Ready to Transform Your Data?</strong>
+                          </h4>
+                          <p class="mbr-text mbr-fonts-style mt-4 display-7">Don’t let your data gather dust!</p>
+                          <div class="mbr-section-btn mt-4">
+                          <a class="btn btn-primary display-4" href="#">Get Started Now!</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="slider2 mbr-embla cid-uIBLl04QxC" id="testimonials-1-uIBLl04QxC">
+      
+  
+      
+      
+  
+      <div class="position-relative text-center">
+          
+  
+          <div class="embla" data-skip-snaps="true" data-align="center" data-auto-play="true" data-auto-play-interval="5" data-draggable="true">
+              <div class="embla__viewport container-fluid is-draggable">
+                  <div class="embla__container" style="transform: translate3d(-41.5454%, 0px, 0px);">
+                      <div class="embla__slide slider-image item is-selected" style="margin-left: 10rem; margin-right: 10rem;">
+                          <div class="user">
+                              <div class="user_image">
+                                  <div class="item-wrapper position-relative">
+                                      <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1535026406642-530e01750ad7.jpeg" alt="">
+                                  </div>
+                              </div>
+                              <div class="user_text mb-4">
+                                  <p class="mbr-fonts-style display-5">
+                                      <strong>SQLite made my data management a breeze!</strong>
+                                  </p>
+                              </div>
+                              <div class="user_name mbr-fonts-style mb-2 display-7">John</div>
+                              <div class="user_desk mbr-fonts-style display-7">Developer</div>
+                          </div>
+                      </div>
+                      <div class="embla__slide slider-image item is-selected" style="margin-left: 10rem; margin-right: 10rem;">
+                          <div class="user">
+                              <div class="user_image">
+                                  <div class="item-wrapper position-relative">
+                                      <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1681075401974-907cc62a4373.jpeg" alt="">
+                                  </div>
+                              </div>
+                              <div class="user_text mb-4">
+                                  <p class="mbr-fonts-style display-5">
+                                      <strong>I can't believe I survived without SQLite!</strong>
+                                  </p>
+                              </div>
+                              <div class="user_name mbr-fonts-style mb-2 display-7">Emily</div>
+                              <div class="user_desk mbr-fonts-style display-7">Analyst</div>
+                          </div>
+                      </div>
+                      <div class="embla__slide slider-image item is-selected" style="margin-left: 10rem; margin-right: 10rem;">
+                          <div class="user">
+                              <div class="user_image">
+                                  <div class="item-wrapper position-relative">
+                                      <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1563170423-18f482d82cc8.jpeg" alt="">
+                                  </div>
+                              </div>
+                              <div class="user_text mb-4">
+                                  <p class="mbr-fonts-style display-5">
+                                      <strong>Best decision ever for my database needs!</strong>
+                                  </p>
+                              </div>
+                              <div class="user_name mbr-fonts-style mb-2 display-7">Mike</div>
+                              <div class="user_desk mbr-fonts-style display-7">Engineer</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <button class="embla__button embla__button--prev">
+                  <span class="mobi-mbri mobi-mbri-arrow-prev mbr-iconfont" aria-hidden="true"></span>
+                  <span class="sr-only visually-hidden visually-hidden">Previous</span>
+              </button>
+              <button class="embla__button embla__button--next">
+                  <span class="mobi-mbri mobi-mbri-arrow-next mbr-iconfont" aria-hidden="true"></span>
+                  <span class="sr-only visually-hidden visually-hidden">Next</span>
+              </button>
+          </div>
+      </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="header18 cid-uIBLl04uxI mbr-fullscreen" data-bg-video="https://www.youtube.com/embed/koPkElMab4U?autoplay=1&amp;loop=1&amp;playlist=koPkElMab4U&amp;t=20&amp;mute=1&amp;playsinline=1&amp;controls=0&amp;showinfo=0&amp;autohide=1&amp;allowfullscreen=true&amp;mode=transparent" id="video-5-uIBLl04uxI"><div class="mbr-background-video-preview" style="display: block; background-size: cover; background-position: center center; background-image: url(&quot;https://img.youtube.com/vi/koPkElMab4U/maxresdefault.jpg&quot;);"></div><div style="overflow: hidden; position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;"><div style="background: rgb(0, 0, 0); inset: 0px;"><div class="mbr-video-foreground" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; pointer-events: none; overflow: hidden;"><iframe class="mbr-background-video" id="ytplayer-d2dae7" style="margin-top: 0px; max-width: initial; transition-property: opacity; transition-duration: 1000ms; pointer-events: none; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; transform: scale(1.2);" frameborder="0" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Financial Background Video Data Visuals - High Resolution" width="1920" height="1080" src="https://www.youtube.com/embed/koPkElMab4U?autoplay=1&amp;mute=0&amp;controls=0&amp;enablejsapi=1&amp;allowfullscreen=true&amp;iv_load_policy=3&amp;modestbranding=1&amp;origin=https%3A%2F%2F1410520.mobirisesite.com&amp;rel=0&amp;mode=transparent&amp;showinfo=0&amp;html5=1&amp;version=3&amp;playerapiid=iframe_YTP_1624972482514&amp;widgetid=1&amp;forigin=https%3A%2F%2F1410520.mobirisesite.com%2F&amp;aoriginsup=1&amp;gporigin=https%3A%2F%2Fa.mobirise.com%2F&amp;vf=1"></iframe></div></div></div>
+    
+  
+    <div class="mbr-overlay" style="opacity: 0.3; background-color: rgb(0, 0, 0);"></div>
+    <div class="container-fluid">
+      <div class="row">
+      </div>
+    </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="features03 cid-uIBLl04Xfh" id="news-1-uIBLl04Xfh">
+    
+    
+    <div class="container-fluid">
+      <div class="row justify-content-center mb-5">
+        <div class="col-12 content-head">
+          <div class="mbr-section-head">
+            <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+              <strong>Latest SQLite Buzz</strong>
+            </h4>
+            
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="item features-image col-12 col-md-6 col-lg-3 active">
+          <div class="item-wrapper">
+            <div class="item-img mb-3">
+              <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1533750204176-3b0d38e9ac1e.jpeg" alt="" title="">
+            </div>
+            <div class="item-content align-left">
+              <h5 class="item-title mbr-fonts-style mt-0 mb-2 display-5">
+                <strong>SQLite 4.0 Release Date Announced</strong>
+              </h5>
+              <p class="mbr-text mbr-fonts-style mb-3 display-7">April 15, 2025</p>
+              <p class="mbr-text mbr-fonts-style mb-3 display-7">Get ready for the next big thing in database management!</p>
+              <div class="mbr-section-btn item-footer">
+                <a href="" class="btn item-btn btn-primary display-7">Read</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item features-image col-12 col-md-6 col-lg-3">
+          <div class="item-wrapper">
+            <div class="item-img mb-3">
+              <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1642775196125-38a9eb496568.jpeg" alt="" title="" data-slide-to="1" data-bs-slide-to="1">
+            </div>
+            <div class="item-content align-left">
+              <h5 class="item-title mbr-fonts-style mb-2 mt-0 display-5">
+                <strong>SQLite Performance Improvements Coming Soon</strong>
+              </h5>
+              <p class="mbr-text mbr-fonts-style mb-3 display-7">April 10, 2025</p>
+              <p class="mbr-text mbr-fonts-style mb-3 display-7">Faster queries and better efficiency are on the way!</p>
+              <div class="mbr-section-btn item-footer">
+                <a href="" class="btn item-btn btn-primary display-7">Read</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item features-image col-12 col-md-6 col-lg-3">
+          <div class="item-wrapper">
+            <div class="item-img mb-3">
+              <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1667372283587-e1557c08aca4.jpeg" alt="" title="" data-slide-to="2" data-bs-slide-to="2">
+            </div>
+            <div class="item-content align-left">
+              <h5 class="item-title mbr-fonts-style mb-2 mt-0 display-5">
+                <strong>SQLite Now Supports JSON Data</strong>
+              </h5>
+              <p class="mbr-text mbr-fonts-style mb-3 display-7">April 5, 2025</p>
+              <p class="mbr-text mbr-fonts-style mb-3 display-7">Handle your data like a pro with JSON support!</p>
+              <div class="mbr-section-btn item-footer">
+                <a href="" class="btn item-btn btn-primary display-7">Read</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item features-image col-12 col-md-6 col-lg-3">
+          <div class="item-wrapper">
+            <div class="item-img mb-3">
+              <img src="https://r.mobirisesite.com/1410520/assets/images/photo-1642132652809-8c6ab1971169.jpeg" alt="" title="" data-slide-to="2" data-bs-slide-to="2">
+            </div>
+            <div class="item-content align-left">
+              <h5 class="item-title mbr-fonts-style mb-2 mt-0 display-5">
+                <strong>SQLite Community Grows Rapidly</strong>
+              </h5>
+              <p class="mbr-text mbr-fonts-style mb-3 display-7">April 1, 2025</p>
+              <p class="mbr-text mbr-fonts-style mb-3 display-7">Join the thriving community of SQLite enthusiasts!</p>
+              <div class="mbr-section-btn item-footer">
+                <a href="" class="btn item-btn btn-primary display-7">Read</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="list05 cid-uIBLl04ig1" id="faq-3-uIBLl04ig1">
+      
+      <div class="container">
+          <div class="col-12 mb-5 content-head">
+              <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                  <strong>SQLite FAQs</strong>
+              </h3>
+              
+          </div>
+          <div class="row justify-content-center ">
+              <div class="col-12 col-lg-8">
+                  <div class="item features-without-image col-12 active">
+                      <div class="item-wrapper">
+                          <h5 class="mbr-card-title mbr-fonts-style mt-0 mb-3 display-5">
+                              <strong>What is SQLite used for?</strong></h5>
+                          <p class="mbr-text mbr-fonts-style mt-0 mb-3 display-7">SQLite is perfect for lightweight database applications.</p>
+                      </div>
+                  </div>
+                  <div class="item features-without-image col-12">
+                      <div class="item-wrapper">
+                          <h5 class="mbr-card-title mbr-fonts-style mt-0 mb-3 display-5">
+                              <strong>Is SQLite free to use?</strong></h5>
+                          <p class="mbr-text mbr-fonts-style mt-0 mb-3 display-7">Absolutely! It's open-source and free.</p>
+                      </div>
+                  </div>
+                  <div class="item features-without-image col-12">
+                      <div class="item-wrapper">
+                          <h5 class="mbr-card-title mbr-fonts-style mt-0 mb-3 display-5">
+                              <strong>Can SQLite handle large databases?</strong></h5>
+                          <p class="mbr-text mbr-fonts-style mt-0 mb-3 display-7">Yes, it can manage databases up to 140 terabytes!</p>
+                      </div>
+                  </div>
+                  <div class="item features-without-image col-12">
+                    <div class="item-wrapper">
+                        <h5 class="mbr-card-title mbr-fonts-style mt-0 mb-3 display-5">
+                            <strong>How secure is SQLite?</strong></h5>
+                        <p class="mbr-text mbr-fonts-style mt-0 mb-3 display-7">SQLite offers robust security features.</p>
+                    </div>
+                </div>
+                <div class="item features-without-image col-12">
+                  <div class="item-wrapper">
+                      <h5 class="mbr-card-title mbr-fonts-style mt-0 mb-3 display-5">
+                          <strong>Is SQLite easy to learn?</strong></h5>
+                      <p class="mbr-text mbr-fonts-style mt-0 mb-3 display-7">Definitely! It's user-friendly and straightforward.</p>
+                  </div>
+              </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="social4 cid-uIBLl06Gkp" id="follow-us-1-uIBLl06Gkp">
+      
+      
+      
+  
+      <div class="container">
+          <div class="media-container-row">
+              <div class="col-12">
+                  <h3 class="mbr-section-title align-center mb-5 mbr-fonts-style display-2">
+                      <strong>Join Our Wild Ride!</strong>
+                  </h3>
+                  <div class="social-list align-center">
+                      <a class="iconfont-wrapper bg-facebook m-2 " target="_blank" href="#">
+                          <span class="socicon-facebook socicon"></span>
+                      </a>
+                      <a class="iconfont-wrapper bg-twitter m-2" href="#" target="_blank">
+                          <span class="socicon-twitter socicon"></span>
+                      </a>
+                      <a class="iconfont-wrapper bg-instagram m-2" href="#" target="_blank">
+                          <span class="socicon-instagram socicon"></span>
+                      </a>
+                      
+                      
+                      
+                      
+                      
+                      <a class="iconfont-wrapper bg-tiktok m-2" href="#" target="_blank">
+                          <span class="socicon-tiktok socicon"></span>
+                      </a>
+                      
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="form5 cid-uIBLl06mST" id="contact-form-2-uIBLl06mST">
+      
+      
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-12 content-head">
+                  <div class="mbr-section-head mb-5">
+                      <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                          <strong>Get in Touch Now!</strong>
+                      </h3>
+                      
+                  </div>
+              </div>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+                  <form action="https://mobirise.eu/" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="L/BhotXvqFJf5UdI5JjT2Yy4ZU/mZOkrRHzKVJHSlZ2nKYwoKVuIUQUvRkHb19G8D6/GMllSf0hqG2OEPyfST7ag6ei/sP4kvx0hcjTFRTsy/nk2SmggCea43xAOIyAW">
+                      <div class="row">
+                          <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling out the form!</div>
+                          <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">
+                              Oops...! some problem!
+                          </div>
+                      </div>
+                      <div class="dragArea row">
+                          <div class="col-md col-sm-12 form-group mb-3" data-for="name">
+                              <input type="text" name="name" placeholder="Name" data-form-field="name" class="form-control" value="" id="name-contact-form-2-uIBLl06mST">
+                          </div>
+                          <div class="col-md col-sm-12 form-group mb-3" data-for="email">
+                              <input type="email" name="email" placeholder="Email" data-form-field="email" class="form-control" value="" id="email-contact-form-2-uIBLl06mST">
+                          </div>
+                          <div class="col-12 form-group mb-3" data-for="textarea">
+                              <textarea name="textarea" placeholder="Message" data-form-field="textarea" class="form-control" id="textarea-contact-form-2-uIBLl06mST"></textarea>
+                          </div>
+                          <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
+                              <button type="submit" class="btn btn-primary display-7">Send It!</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="contacts03 cid-uIBLl06QgE" id="contacts-11-uIBLl06QgE">
+    
+  
+    
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-4">
+          <div class="col-12 col-md-12">
+            <h5 class="mbr-section-title mbr-fonts-style mt-0 mb-4 display-2">
+              <strong>Reach Us</strong>
+            </h5>
+            <p class="mbr-section-subtitle mbr-fonts-style mt-0 mb-4 display-7">
+              Phone: (123) 456-7890
+              <br>SQLite Database Management System for Efficient Data Checking: info@wildwebsite.com
+              <br>SQLite Database Management System for Efficient Data Checking: 123 Fun St, Party City, PC 12345
+              <br>Working Hours: Mon-Fri: 9am - 5pm
+            </p> 
+  
+            
+          </div>
+        </div>
+          <div class="col-lg-8 side-features">
+          <div class="google-map"><iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6045.3003145248895!2d-73.9884657!3d40.7477229!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9ac1f1b85%3A0x7e33d1c0e7af3be4!2zMzUwIDV0aCBBdmUsIE5ldyBZb3JrLCBOWSAxMDExOCwg0KHQqNCQ!5e0!3m2!1sru!2sru!4v1689597362021!5m2!1sen!2sen" allowfullscreen=""></iframe></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section data-bs-version="5.1" class="footer4 cid-uIBLl08dyW" once="footers" id="footer-4-uIBLl08dyW">
+  
+      
+  
+      
+  
+      <div class="container">
+          <div class="media-container-row align-center mbr-white">
+              <div class="col-12">
+                  <p class="mbr-text mb-0 mbr-fonts-style display-7">© 2025 Wild Website. All rights reserved.</p>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  
+    <script src="https://r.mobirisesite.com/1410520/assets/web/assets/jquery/jquery.min.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/bootstrap/js/bootstrap.bundle.min.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/parallax/jarallax.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/smoothscroll/smooth-scroll.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/ytplayer/index.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/dropdown/js/navbar-dropdown.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/scrollgallery/scroll-gallery.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/embla/embla.min.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/embla/script.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/vimeoplayer/player.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/theme/js/script.js?rnd=1744875199411"></script>
+    <script src="https://r.mobirisesite.com/1410520/assets/formoid.min.js?rnd=1744875199411"></script>
+    
+    
+    
+  
+  
+  </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

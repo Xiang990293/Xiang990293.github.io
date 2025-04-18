@@ -7,29 +7,38 @@
     returnText = returnText.replace(/```(.*?)```/gs,`<stoptrans><object title="1" style="background-color:gray; border: 3px solid black; border-radius: 10px; width:300px">$1</object></stoptrans>`)
     var titles = returnText.match(/^>+(.+?)$/gm)
 
-    for(title_index=0; title_index<titles.length; title_index++){
-		
-		temp_title = titles[title_index].replace(/(\\)/gm,"\\$1").replace(/(\()/gm,"\\$1").replace(/(\))/gm,"\\$1").replace(/(\!)/gm,"\\$1").replace(/(\^)/gm,"\\$1").replace(/(\$)/gm,"\\$1").replace(/(\*)/gm,"\\$1").replace(/(\+)/gm,"\\$1").replace(/(\?)/gm,"\\$1").replace(/(\{)/gm,"\\$1").replace(/(\})/gm,"\\$1").replace(/(\[)/gm,"\\$1").replace(/(\])/gm,"\\$1").replace(/(\,)/gm,"\\$1").replace(/(\.)/gm,"\\$1").replace(/(\:)/gm,"\\$1").replace(/(\<)/gm,"\\$1").replace(/(\=)/gm,"\\$1").replace(/(\|)/gm,"\\$1").replace(/(\-)/gm,"\\$1") //.replace(/(\>)/gm,"\\$1")
-        current_title_regexp = new RegExp(`^(${temp_title})$`,"gm")
-        title_type = temp_title.match(/^>+/gm)[0].length+1;
-		
-		group_1_in_current_title = titles[title_index].replace(/^>+(.+?)$/gm,"$1")
-        
-		returnText = returnText.replace(current_title_regexp,`<h${title_type} class="from_txt" id="${group_1_in_current_title}-${title_index}">${group_1_in_current_title}</h${title_type}>`)
+    if (titles != null){
+        for(title_index=0; title_index<titles.length; title_index++){
+            
+            temp_title = titles[title_index].replace(/(\\)/gm,"\\$1").replace(/(\()/gm,"\\$1").replace(/(\))/gm,"\\$1").replace(/(\!)/gm,"\\$1").replace(/(\^)/gm,"\\$1").replace(/(\$)/gm,"\\$1").replace(/(\*)/gm,"\\$1").replace(/(\+)/gm,"\\$1").replace(/(\?)/gm,"\\$1").replace(/(\{)/gm,"\\$1").replace(/(\})/gm,"\\$1").replace(/(\[)/gm,"\\$1").replace(/(\])/gm,"\\$1").replace(/(\,)/gm,"\\$1").replace(/(\.)/gm,"\\$1").replace(/(\:)/gm,"\\$1").replace(/(\<)/gm,"\\$1").replace(/(\=)/gm,"\\$1").replace(/(\|)/gm,"\\$1").replace(/(\-)/gm,"\\$1") //.replace(/(\>)/gm,"\\$1")
+            current_title_regexp = new RegExp(`^(${temp_title})$`,"gm")
+            title_type = temp_title.match(/^>+/gm)[0].length+1;
+            
+            group_1_in_current_title = titles[title_index].replace(/^>+(.+?)$/gm,"$1")
+            
+            returnText = returnText.replace(current_title_regexp,`<h${title_type} class="from_txt" id="${group_1_in_current_title}-${title_index}">${group_1_in_current_title}</h${title_type}>`)
+        } 
+
+        // siderpage/navigation construct
+        var siderPage = document.getElementById("siderPage");
+        siderPage.innerHTML = `<ul id="側導航欄"><li><h3>章節列表</h3></li></ul>`;
     }
     
-	returnText = returnText.replace(/^----$/gm, "<hr/>")					// "----" -> "<hr/>"
-	returnText = returnText.replace(/(?<!\\)@color(#[0-9a-fA-F]{6}){(.+?)(?<!\\)}/gm, `<p style="color: $1">$2</p>`)	// change color "<p style></p>""
-	returnText = returnText.replace(/(?<!\\)@bold{(.+?)(?<!\\)}/gm, `<p style="font-weight: bold">$1</p>`)	// change bold "<p style></p>""
+    /* 
+        "----" -> "<hr/>"
+        "@color" -> "<p style="color: $1">$2</p>"
+        "@bold" -> "<p style="font-weight: bold">$1</p>"
+        "@button" -> "<$2 class="text-to-button" href="$1" $3>$4</$2>"
+    */
+	returnText = returnText.replace(/^----$/gm, "<hr/>")					// 
+	returnText = returnText.replace(/(?<!\\)@color(#[0-9a-fA-F]{6}){(.+?)(?<!\\)}/gm, `<p style="color: $1">$2</p>`)
+	returnText = returnText.replace(/(?<!\\)@bold{(.+?)(?<!\\)}/gm, `<p style="font-weight: bold">$1</p>`)
 	returnText = returnText.replace(/(?<!\\)@button\((https?:\/\/.+?)(?<!\()\)(?:\(tag=(a|p|button)(?:,(style=".+?"))?\))?(?<!\\){(.+?)(?<!\\)}/gm, `<$2 class="text-to-button" onclick="window.location.href='$1'" $3>$4</$2>`)	// add button "<$2 class="text-to-button" href="$1" $3>$4</$2>""
 	// returnText = returnText.replace(/^(?<!<)(.+?)(?!>)$/gs, "<p>$1</p>")	// put plain text into "<p></p>""
 
 	document.getElementById("content_text").innerHTML = returnText
     document.getElementById("content").style.visibility = false;
 
-	// siderpage/navigation construct
-    var siderPage = document.getElementById("siderPage");
-    siderPage.innerHTML = `<ul id="側導航欄"><li><h3>章節列表</h3></li></ul>`;
 
     var ul_in_siderPage = siderPage.getElementsByTagName("ul");
     var content = document.getElementById("content_text");

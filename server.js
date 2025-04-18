@@ -3,25 +3,13 @@ const port = 3000;
 const ip = "0.0.0.0";//"172.28.246.224" ,"192.168.124.17";
 // Map of file extensions to mime types
 const mimeTypes = {
-  ico: 'image/x-icon',
-  js: 'text/javascript',
-  css: 'text/css',
-  svg: 'image/svg+xml',
-  png: 'image/png'
+    ico: 'image/x-icon',
+    js: 'text/javascript',
+    css: 'text/css',
+    svg: 'image/svg+xml',
+    png: 'image/png'
 }
-
-
-
-
-// # sqlite3 setting
-const sqlite3 = require('sqlite3')
-// open database
-// process.env.DATABASE_URL ||= url.pathToFileURL('production.sqlite3').toString()
-// const db = new sqlite3.Database(new URL(process.env.DATABASE_URL).pathname.slice(1))
-
-// Ensure welcome table exists
-// db.run('CREATE TABLE IF NOT EXISTS "welcome" ( "count" INTEGER )')
-
+const ROOT = __dirname;
 
 
 
@@ -40,62 +28,87 @@ fs.readdirSync('./notebooks').forEach(file => {
         const html = renderNotebook(notebook).outerHTML;
         fs.writeFileSync(`./code_tutorial/${file.replace('.ipynb', '.html')}`, html);
     }
-}); 
+});
 
 
 
 // # express.js setting: static files
 // Serve static files from public
-const ejs = require('ejs');
+const path = require('path');
 const express = require("express");
 const app = express();
-app.set('view engine', 'ejs');
-app.set('views', './public/template');
 app.use(express.static('public'));
 app.use(express.static('assets'));
 app.use('/web_content', express.static('web_content'));
+app.use('/code_tutorial', express.static('code_tutorial'));
+app.use('/template', express.static('template'));
+
+const ssi = require('ssi');
+const parser = new ssi(__dirname, __dirname, '/**/*.html', true);
+
+const ejs = require('ejs');
+app.set('view engine', 'ejs');
+app.set('views', './template');
+// 路由模組
+const toolsRouter = require('./router/tools.js')(ROOT);
+// 路由掛載
+app.use('/tools', toolsRouter);
+
 
 // Serve favicon
 app.get('/favicon.png', (req, res) => {
     res.sendFile(path.join(__dirname, 'assets', 'favicon.png'));
 });
 
-app.get('/personal_web', (request, response) => {
-	// console.log("GET request recieved:" + request.url)
+app.get('/personal_web', (req, res) => {
+    // console.log("GET req recieved:" + req.url)
 
     res.sendFile(path.join(__dirname, 'home.html'));
 });
 
-// request entry point
-app.get('/template_test', (request, response) => {
-	console.log(request.query)
+app.get('/template_test', (req, res) => {
+    const data = query_handler(req.query);
 
-    const data = query_handler(request.query);
-
-    response.render('general_template', data);
+    res.render('general_template', data);
 });
 
-app.get('/', (request, response) => {
-	// console.log("GET request recieved:" + request.url)
+app.get('/', (req, res) => {
+    res.render('home');
+});
 
-    res.sendFile(path.join(__dirname, 'home.html'));
+app.get('/home', (req, res) => {
+    res.render('home');
+});
+
+app.get('/team_intro', (req, res) => {
+    data = {
+        title: '團隊成員 - 立方漣漪研究社',
+        heading: '團隊成員',
+        content: fs.readFileSync(path.join(ROOT, "public/member_intro.html"), 'utf8') //tools.html
+    }
+
+    res.render('general_template', data);
 });
 
 // Error handling for 404
 app.use((req, res, next) => {
-    res.status(404).send('Not Found');
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html')); // 404 Not Found
 });
 
-app.listen(port, () =>{
+app.listen(port, () => {
     console.log(`Server start running! At http://${ip}:${port}`);
 });
 
 function query_handler(querys) {
+    /*
+        this function is specially work for template,
+        do not use if you don't know what you are doing.
+    */
+
     let result = {
         title: '模板 - 立方漣漪研究社',
         heading: '此為模板頁面',
-        iframe: '404.html',
-        content_url: 'web_content/home.txt',
+        content: ''
     };
 
     Object.entries(querys).forEach(entry => {
@@ -107,34 +120,91 @@ function query_handler(querys) {
     return result;
 }
 
+
+
+
+// # sqlite3 setting
+// 載入 sqlite3
+const sqlite3 = require('sqlite3').verbose();
+// 新增一個sqlite3的資料庫
+// var db = new sqlite3.Database(file);
+
+// // Ensure welcome table exists
+// db.run('CREATE TABLE IF NOT EXISTS "welcome" ( "count" INTEGER )')
+
+const securedb = new sqlite3.Database('./secure.sqlite', (err) => {
+    if (err) {
+        console.error('Error opening secure database:', err.message);
+    } else {
+        console.log('Connected to secure database.');
+    }
+});
+
+// // 建立第二個資料庫連線
+// const db2 = new sqlite3.Database('./database2.sqlite', (err) => {
+//     if (err) {
+//         console.error('Error opening database2:', err.message);
+//     } else {
+//         console.log('Connected to database2.');
+//     }
+// });
+// Ensure users table exists
+
+securedb.run(`CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(75) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);`)
+
+// access database as admin
+// app.get('/admin/database', (req, res) => {
+//     const query = req.query
+//     db1.get(`SELECT * FROM `, [], (err, row) => {
+//       if (err) {
+//         return res.status(500).send('Database error');
+//       }
+//       // 使用 db2 進行其他操作
+//       db2.get('SELECT * FROM tableB', [], (err, row2) => {
+//         if (err) {
+//           return res.status(500).send('Database error');
+//         }
+//         res.json({ data1: row, data2: row2 });
+//       });
+//     });
+//   });
+
+
+
+
 /*
-// Process requests based on pathname
-async function listener(request, response) {
-    const { pathname } = url.parse(request.url)
+// Process reqs based on pathname
+async function listener(req, res) {
+    const { pathname } = url.parse(req.url)
 
     if (pathname === '/') {
-        await main(request, response)
+        await main(req, res)
     } else if (fs.existsSync(`public${pathname}`)) {
         try {
             const contents = fs.readFileSync(`public${pathname}`, 'utf-8')
             const mimeType = mimeTypes[pathname.split('.').pop()] || 'application/octet-stream'
 
-            response.writeHead(200, { 'Content-Type': mimeType })
-            response.write(contents, 'utf-8')
+            res.writeHead(200, { 'Content-Type': mimeType })
+            res.write(contents, 'utf-8')
         } catch (error) {
-            response.writeHead(500, { 'Content-Type': 'text/plain' })
-            response.write(error + '\n')
+            res.writeHead(500, { 'Content-Type': 'text/plain' })
+            res.write(error + '\n')
         }
 
-        response.end()
+        res.end()
     } else {
-        response.writeHead(404)
-        response.end('Not found.')
+        res.writeHead(404)
+        res.end('Not found.')
     }
 }
 
 // Main page
-async function main(_request, response) {
+async function main(_req, res) {
     // increment counter in counter.txt file
     try {
         count = parseInt(fs.readFileSync('counter.txt', 'utf-8')) + 1
@@ -144,19 +214,19 @@ async function main(_request, response) {
 
     fs.writeFileSync('counter.txt', count.toString())
 
-    // render HTML response
+    // render HTML res
     try {
         let contents = fs.readFileSync('views/index.tmpl', 'utf-8')
         contents = contents.replace('@@COUNT@@', count.toString())
 
-        response.writeHead(200, { 'Content-Type': 'text/html' })
-        response.write(contents, 'utf-8')
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.write(contents, 'utf-8')
     } catch (error) {
-        response.writeHead(500, { 'Content-Type': 'text/plain' })
-        response.write(error + '\n')
+        res.writeHead(500, { 'Content-Type': 'text/plain' })
+        res.write(error + '\n')
     }
 
-    response.end()
+    res.end()
 }
 
 */
