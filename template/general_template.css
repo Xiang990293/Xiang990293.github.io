@@ -411,35 +411,6 @@ main{
 	flex-grow: 1;
 }
 
-footer{
-    background-color:gray; 
-	height: 20vh;
-	position: fixed;
-	width: 100%;
-	margin-top: auto;
-	bottom: 0px;
-
-	#showbox{
-		display: inline;
-		animation-name:showbox_slider;
-		animation-duration:20s;
-		animation-iteration-count:infinite;
-		animation-timing-function: linear;
-	}
-
-	p{
-		margin:0;
-	}
-
-	div{
-		background: var(--footer-color);
-		ul{
-			list-style-type: none;
-			display: inline-grid;
-		}
-	}
-}
-
 /* dark mode */
 #dark-mode {  /* switch style*/
 	position: fixed;

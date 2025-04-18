@@ -19,7 +19,8 @@
             <ul>
                 <h3>解決問題</h3>
                 <li>
-                    <a href="https://github.com/Xiang990293/Xiang990293.github.io/issues/new" style="text-decoration: none;">回報問題</a>
+                    <a href="https://github.com/Xiang990293/Xiang990293.github.io/issues/new"
+                        style="text-decoration: none;">回報問題</a>
                 </li>
                 <li>
                     <a href="/contect_to_us" style="text-decoration: none;">聯絡我們</a>
@@ -29,24 +30,54 @@
     </div>
     <script>
         // show current time
-        function ShowTime(){
+        function ShowTime() {
             const d = new Date();
 
-            function trans_num_to_ChineseDay(x){
-                const word=["日","一","二","三","四","五","六"];
+            function trans_num_to_ChineseDay(x) {
+                const word = ["日", "一", "二", "三", "四", "五", "六"];
                 return word[x];
             }
 
-            function timefix(x){
-                if (x<10){
+            function timefix(x) {
+                if (x < 10) {
                     x = "0" + x;
                 }
                 return x;
             }
 
-            document.getElementById('showtime').innerHTML = "⏰" + d.getFullYear() + "/" + timefix(d.getMonth()+1) + "/" + timefix(d.getDate()) + "(" + trans_num_to_ChineseDay(d.getDay()) + ") " + timefix(d.getHours()) + ":" + timefix(d.getMinutes()) + ":" + timefix(d.getSeconds()) + " (UTC+8)";
-            setTimeout('ShowTime()',100);
+            document.getElementById('showtime').innerHTML = "⏰" + d.getFullYear() + "/" + timefix(d.getMonth() + 1) + "/" + timefix(d.getDate()) + "(" + trans_num_to_ChineseDay(d.getDay()) + ") " + timefix(d.getHours()) + ":" + timefix(d.getMinutes()) + ":" + timefix(d.getSeconds()) + " (UTC+8)";
+            setTimeout('ShowTime()', 100);
         }
         var timer = document.getElementById("time");
     </script>
 </footer>
+<style>
+    footer {
+        background-color: gray;
+        height: 20vh;
+        width: 100%;
+        margin-top: auto;
+        bottom: 0px;
+
+        #showbox {
+            display: inline;
+            animation-name: showbox_slider;
+            animation-duration: 20s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        div {
+            background: var(--footer-color);
+
+            ul {
+                list-style-type: none;
+                display: inline-grid;
+            }
+        }
+    }
+</style>
