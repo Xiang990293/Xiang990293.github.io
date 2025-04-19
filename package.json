@@ -13,6 +13,8 @@
     "@flydotio/node-demo": "^0.2.1"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "blockly": "^11.2.2",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "exprssi": "^0.5.1",

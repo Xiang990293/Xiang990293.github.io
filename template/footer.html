@@ -54,30 +54,77 @@
 <style>
     footer {
         background-color: gray;
-        height: 20vh;
-        width: 100%;
+        width: 100vw;
         margin-top: auto;
         bottom: 0px;
 
-        #showbox {
-            display: inline;
-            animation-name: showbox_slider;
-            animation-duration: 20s;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
+    }
+
+    /* footer p {
+        margin: 0;
+    } */
+
+    #showbox {
+        display: inline-block;
+        border: 0px;
+        background-color: gold;
+        position: relative;
+        font-size: 15px;
+        overflow: hidden;
+        animation-delay: 0s;
+        max-width: 100vw;
+        display: inline-block;
+
+    }
+
+    #showbox {
+        display: inline-block;
+        white-space: nowrap;
+        animation: slideLinear 20s linear infinite;
+    }
+
+    /* 定義滑動動畫 */
+    @keyframes slideLinear {
+        0% {
+            transform: translateX(-100vw);
+            /* 從容器右邊外開始 */
         }
 
-        p {
-            margin: 0;
+        100% {
+            transform: translateX(200vw);
+            /* 滑到容器左邊外結束 */
+        }
+    }
+
+    div {
+        background: var(--footer-color);
+
+
+    }
+
+    div ul {
+        list-style-type: none;
+        display: inline-grid;
+    }
+
+    /* 手機尺寸（max-width 768px）時反轉 */
+    @media (max-width: 768px) {
+        #slider {
+            display: none;
         }
 
-        div {
-            background: var(--footer-color);
-
-            ul {
-                list-style-type: none;
-                display: inline-grid;
-            }
+        #timebox {
+            display: block;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: gold;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: monospace, Arial, sans-serif;
+            z-index: 9999;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         }
     }
 </style>

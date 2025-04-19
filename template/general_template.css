@@ -5,6 +5,8 @@
 
 body{
     margin:0px;
+	overflow-x: hidden;
+	font-family: Minecraft, sans-serif;
 }
 
 @keyframes timer{
@@ -22,30 +24,6 @@ body{
     }
 }
 
-#showbox{
-	display: inline;
-	width: fit-content;
-}
-
-#showtext{
-    border: 0px solid gold;
-    background-color: gold;
-    border-radius: 0 0 0 0px;
-    position: relative; 
-    font-size: 15px;
-    bottom: 0px;
-    right: 0px;
-    animation-name:showbox_slider;
-	animation-duration: 20s;
-	animation-iteration-count: infinite;
-	animation-direction: normal;
-	animation-timing-function: linear;
-	animation-delay: 0s;
-	overflow-x: hidden;
-	max-width: 100%;
-	font: Minecraft;
-	z-index: 2;
-}
 
 
 @keyframes big-circle{
@@ -433,15 +411,6 @@ main{
     to {
         position:relative; left:20px;
         opacity:1
-    }
-}
-
-@keyframes showbox_slider {
-    from {
-        position:relative; left:-50vw;
-	}
-    to {
-        position:relative; left:150vw;
     }
 }
 

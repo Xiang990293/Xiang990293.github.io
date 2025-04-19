@@ -13,22 +13,7 @@ const ROOT = __dirname;
 
 
 
-// # ipynb to html
-// Convert all .ipynb files in /notebooks
-const ipynb = require('ipynb2html');
-const { Document } = require("nodom");
-const fs = require("fs");
-
-fs.readdirSync('./notebooks').forEach(file => {
-    if (file.endsWith('.ipynb')) {
-        // Create a DOM document instance
-        const document = new Document();
-        const renderNotebook = ipynb.createRenderer(document)
-        const notebook = JSON.parse(fs.readFileSync(`./notebooks/${file}`, 'utf8'));
-        const html = renderNotebook(notebook).outerHTML;
-        fs.writeFileSync(`./code_tutorial/${file.replace('.ipynb', '.html')}`, html);
-    }
-});
+const ipynb_to_html = require('./modules/ipynb_to_html.js')(ROOT);
 
 
 
@@ -37,14 +22,14 @@ fs.readdirSync('./notebooks').forEach(file => {
 const path = require('path');
 const express = require("express");
 const app = express();
+const fs = require("fs");
 app.use(express.static('public'));
 app.use(express.static('assets'));
 app.use('/web_content', express.static('web_content'));
 app.use('/code_tutorial', express.static('code_tutorial'));
 app.use('/template', express.static('template'));
 
-const ssi = require('ssi');
-const parser = new ssi(__dirname, __dirname, '/**/*.html', true);
+
 
 const ejs = require('ejs');
 app.set('view engine', 'ejs');
@@ -53,7 +38,6 @@ app.set('views', './template');
 const toolsRouter = require('./router/tools.js')(ROOT);
 // 路由掛載
 app.use('/tools', toolsRouter);
-
 
 // Serve favicon
 app.get('/favicon.png', (req, res) => {
@@ -72,7 +56,7 @@ app.get('/template_test', (req, res) => {
     res.render('general_template', data);
 });
 
-app.get(['/','/home.html', '/home'], (req, res) => {
+app.get(['/', '/home.html', '/home'], (req, res) => {
     res.render('home');
 });
 
@@ -102,7 +86,7 @@ app.use((req, res, next) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server start running! At http://${ip}:${port}`);
+    console.log(`伺服器開始運行! 在 http://${ip}:${port}`);
 });
 
 function query_handler(querys) {
@@ -128,58 +112,36 @@ function query_handler(querys) {
 
 
 
+const bcrypt = require('bcrypt');
+async function verifyPassword(plainPassword, hash) {
+    return await bcrypt.compare(plainPassword, hash);
+}
 
-// # sqlite3 setting
-// 載入 sqlite3
-const sqlite3 = require('sqlite3').verbose();
-// 新增一個sqlite3的資料庫
-// var db = new sqlite3.Database(file);
+/*
+// 從資料庫取出該用戶的 hash 密碼
+const storedHash = '從資料庫取得的hash字串';
 
-// // Ensure welcome table exists
-// db.run('CREATE TABLE IF NOT EXISTS "welcome" ( "count" INTEGER )')
-
-const securedb = new sqlite3.Database('./secure.sqlite', (err) => {
-    if (err) {
-        console.error('Error opening secure database:', err.message);
+verifyPassword('userPassword123', storedHash).then(isMatch => {
+    if (isMatch) {
+        console.log('密碼正確，登入成功');
     } else {
-        console.log('Connected to secure database.');
+        console.log('密碼錯誤，登入失敗');
     }
 });
+*/
 
-// // 建立第二個資料庫連線
-// const db2 = new sqlite3.Database('./database2.sqlite', (err) => {
-//     if (err) {
-//         console.error('Error opening database2:', err.message);
-//     } else {
-//         console.log('Connected to database2.');
-//     }
-// });
-// Ensure users table exists
 
-securedb.run(`CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(75) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
-);`)
 
-// access database as admin
-// app.get('/admin/database', (req, res) => {
-//     const query = req.query
-//     db1.get(`SELECT * FROM `, [], (err, row) => {
-//       if (err) {
-//         return res.status(500).send('Database error');
-//       }
-//       // 使用 db2 進行其他操作
-//       db2.get('SELECT * FROM tableB', [], (err, row2) => {
-//         if (err) {
-//           return res.status(500).send('Database error');
-//         }
-//         res.json({ data1: row, data2: row2 });
-//       });
-//     });
-//   });
-
+// # sqlite3 setting
+// 載入 sqlite3 secure database module
+const securedbmod = require('./modules/sqlite_secure.js')(ROOT);
+app.get('/user/:id', (req, res) => {
+    securedbmod.getUserById(req.params.id, (err, user) => {
+        if (err) return res.status(500).send('DB error');
+        if (!user) return res.status(404).send('User not found');
+        res.json(user);
+    });
+});
 
 
 
