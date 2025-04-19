@@ -7,5 +7,6 @@ textures
 node_modules
 tools
 .vscode/
+npm
 node_modules/*
 */*.code-workspace
