@@ -41,7 +41,7 @@ app.use('/tools', toolsRouter);
 
 // Serve favicon
 app.get('/favicon.png', (req, res) => {
-    res.sendFile(path.join(__dirname, 'assets', 'favicon.png'));
+    res.sendFile(path.join(__dirname, 'public', 'assets', 'favicon.png'));
 });
 
 app.get('/personal_web', (req, res) => {

@@ -3,7 +3,7 @@
         <a id="shownews"></a>
         <a id="showtime"></a>
     </div>
-    <div>
+    <div id="total_info">
         <span>
             <ul>
                 <h3>瞭解詳情</h3>
@@ -74,35 +74,34 @@
         animation-delay: 0s;
         max-width: 100vw;
         display: inline-block;
-
-    }
-
-    #showbox {
-        display: inline-block;
         white-space: nowrap;
-        animation: slideLinear 20s linear infinite;
+        animation: slideLinear 5s linear infinite;
+        height: 100%;
+
     }
+
+    /* #showbox {
+        display: inline-block;
+    } */
 
     /* 定義滑動動畫 */
     @keyframes slideLinear {
         0% {
-            transform: translateX(-100vw);
+            transform: translateX(-20vw);
             /* 從容器右邊外開始 */
         }
 
         100% {
-            transform: translateX(200vw);
+            transform: translateX(100vw);
             /* 滑到容器左邊外結束 */
         }
     }
 
-    div {
+    #total_info {
         background: var(--footer-color);
-
-
     }
 
-    div ul {
+    #total_info ul {
         list-style-type: none;
         display: inline-grid;
     }
