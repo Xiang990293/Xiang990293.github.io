@@ -1,11 +1,16 @@
 ﻿const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const fs = require('fs');
 
 module.exports = (root) => {
 	console.log("正在載入 sqlite_secure")
 	const toroot = require('./toroot.js')(root);
-	const securedb = new sqlite3.Database(toroot("./secure/secure.sqlite"), (err) => {
+	const dbDir = toroot("./database");
+	if (!fs.existsSync(dbDir)) {
+		fs.mkdirSync(dbDir);
+	}
+	const securedb = new sqlite3.Database(toroot("./database/secure.sqlite"), (err) => {
 		if (err) {
 			console.error('連接至安全資料庫時發生問題：', err.message);
 		} else {
