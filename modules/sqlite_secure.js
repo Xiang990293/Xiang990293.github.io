@@ -37,15 +37,18 @@ module.exports = (root) => {
 		});
 	}
 
-	async function addUser(user, callback) {
-		securedb.run('INSERT INTO users(username, email, hashpassword) VALUES(?, ?)', [user.username, user.email, user.hashPassword], function (err) {
-			if (err) {
-				console.error(err.message);
-			} else {
-				console.log(`使用者 ${username} 已新增`);
-			}
-			callback(err, this.lastID);
-		});
+	async function addUser(username, email, plainPassword) {
+		const hashPassword = await storedHashPassword(plainPassword)
+		return new Promise((resolved, reject) => {
+		  securedb.run('INSERT INTO users(username, email, hashpassword) VALUES(?, ?, ?)', [username, email, hashPassword], function (err) {
+  			if (err) {
+  				reject(err.message);
+  				return;
+  			}
+  			resolved(`使用者 ${username} 已新增`);
+  		  return;
+  		});
+  	});
 	}
 
 	// 更新使用者
