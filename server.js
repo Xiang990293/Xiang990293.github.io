@@ -24,7 +24,6 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 app.use(express.static('public'));
-app.use(express.static('assets'));
 app.use('/web_content', express.static('web_content'));
 app.use('/code_tutorial', express.static('code_tutorial'));
 app.use('/template', express.static('template'));
@@ -44,6 +43,35 @@ app.get('/favicon.png', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'assets', 'favicon.png'));
 });
 
+// send rendom picture in home album
+app.get('/random_album', (req, res) => {
+    fs.readdir(path.join(ROOT, "web_content", "home", "header_background"), (err, files) => {
+        if (err) {
+            return res.status(500).send('Error reading directory');
+        }
+        
+        const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file));
+        if (images.length === 0) {
+            return res.status(404).send('No images found');
+        }
+
+        const randomImage = images[Math.floor(Math.random() * images.length)];
+        res.sendFile(path.join(ROOT, "web_content", "home", "header_background", randomImage));
+    });
+});
+
+app.get('/all_album', (req, res) => {
+    fs.readdir(path.join(ROOT, "web_content", "home", "header_background"), (err, files) => {
+        if (err) {
+            return res.status(500).send('Error reading directory');
+        }
+
+        const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file));
+        res.json({pics: images})
+    })
+});
+
+// **outdated
 app.get('/personal_web', (req, res) => {
     // console.log("GET req recieved:" + req.url)
 
@@ -80,14 +108,77 @@ app.get('/team_intro', (req, res) => {
     res.render('general_template', data);
 });
 
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
+app.get('/user/:id', (req, res) => {
+    securedbmod.getUserById(req.params.id, (err, user) => {
+        if (err) return res.status(500).send('DB error');
+        if (!user) return res.status(404).send('User not found');
+        res.json(user);
+    });
+});
+
+// # sqlite3 setting
+// 載入 sqlite3 secure database module
+const securedbmod = require('./modules/sqlite_secure.js')(ROOT);
+app.use(express.urlencoded({ extended: true })); // 處理 form-urlencoded（表單）資料
+app.use(express.json()); // 處理 JSON 資料（如果有用到）
+app.post('/auth', async (req, res) => {
+    if (req.body.password === undefined || req.body.username === undefined) {
+        res.json({ success: false, message: '帳號/密碼缺失' });
+        return;
+    }
+
+    const { username, password } = req.body;
+    try {
+        const isValid = await securedbmod.verifyPassword(username, password)
+
+
+        if (isValid) res.json({ success: true, message: '登入成功' });
+        else res.json({ success: false, message: '帳號或密碼錯誤，若尚未註冊，請先註冊' });;
+    } catch (err) {
+        if (err.message === 'username not found') {
+            res.json({ success: false, message: '帳號不存在，請先註冊' });
+        } else {
+            console.error(err);
+            res.json({ success: false, message: '伺服器錯誤' });
+        }
+    }
+});
+
+app.post('/registering', async (req, res) => {
+    if (req.body.password === undefined || req.body.username === undefined || req.body.email === undefined) {
+        res.json({ success: false, message: '帳號/密碼/信箱缺失' });
+        return;
+    }
+
+    const { username, password } = req.body;
+    try {
+        const isEmailExist = await securedbmod.checkEmail(username, password)
+
+        if (isEmailExist) res.json({ success: true, message: '電子郵件已被註冊，請嘗試登入或聯絡管理員' });
+        else await securedbmod.addUser(username, password, email)
+    } catch (err) {
+        if (err.message === 'username not found') {
+            res.json({ success: false, message: '帳號不存在，請先註冊' });
+        } else {
+            console.error(err);
+            res.json({ success: false, message: '伺服器錯誤' });
+        }
+    }
+});
+
 // Error handling for 404
 app.use((req, res, next) => {
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html')); // 404 Not Found
 });
 
-app.listen(port, () => {
-    console.log(`伺服器開始運行! 在 http://${ip}:${port}`);
-});
 
 function query_handler(querys) {
     /*
@@ -112,11 +203,6 @@ function query_handler(querys) {
 
 
 
-const bcrypt = require('bcrypt');
-async function verifyPassword(plainPassword, hash) {
-    return await bcrypt.compare(plainPassword, hash);
-}
-
 /*
 // 從資料庫取出該用戶的 hash 密碼
 const storedHash = '從資料庫取得的hash字串';
@@ -130,97 +216,6 @@ verifyPassword('userPassword123', storedHash).then(isMatch => {
 });
 */
 
-
-
-// # sqlite3 setting
-// 載入 sqlite3 secure database module
-const securedbmod = require('./modules/sqlite_secure.js')(ROOT);
-app.get('/user/:id', (req, res) => {
-    securedbmod.getUserById(req.params.id, (err, user) => {
-        if (err) return res.status(500).send('DB error');
-        if (!user) return res.status(404).send('User not found');
-        res.json(user);
-    });
+app.listen(port, () => {
+    console.log(`伺服器開始運行! 在 http://${ip}:${port}`);
 });
-
-
-
-/*
-// Process reqs based on pathname
-async function listener(req, res) {
-    const { pathname } = url.parse(req.url)
-
-    if (pathname === '/') {
-        await main(req, res)
-    } else if (fs.existsSync(`public${pathname}`)) {
-        try {
-            const contents = fs.readFileSync(`public${pathname}`, 'utf-8')
-            const mimeType = mimeTypes[pathname.split('.').pop()] || 'application/octet-stream'
-
-            res.writeHead(200, { 'Content-Type': mimeType })
-            res.write(contents, 'utf-8')
-        } catch (error) {
-            res.writeHead(500, { 'Content-Type': 'text/plain' })
-            res.write(error + '\n')
-        }
-
-        res.end()
-    } else {
-        res.writeHead(404)
-        res.end('Not found.')
-    }
-}
-
-// Main page
-async function main(_req, res) {
-    // increment counter in counter.txt file
-    try {
-        count = parseInt(fs.readFileSync('counter.txt', 'utf-8')) + 1
-    } catch {
-        count = 1
-    }
-
-    fs.writeFileSync('counter.txt', count.toString())
-
-    // render HTML res
-    try {
-        let contents = fs.readFileSync('views/index.tmpl', 'utf-8')
-        contents = contents.replace('@@COUNT@@', count.toString())
-
-        res.writeHead(200, { 'Content-Type': 'text/html' })
-        res.write(contents, 'utf-8')
-    } catch (error) {
-        res.writeHead(500, { 'Content-Type': 'text/plain' })
-        res.write(error + '\n')
-    }
-
-    res.end()
-}
-
-*/
-
-// access dataabase like this
-/*
-
-// get method
-db.get('SELECT "count" from "welcome"', (err, row) => {
-    let query = 'UPDATE "welcome" SET "count" = ?'
-
-    if (err) {
-        reject(err)
-        return
-    }
-    
-    if (row) {
-        count = row.count + 1
-    } else {
-        count = 1
-        query = 'INSERT INTO "welcome" VALUES(?)'
-    }
-
-    db.run(query, [count], err => {
-    err ? reject(err) : resolve()
-    })
-})
-
-*/

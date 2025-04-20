@@ -1,7 +1,4 @@
-﻿@font-face {
-	font-family: minecraft;
-	src: url(/assets/Mojang-Regular.ttf), url(/assets/Mojang-Bold.ttf), url(/assets/Minecraft.ttf);
-}
+﻿@import url("/template/font.css");
 
 body{
     margin:0px;
