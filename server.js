@@ -10,6 +10,8 @@ const mimeTypes = {
     png: 'image/png'
 }
 const ROOT = __dirname;
+require('dotenv').config();
+
 
 
 
@@ -49,7 +51,7 @@ app.get('/random_album', (req, res) => {
         if (err) {
             return res.status(500).send('Error reading directory');
         }
-        
+
         const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file));
         if (images.length === 0) {
             return res.status(404).send('No images found');
@@ -67,7 +69,7 @@ app.get('/all_album', (req, res) => {
         }
 
         const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file));
-        res.json({pics: images})
+        res.json({ pics: images })
     })
 });
 
@@ -102,18 +104,46 @@ app.get('/team_intro', (req, res) => {
     data = {
         title: '關於團隊 - 立方漣漪研究社',
         heading: '關於團隊',
-        content: fs.readFileSync(path.join(ROOT, "public/team_intro.html"), 'utf8') //tools.html
+        content: fs.readFileSync(path.join(ROOT, "public/team_intro.html"), 'utf8')
     }
 
     res.render('general_template', data);
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    data = {
+        title: '登入 - 立方漣漪研究社',
+        form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/login.html"), 'utf8')
+    }
+
+    res.render('login_system', data);
 });
 
 app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+    data = {
+        title: '註冊 - 立方漣漪研究社',
+        form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/register.html"), 'utf8')
+    }
+
+    res.render('login_system', data);
+});
+
+app.get('/forgot_password', (req, res) => {
+    data = {
+        title: '忘記密碼 - 立方漣漪研究社',
+        form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/forgot_password.html"), 'utf8')
+    }
+
+    res.render('login_system', data);
+});
+
+app.get('/reset_password', (req, res) => {
+    data = {
+        title: '重設密碼 - 立方漣漪研究社',
+        form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/reset_password.html"), 'utf8')
+    }
+
+    res.render('login_system', data);
 });
 
 app.get('/user/:id', (req, res) => {
@@ -158,20 +188,109 @@ app.post('/registering', async (req, res) => {
         return;
     }
 
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
     try {
-        const isEmailExist = await securedbmod.checkEmail(username, password)
+        const isEmailExist = await securedbmod.checkEmail(email)
 
-        if (isEmailExist) res.json({ success: true, message: '電子郵件已被註冊，請嘗試登入或聯絡管理員' });
-        else await securedbmod.addUser(username, password, email)
+        if (isEmailExist) {
+            res.json({ success: false, message: '電子郵件已被註冊，請嘗試登入或聯絡管理員' });
+            return;
+        }
+        await securedbmod.addUser(username, email, password).then((result) => {
+            res.json({ success: true, message: '註冊成功' });
+            return;
+        }).catch((err) => {
+            res.json({ success: false, message: `註冊失敗: ${err.message}` });
+            return;
+        })
     } catch (err) {
         if (err.message === 'username not found') {
             res.json({ success: false, message: '帳號不存在，請先註冊' });
+            return;
         } else {
             console.error(err);
             res.json({ success: false, message: '伺服器錯誤' });
+            return;
         }
     }
+});
+
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+app.post('/verifying_email', async (req, res) => {
+    if (req.body.username === undefined || req.body.email === undefined) {
+        res.json({ success: false, message: '帳號/信箱缺失' });
+        return;
+    }
+
+    const { username, email } = req.body;
+    try {
+        const isUserOwnEmail = await securedbmod.checkUsernameAndEmailPair(username, email)
+
+        if (!isUserOwnEmail) {
+            res.json({ success: false, message: '電子郵件錯誤' });
+            return;
+        }
+
+        const token = crypto.randomBytes(32).toString('hex');
+        const expire = Date.now() + 600000; // 10分鐘過期
+        await securedbmod.saveVerifyingEmailToken(email, token, expire).catch((err) => {
+            res.json({ success: false, message: `發送失敗: ${err.message}` });
+            return;
+        })
+
+        const resetLink = `https://${process.env.DOMAIN_NAME}/reset_password?token=${token}`;
+        const transporter = nodemailer.createTransport({
+            host: "smtp.github.com",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        })
+
+        // Setup email data
+        const info =  await transporter.sendMail({
+            from: '"立方漣漪研究社" <rippou.ripple.web.noreply@google.com>', // sender address
+            to: email, // list of receivers
+            subject: 'reset password 重設密碼', // Subject line
+            text: `請點擊以下連結重設密碼：${resetLink}`,
+            html: `<p>請點擊以下連結重設密碼：<a href="${resetLink}">${resetLink}</a></p>` 
+        });
+        
+        console.log("Message sent: %s", info.messageId);
+        res.json({ success: true, message: '已發送驗證信件' });
+        return;
+
+    } catch (err) {
+        if (err.message === 'username not found') {
+            res.json({ success: false, message: '帳號不存在，請先註冊' });
+            return;
+        } else {
+            console.error(err);
+            res.json({ success: false, message: '伺服器錯誤' });
+            return;
+        }
+    }
+});
+
+app.post('/reseting_password', async (req, res) => {
+    const { token, newPassword } = req.body;
+    // 1. 驗證 token 是否存在且未過期
+    const record = await securedbmod.getResetToken(token);
+    if (!record || record.expire < Date.now()) {
+        return res.json({ success: false, message: 'Token 無效或已過期' });
+    }
+
+    // 2. 更新密碼（請用 bcrypt hash）
+    const email = await securedbmod.getEmailByToken(token);
+    await securedbmod.updateUserPasswordWithEmail(email, newPassword);
+
+    // 3. 刪除 token 或標記已使用
+    await securedbmod.deleteVerifyingEmailToken(token);
+    ㄍ
+    res.json({ success: true, message: '密碼已成功重設' });
 });
 
 // Error handling for 404

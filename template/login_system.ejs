@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title id="title"><%- title %></title>
+    <link rel="icon" href="/favicon.png" />
+</head>
+
+<body id="content">
+    <button id="back" onclick="history.back()">
+        <!-- <img src="/assets/back.svg" /> -->
+    </button>
+    <button id="home" onclick="window.location.href='/home'">
+        <!-- <img src="/assets/home.svg" />  -->
+    </button>
+    <%- form_type_and_logic %>
+    <style>
+        @import '~lucide-static/font/Lucide.css';
+        @import url("/template/font.css");
+
+        form input {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            background-color: #00000000;
+            border: black solid 2px;
+            padding: 12px;
+            font-size: 15px;
+            outline: none;
+            align-self: center;
+
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        form .text_field {
+            background-image: url(/assets/text_field_disabled.png);
+        }
+
+        form .text_field:focus {
+            background-image: url(/assets/text_field.png);
+        }
+
+        form .button {
+            background-image: url(/assets/button.png);
+        }
+
+        form .button:focus {
+            background-image: url(/assets/button_highlighted.png);
+        }
+
+        form .button:hover {
+            background-image: url(/assets/button_highlighted.png);
+        }
+
+        form .button:disabled {
+            background-image: url(/assets/button_disabled.png);
+        }
+
+        #other_options a{
+            color: #013d01;
+        }
+
+        #content {
+            font-family: Roboto;
+            background-image: url("/random_album");
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vb;
+            margin: 0px;
+            background-size: 100% 100%;
+        }
+
+        #content button {
+            height: 50px;
+            width: 50px;
+        }
+
+        #content button {
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        #content #back {
+            background-image: url(/assets/back.svg);
+        }
+
+        #content #home {
+            background-image: url(/assets/home.svg);
+        }
+
+        #back {
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            background: unset;
+            border: unset;
+            color: white;
+            height: 50px;
+            width: 50px;
+            font-size: 25pt;
+        }
+
+        :hover #back {
+            cursor: pointer;
+        }
+
+        #home {
+            position: fixed;
+            left: 70px;
+            top: 10px;
+            background: unset;
+            border: unset;
+            color: white;
+            height: 50px;
+            width: 50px;
+            font-size: 25pt;
+        }
+
+        :hover #home {
+            cursor: pointer;
+        }
+
+        form {
+            background-color: rgb(169, 169, 169, 0.7);
+            width: 400px;
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border: rgb(76, 76, 76) solid 5px;
+            align-content: center;
+
+        }
+
+        * {
+            font-family: Minecraft;
+        }
+    </style>
+</body>
+
+</html>

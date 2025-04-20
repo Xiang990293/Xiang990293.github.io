@@ -16,9 +16,16 @@ module.exports = (root) => {
 	securedb.run(`CREATE TABLE IF NOT EXISTS users (
 		id INT AUTO_INCREMENT PRIMARY KEY,
 		username TEXT UNIQUE NOT NULL,
-		email TEXT UNIQUE NOT NULL UNIQUE,
+		email TEXT UNIQUE NOT NULL,
 		hashpassword TEXT NOT NULL,
 		power INT DEFAULT 0
+	);`)
+
+	securedb.run(`CREATE TABLE IF NOT EXISTS verifying_email (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		email TEXT UNIQUE NOT NULL,
+		token TEXT NOT NULL,
+		expire INT DEFAULT 600000
 	);`)
 
 	// 取得使用者
@@ -39,27 +46,27 @@ module.exports = (root) => {
 
 	async function addUser(username, email, plainPassword) {
 		const hashPassword = await storedHashPassword(plainPassword)
-		return new Promise((resolved, reject) => {
-		  securedb.run('INSERT INTO users(username, email, hashpassword) VALUES(?, ?, ?)', [username, email, hashPassword], function (err) {
-  			if (err) {
-  				reject(err.message);
-  				return;
-  			}
-  			resolved(`使用者 ${username} 已新增`);
-  		  return;
-  		});
-  	});
+		return new Promise((resolve, reject) => {
+			securedb.run('INSERT INTO users(username, email, hashpassword) VALUES(?, ?, ?)', [username, email, hashPassword], function (err) {
+				if (err) {
+					reject(err.message);
+					return;
+				}
+				resolve(`使用者 ${username} 已新增`);
+				return;
+			});
+		});
 	}
 
 	// 更新使用者
 	async function updateUserEmail(username, email, callback) {
-		return Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			securedb.run(`UPDATE users SET email = ? WHERE username = ?;`, [email, username], function (err) {
 				if (err) {
 					reject(err.message);
 					return;
 				} else {
-					resolved(`使用者 ${username} 電子郵件已更新`);
+					resolve(`使用者 ${username} 電子郵件已更新`);
 					return;
 				}
 				callback(err, this.lastID);
@@ -67,9 +74,9 @@ module.exports = (root) => {
 		})
 	}
 	async function updateUserPassword(username, newPassword, oldPassword) {
-		if (!await verifyPassword(username, oldPassword)) return Promise((resolve, reject) => reject("舊密碼錯誤"))
+		if (!await verifyPassword(username, oldPassword)) return new Promise((resolve, reject) => reject("舊密碼錯誤"))
 		const hashPassword = await storedHashPassword(newPassword);
-		return Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 
 			securedb.run(`UPDATE users SET hashpassword = ? WHERE username = ?;`, [hashPassword, username], function (err) {
 				if (err) {
@@ -82,8 +89,22 @@ module.exports = (root) => {
 		})
 	}
 
-	async function updateUserInfo(username, info, callback) {
-		return Promise((resolve, reject) => {
+	async function updateUserPasswordWithEmail(username, newPassword) {
+		const hashPassword = await storedHashPassword(newPassword);
+		return new Promise((resolve, reject) => {
+			securedb.run(`UPDATE users SET hashpassword = ? WHERE username = ?;`, [hashPassword, username], function (err) {
+				if (err) {
+					reject(err.message);
+					return;
+				}
+				resolve(`使用者 ${username} 密碼已更新`);
+				return;
+			});
+		})
+	}
+
+	function updateUserInfo(username, info) {
+		return new Promise((resolve, reject) => {
 			securedb.run(`UPDATE users SET info = ? WHERE username = ?;`, [info, username], function (err) {
 				if (err) {
 					reject(err.message);
@@ -95,7 +116,7 @@ module.exports = (root) => {
 		})
 	}
 
-	async function updateUserName(username, callback) {
+	function updateUserName(username, callback) {
 		securedb.run(`UPDATE users SET username = ? WHERE username = ?;`, [userdata.usernameUpdated, userdata.username], function (err) {
 			if (err) {
 				console.error(err.message);
@@ -107,34 +128,36 @@ module.exports = (root) => {
 	}
 
 	async function storedHashPassword(plainPassword) {
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hash = await bcrypt.hash(plainPassword, salt);
-    return hash;
-  }
+		const salt = await bcrypt.genSalt(saltRounds);
+		const hash = await bcrypt.hash(plainPassword, salt);
+		return hash;
+	}
 
-	async function verifyPassword(username, plainPassword) {
+	function verifyPassword(username, plainPassword) {
 		return new Promise((resolve, reject) => {
-			securedb.get('SELECT hashpassword FROM users WHERE username = ?', [username], (err, hash) => {
+			securedb.get('SELECT hashpassword FROM users WHERE username = ?', [username], (err, row) => {
 				if (err) {
 					reject(err);
 					return;
 				}
 
-				if (hash == undefined) {
-					reject(new Error("username not found"));
+				if (row == undefined) {
+					reject("username not found");
 					return;
 				}
 
-				bcrypt.compare(plainPassword, hash, (err, result) => {
+				const hash = row.hashpassword
+				bcrypt.compare(`${plainPassword}`, `${hash}`, (err, result) => {
 					if (err) {
 						reject(err);
 						return;
 					}
 
 					if (result == undefined) {
-						reject(new Error("username not found"));
+						reject("username not found");
 						return;
 					}
+
 					resolve(result); // t/f
 					return;
 				});
@@ -143,7 +166,7 @@ module.exports = (root) => {
 
 	}
 
-	async function checkEmail(email) {
+	function checkEmail(email) {
 		return new Promise((resolve, reject) => {
 			securedb.get('SELECT email FROM users WHERE email = ?', [email], (err, email) => {
 				if (err) {
@@ -152,13 +175,86 @@ module.exports = (root) => {
 				}
 
 				if (email == undefined) {
-					resolve(false);
+					reject("email not found");
 					return;
 				}
 
 				resolve(true); // t/f
 				return;
 			})
+		})
+	}
+
+	function checkUsernameAndEmailPair(username, email) {
+		return new Promise((resolve, reject) => {
+			securedb.get('SELECT email FROM users WHERE username = ?', [username], (err, row) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+
+				if (email == undefined) {
+					reject("email not found");
+					return;
+				}
+
+				if (username == undefined) {
+					reject("username not found");
+					return;
+				}
+
+				if (row.email == undefined) {
+					reject("email not found");
+					return;
+				}
+
+				if (row.email != email) {
+					resolve(false);
+					return;
+				}
+
+				resolve(true);
+				return;
+			})
+		})
+	}
+
+	function saveVerifyingEmailToken(email, token, expire) {
+		return new Promise((resolve, reject) => {
+			securedb.run('INSERT OR REPLACE INTO verifying_email(email, token, expire) VALUES(?, ?, ?)', [email, token, expire], function (err) {
+				if (err) {
+					reject(err.message);
+					return;
+				}
+				resolve(`等待使用者接收驗證信件`);
+				return;
+			});
+		})
+	}
+
+	function getEmailByToken(token) {
+		return new Promise((resolve, reject) => {
+			securedb.run('SELECT email FROM verifying_email WHERE token = ?', [token], function (err, email) {
+				if (err) {
+					reject(err.message);
+					return;
+				}
+				resolve(email);
+				return;
+			});
+		})
+	}
+
+	function deleteVerifyingEmailToken(token) {
+		return new Promise((resolve, reject) => {
+			securedb.run('DELETE * FROM verifying_email WHERE token = VALUES(?)', [token], function (err) {
+				if (err) {
+					reject(err.message);
+					return;
+				}
+				resolve(` ${username} 驗證成功`);
+				return;
+			});
 		})
 	}
 
@@ -169,14 +265,18 @@ module.exports = (root) => {
 		addUser,
 		getUserbyUsername,
 		updateUserEmail,
+		updateUserPasswordWithEmail,
 		updateUserInfo,
 		updateUserPassword,
 		updateUserName,
 		verifyPassword,
 		storedHashPassword,
-		checkEmail
-		// 其他資料庫操作函式
-	};
+		checkEmail,
+		checkUsernameAndEmailPair,
+		saveVerifyingEmailToken,
+		deleteVerifyingEmailToken,
+		getEmailByToken
+	}
 }
 
 /*
