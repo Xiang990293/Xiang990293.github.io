@@ -104,23 +104,10 @@ module.exports = (root) => {
 	}
 
 	async function storedHashPassword(plainPassword) {
-		const salt = bcrypt.genSalt(saltRounds, (err, salt) => {
-			if (err) {
-				return callback(err);
-			}
-
-			return salt;
-		});
-
-		return bcrypt.hash(plainPassword, salt, (err, hash) => {
-			if (err) {
-				return callback(err);
-			}
-
-			return hash;
-		});
-
-	}
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(plainPassword, salt);
+    return hash;
+  }
 
 	async function verifyPassword(username, plainPassword) {
 		return new Promise((resolve, reject) => {
