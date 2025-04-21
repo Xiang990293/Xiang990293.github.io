@@ -6,7 +6,7 @@ const fs = require('fs');
 module.exports = (root) => {
 	console.log("正在載入 sqlite_secure")
 	const toroot = require('./toroot.js')(root);
-	const dbDir = toroot("./database");
+	const dbDir = "/database";
 	if (!fs.existsSync(dbDir)) {
 		fs.mkdirSync(dbDir);
 	}
