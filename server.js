@@ -277,7 +277,7 @@ app.post('/verifying_email', async (req, res) => {
         });
 
         console.log("Message sent: %s", info.messageId);
-        res.json({ success: true, message: '已發送驗證信件' });
+        res.json({ success: true, message: '已發送驗證信件，可能被視為垃圾郵件' });
         return;
 
     } catch (err) {
