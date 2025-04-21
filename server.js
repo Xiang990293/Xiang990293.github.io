@@ -18,17 +18,19 @@ require('dotenv').config();
 const ipynb_to_html = require('./modules/ipynb_to_html.js')(ROOT);
 
 
-
 // # express.js setting: static files
 // Serve static files from public
 const path = require('path');
 const express = require("express");
 const app = express();
 const fs = require("fs");
+const cookieParser = require('cookie-parser');
 app.use(express.static('public'));
 app.use('/web_content', express.static('web_content'));
 app.use('/code_tutorial', express.static('code_tutorial'));
 app.use('/template', express.static('template'));
+app.use(cookieParser());
+
 
 
 
@@ -147,11 +149,15 @@ app.get('/reset_password', (req, res) => {
 });
 
 app.get('/user/:id', (req, res) => {
-    securedbmod.getUserById(req.params.id, (err, user) => {
-        if (err) return res.status(500).send('DB error');
-        if (!user) return res.status(404).send('User not found');
-        res.json(user);
-    });
+    const userId = req.params.id;
+
+    if (!userId) {
+        res.redirect('/login');
+        return;
+    }
+    res.send(`User ID: ${userId}`);
+
+    // res.render('user_profile', { userId });
 });
 
 // # sqlite3 setting
@@ -167,18 +173,34 @@ app.post('/auth', async (req, res) => {
 
     const { username, password } = req.body;
     try {
-        const isValid = await securedbmod.verifyPassword(username, password)
+        const row = await securedbmod.verifyPassword(username, password)
+        const isValid = row.success;
+        const userId = row.userid
 
 
-        if (isValid) res.json({ success: true, message: '登入成功' });
-        else res.json({ success: false, message: '帳號或密碼錯誤，若尚未註冊，請先註冊' });;
-    } catch (err) {
-        if (err.message === 'username not found') {
-            res.json({ success: false, message: '帳號不存在，請先註冊' });
-        } else {
-            console.error(err);
-            res.json({ success: false, message: '伺服器錯誤' });
+        if (!isValid) {
+            res.json({ success: false, message: '帳號或密碼錯誤，若尚未註冊，請先註冊' });
+            return;
         }
+
+        // Set the cookie
+        res.cookie('userId', userId, {
+            maxAge: 30 * 24 * 60 * 60 * 1000, // Cookie expires in 30 days
+            httpOnly: true,   // Cookie cannot be accessed by client-side JavaScript
+            secure: true,     // Only sent over HTTPS (in production)
+            sameSite: 'strict' // Help prevent CSRF attacks
+        });
+        res.json({ success: true, message: '登入成功', userid: userId });
+
+        return;
+    } catch (err) {
+        if (err === 'username not found') {
+            res.json({ success: false, message: '帳號不存在，請先註冊' });
+            return
+        }
+
+        console.error(err);
+        res.json({ success: false, message: '伺服器錯誤' });
     }
 });
 
@@ -196,13 +218,10 @@ app.post('/registering', async (req, res) => {
             res.json({ success: false, message: '電子郵件已被註冊，請嘗試登入或聯絡管理員' });
             return;
         }
-        await securedbmod.addUser(username, email, password).then((result) => {
-            res.json({ success: true, message: '註冊成功' });
-            return;
-        }).catch((err) => {
-            res.json({ success: false, message: `註冊失敗: ${err.message}` });
-            return;
-        })
+
+        await securedbmod.addUser(username, email, password);
+        res.json({ success: true, message: '註冊成功', userid: await securedbmod.getIdbyEmail(email) });
+        return;
     } catch (err) {
         if (err.message === 'username not found') {
             res.json({ success: false, message: '帳號不存在，請先註冊' });
@@ -251,14 +270,14 @@ app.post('/verifying_email', async (req, res) => {
         })
 
         // Setup email data
-        const info =  await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: '"立方漣漪研究社" <rippou.ripple.web.noreply@google.com>', // sender address
             to: email, // list of receivers
             subject: 'reset password 重設密碼', // Subject line
             text: `請點擊以下連結重設密碼：${resetLink}`,
-            html: `<p>請點擊以下連結重設密碼：<a href="${resetLink}">${resetLink}</a></p>` 
+            html: `<p>請點擊以下連結重設密碼：<a href="${resetLink}">${resetLink}</a></p>`
         });
-        
+
         console.log("Message sent: %s", info.messageId);
         res.json({ success: true, message: '已發送驗證信件' });
         return;
@@ -321,19 +340,6 @@ function query_handler(querys) {
 }
 
 
-
-/*
-// 從資料庫取出該用戶的 hash 密碼
-const storedHash = '從資料庫取得的hash字串';
-
-verifyPassword('userPassword123', storedHash).then(isMatch => {
-    if (isMatch) {
-        console.log('密碼正確，登入成功');
-    } else {
-        console.log('密碼錯誤，登入失敗');
-    }
-});
-*/
 
 app.listen(port, () => {
     console.log(`伺服器開始運行! 在 http://${ip}:${port}`);

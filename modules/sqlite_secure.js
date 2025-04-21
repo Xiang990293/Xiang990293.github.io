@@ -19,33 +19,52 @@ module.exports = (root) => {
 	});
 
 	securedb.run(`CREATE TABLE IF NOT EXISTS users (
-		id INT AUTO_INCREMENT PRIMARY KEY,
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		username TEXT UNIQUE NOT NULL,
 		email TEXT UNIQUE NOT NULL,
 		hashpassword TEXT NOT NULL,
-		power INT DEFAULT 0
+		power INTEGER DEFAULT 0
 	);`)
 
 	securedb.run(`CREATE TABLE IF NOT EXISTS verifying_email (
-		id INT AUTO_INCREMENT PRIMARY KEY,
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		email TEXT UNIQUE NOT NULL,
 		token TEXT NOT NULL,
-		expire INT DEFAULT 600000
+		expire INTEGER DEFAULT 600000
 	);`)
 
 	// 取得使用者
-	function getUserById(id, callback) {
-		securedb.get('SELECT * FROM users WHERE id = ?', [id], (err, row) => {
-			callback(err, row);
+	function getUsernameById(id) {
+		return new Promise((resolve, reject) => {
+			securedb.get('SELECT username FROM users WHERE id = ?', [id], (err, row) => {
+				if (err) {
+					reject(err.message);
+					return;
+				}
+				if (row == undefined) {
+					reject("id not found");
+					return;
+				}
+				resolve(row.username);
+				return;
+			});
 		});
-
 	}
-	function getUserbyUsername(username, callback) {
-		securedb.get(`SELECT * FROM users WHERE username = ?`, [username], (err, row) => {
-			if (err) {
-				return callback(err);
-			}
-			callback(null, row);
+
+	function getIdbyEmail(email) {
+		return new Promise((resolve, reject) => {
+			securedb.get(`SELECT id FROM users WHERE email = ?`, [email], (err, row) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+				if (row == undefined) {
+					reject("email not found");
+					return;
+				}
+				resolve(row.id);
+				return;
+			});
 		});
 	}
 
@@ -140,7 +159,7 @@ module.exports = (root) => {
 
 	function verifyPassword(username, plainPassword) {
 		return new Promise((resolve, reject) => {
-			securedb.get('SELECT hashpassword FROM users WHERE username = ?', [username], (err, row) => {
+			securedb.get('SELECT hashpassword, id FROM users WHERE username = ?', [username], (err, row) => {
 				if (err) {
 					reject(err);
 					return;
@@ -163,7 +182,7 @@ module.exports = (root) => {
 						return;
 					}
 
-					resolve(result); // t/f
+					resolve({success: result, userid: row.id}); // t/f
 					return;
 				});
 			})
@@ -179,12 +198,12 @@ module.exports = (root) => {
 					return;
 				}
 
-				if (email == undefined) {
-					reject("email not found");
+				if (email != undefined) {
+					resolve(true);
 					return;
 				}
 
-				resolve(true); // t/f
+				resolve(false); // t/f
 				return;
 			})
 		})
@@ -271,9 +290,9 @@ module.exports = (root) => {
 	console.log("已載入 sqlite_secure")
 
 	return {
-		getUserById,
+		getUsernameById,
 		addUser,
-		getUserbyUsername,
+		getIdbyEmail,
 		updateUserEmail,
 		updateUserPasswordWithEmail,
 		updateUserInfo,

@@ -17,6 +17,13 @@
             password: document.getElementById('loginForm').password.value
         };
 
+        // get cookie
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
         try {
             const res = await fetch('/auth', {
                 method: 'POST',
@@ -28,7 +35,7 @@
 
             if (res.ok && result.success) {
                 // 登入成功，導向主頁或其他頁面
-                window.location.href = '/dashboard'; // 依實際需求修改
+                window.location.href = `/user/${result.userid}`; // 依實際需求修改
             } else {
                 // 顯示錯誤訊息
                 document.getElementById('errorMsg').textContent = result.message || '登入失敗';
