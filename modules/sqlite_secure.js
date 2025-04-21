@@ -113,15 +113,15 @@ module.exports = (root) => {
 		})
 	}
 
-	async function updateUserPasswordWithEmail(username, newPassword) {
+	async function updateUserPasswordWithEmail(email, newPassword) {
 		const hashPassword = await storedHashPassword(newPassword);
 		return new Promise((resolve, reject) => {
-			securedb.run(`UPDATE users SET hashpassword = ? WHERE username = ?;`, [hashPassword, username], function (err) {
+			securedb.run(`UPDATE users SET hashpassword = ? WHERE email = ?;`, [hashPassword, email], function (err) {
 				if (err) {
-					reject(err.message);
+					reject(err.message + ", at updateUserPasswordWithEmail");
 					return;
 				}
-				resolve(`使用者 ${username} 密碼已更新`);
+				resolve(`使用者 ${email} 密碼已更新`);
 				return;
 			});
 		})
@@ -140,12 +140,12 @@ module.exports = (root) => {
 		})
 	}
 
-	function updateUserName(username, callback) {
-		securedb.run(`UPDATE users SET username = ? WHERE username = ?;`, [userdata.usernameUpdated, userdata.username], function (err) {
+	function updateUserName(username, usernameUpdated) {
+		securedb.run(`UPDATE users SET username = ? WHERE username = ?;`, [usernameUpdated, username], function (err) {
 			if (err) {
 				console.error(err.message);
 			} else {
-				console.log(`使用者 ${username} 簡介已更新`);
+				console.log(`使用者 ${username} 已更新為 ${usernameUpdated}`);
 			}
 			callback(err, this.lastID);
 		});
@@ -263,12 +263,29 @@ module.exports = (root) => {
 
 	function getEmailByToken(token) {
 		return new Promise((resolve, reject) => {
-			securedb.run('SELECT email FROM verifying_email WHERE token = ?', [token], function (err, email) {
+			securedb.get('SELECT email FROM verifying_email WHERE token = ?', [token], function (err, row) {
 				if (err) {
-					reject(err.message);
+					reject(err.message + ", at getEmailByToken");
 					return;
 				}
-				resolve(email);
+				resolve(row.email);
+				return;
+			});
+		})
+	}
+
+	function getResetToken(token) {
+		return new Promise((resolve, reject) => {
+			securedb.get('SELECT * FROM verifying_email WHERE token = ?', [token], function (err, row) {
+				if (err) {
+					reject(err.message + ", at getResetToken");
+					return;
+				}
+
+				if (!row) {
+					reject("token not found")
+				}
+				resolve(row);
 				return;
 			});
 		})
@@ -276,12 +293,12 @@ module.exports = (root) => {
 
 	function deleteVerifyingEmailToken(token) {
 		return new Promise((resolve, reject) => {
-			securedb.run('DELETE * FROM verifying_email WHERE token = VALUES(?)', [token], function (err) {
+			securedb.run('DELETE FROM verifying_email WHERE token = ?', [token], function (err) {
 				if (err) {
-					reject(err.message);
+					reject(err.message + ", at deleteVerifyingEmailToken");
 					return;
 				}
-				resolve(` ${username} 驗證成功`);
+				resolve(`驗證成功`);
 				return;
 			});
 		})
@@ -304,7 +321,8 @@ module.exports = (root) => {
 		checkUsernameAndEmailPair,
 		saveVerifyingEmailToken,
 		deleteVerifyingEmailToken,
-		getEmailByToken
+		getEmailByToken,
+		getResetToken
 	}
 }
 

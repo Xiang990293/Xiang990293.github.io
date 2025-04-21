@@ -260,9 +260,7 @@ app.post('/verifying_email', async (req, res) => {
 
         const resetLink = `https://${process.env.DOMAIN_NAME}/reset_password?token=${token}`;
         const transporter = nodemailer.createTransport({
-            host: "smtp.github.com",
-            port: 587,
-            secure: false, // true for 465, false for other ports
+            service: 'gmail',
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
@@ -295,20 +293,20 @@ app.post('/verifying_email', async (req, res) => {
 });
 
 app.post('/reseting_password', async (req, res) => {
-    const { token, newPassword } = req.body;
+    const { token, password } = req.body;
     // 1. 驗證 token 是否存在且未過期
-    const record = await securedbmod.getResetToken(token);
-    if (!record || record.expire < Date.now()) {
+    const row = await securedbmod.getResetToken(token);
+    if (!row || row.expire < Date.now()) {
         return res.json({ success: false, message: 'Token 無效或已過期' });
     }
 
     // 2. 更新密碼（請用 bcrypt hash）
     const email = await securedbmod.getEmailByToken(token);
-    await securedbmod.updateUserPasswordWithEmail(email, newPassword);
+
+    await securedbmod.updateUserPasswordWithEmail(email, password);
 
     // 3. 刪除 token 或標記已使用
     await securedbmod.deleteVerifyingEmailToken(token);
-    ㄍ
     res.json({ success: true, message: '密碼已成功重設' });
 });
 
