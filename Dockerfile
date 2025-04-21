@@ -37,8 +37,8 @@ FROM base
 COPY --from=build /app /app
 
 # Setup sqlite3 on a separate volume
-RUN mkdir -p /data
-VOLUME /data
+RUN mkdir -p /database
+VOLUME /database
 
 # Copy notebooks folder into /notebooks
 RUN mkdir -p /notebooks
