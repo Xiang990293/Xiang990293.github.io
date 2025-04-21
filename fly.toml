@@ -11,7 +11,7 @@ source="member_access"
 destination="/database"
 
 [env]
-DOMAIN_NAME = "rippou-ripple-web.fly.dev"
+DOMAIN_NAME = "https://rippou-ripple-web.fly.dev"
 
 [build]
 

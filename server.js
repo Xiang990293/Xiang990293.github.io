@@ -258,7 +258,7 @@ app.post('/verifying_email', async (req, res) => {
             return;
         })
 
-        const resetLink = `https://${process.env.DOMAIN_NAME}/reset_password?token=${token}`;
+        const resetLink = `${process.env.DOMAIN_NAME}/reset_password?token=${token}`;
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
