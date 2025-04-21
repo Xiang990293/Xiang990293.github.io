@@ -208,6 +208,11 @@ module.exports = (root) => {
 					return;
 				}
 
+				if (row == undefined) {
+					reject("email not found");
+					return;
+				}
+
 				if (row.email == undefined) {
 					reject("email not found");
 					return;
