@@ -284,11 +284,15 @@ app.post('/verifying_email', async (req, res) => {
         if (err.message === 'username not found') {
             res.json({ success: false, message: '帳號不存在，請先註冊' });
             return;
-        } else {
-            console.error(err);
-            res.json({ success: false, message: '伺服器錯誤' });
+        }
+        if (err.message === 'email not found') {
+            res.json({ success: false, message: '帳號不存在，請先註冊' });
             return;
         }
+
+        console.error(err);
+        res.json({ success: false, message: '伺服器錯誤' });
+        return;
     }
 });
 
