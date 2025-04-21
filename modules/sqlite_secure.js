@@ -10,7 +10,7 @@ module.exports = (root) => {
 	if (!fs.existsSync(dbDir)) {
 		fs.mkdirSync(dbDir);
 	}
-	const securedb = new sqlite3.Database(toroot("./database/secure.sqlite"), (err) => {
+	const securedb = new sqlite3.Database(`${dbDir}/secure.sqlite`), (err) => {
 		if (err) {
 			console.error('連接至安全資料庫時發生問題：', err.message);
 		} else {
