@@ -12,6 +12,7 @@ destination="/database"
 
 [env]
 DOMAIN_NAME = "https://rippou-ripple-web.fly.dev"
+DATABASE_PATH = "/database"
 
 [build]
 

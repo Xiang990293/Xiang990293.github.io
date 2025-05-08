@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Test</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+    <script>
+        async function runPythonCode() {
+            try{
+                const res = await fetch('/api/python/test?param1=3&param2=5');
+            console.log('Running Python code...');
+
+                const result = await res.json();
+
+                document.body.innerHTML = `
+                    <h1>Python Test</h1>
+                    <p>Result: ${result.result}</p>
+                    <p>Message: ${result.message}</p>
+                `;
+            } catch (error) {
+                document.body.innerHTML = `
+                    <h1>Error</h1>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+
+        window.onload = runPythonCode;
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+</html>

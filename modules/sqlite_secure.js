@@ -6,16 +6,17 @@ const fs = require('fs');
 module.exports = (root) => {
 	console.log("正在載入 sqlite_secure")
 	const toroot = require('./toroot.js')(root);
-	const dbDir = "/database";
+	const dbDir = process.env.DATABASE_PATH;
 	if (!fs.existsSync(dbDir)) {
 		fs.mkdirSync(dbDir);
 	}
 	const securedb = new sqlite3.Database(`${dbDir}/secure.sqlite`, (err) => {
 		if (err) {
 			console.error('連接至安全資料庫時發生問題：', err.message);
-		} else {
-			console.log('已連接至安全資料庫');
+			return;
 		}
+		console.log('已連接至安全資料庫');
+		return;
 	});
 
 	securedb.run(`CREATE TABLE IF NOT EXISTS users (

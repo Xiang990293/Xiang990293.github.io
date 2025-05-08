@@ -33,14 +33,14 @@ app.use(cookieParser());
 
 
 
-
 const ejs = require('ejs');
 app.set('view engine', 'ejs');
 app.set('views', './template');
-// 路由模組
+// 路由模組 & 路由掛載
 const toolsRouter = require('./router/tools.js')(ROOT);
-// 路由掛載
+const pythonRouter = require('./router/python.js')(ROOT);
 app.use('/tools', toolsRouter);
+app.use('/python', pythonRouter);
 
 // Serve favicon
 app.get('/favicon.png', (req, res) => {
@@ -148,6 +148,15 @@ app.get('/reset_password', (req, res) => {
     res.render('login_system', data);
 });
 
+app.get('/test_python', (req, res) => {
+    data = {
+        title: 'nan py - 立方漣漪研究社',
+        form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/test_python.html"), 'utf8')
+    }
+
+    res.sendFile(path.join(ROOT, "public/test_python.html"));
+});
+
 app.get('/user/:id', (req, res) => {
     const userId = req.params.id;
 
@@ -159,6 +168,8 @@ app.get('/user/:id', (req, res) => {
 
     // res.render('user_profile', { userId });
 });
+
+
 
 // # sqlite3 setting
 // 載入 sqlite3 secure database module
@@ -226,11 +237,11 @@ app.post('/registering', async (req, res) => {
         if (err.message === 'username not found') {
             res.json({ success: false, message: '帳號不存在，請先註冊' });
             return;
-        } else {
-            console.error(err);
-            res.json({ success: false, message: '伺服器錯誤' });
-            return;
         }
+
+        console.error(err);
+        res.json({ success: false, message: '伺服器錯誤' });
+        return;
     }
 });
 
