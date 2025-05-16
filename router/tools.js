@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs');
+const i18next = require('i18next');
 
 // 匯出路由
 module.exports = (root) => {
@@ -39,8 +40,8 @@ module.exports = (root) => {
         const toolName = req.params.name;
 
         data = {
-            title: `${genre} - 立方漣漪研究社`,
-            heading: `${genre}`,
+            title: `${genre} - ${toolName} - 立方漣漪研究社`,
+            heading: `${genre} - ${toolName}`,
             content: fs.readFileSync(path.join(root, `public/tools/${genre}/${toolName}.html`), 'utf8')
         }
 

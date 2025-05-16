@@ -14,7 +14,6 @@ require('dotenv').config();
 
 
 
-
 const ipynb_to_html = require('./modules/ipynb_to_html.js')(ROOT);
 
 
@@ -351,6 +350,10 @@ function query_handler(querys) {
 
     return result;
 }
+
+
+
+const i18next = require('i18next');
 
 
 
