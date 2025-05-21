@@ -10,7 +10,7 @@ module.exports = (root) => {
     const execPython = async (scriptPath, args) => {
         const arguments = args.map(arg => arg.toString());
     
-        const py = spawn("python3", [scriptPath, ...arguments]);
+        const py = spawn(process.env.PYTHON_PATH, [scriptPath, ...arguments]);
     
         return await new Promise((resolve, reject) => {
     
