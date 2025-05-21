@@ -1,53 +1,49 @@
 # syntax = docker/dockerfile:1
 
-# Adjust NODE_VERSION as desired
 ARG NODE_VERSION=20.18.0
-ARG PYTHON_VERSION=3.12
 FROM node:${NODE_VERSION}-slim AS base
 
 LABEL fly_launch_runtime="Node.js"
 
-# Node.js app lives here
 WORKDIR /app
 
-# Throw-away build stage to reduce size of final image
+# Build 階段，安裝 Python 及編譯環境
 FROM base AS build
 
-# Install packages needed to build node modules
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
-        python${PYTHON_VERSION} python3-pip python3-venv \
+        python3 python3-pip python3-venv \
         build-essential node-gyp pkg-config python-is-python3 && \
-    ln -sf python${PYTHON_VERSION} /usr/bin/python3 && \
     ln -sf python3 /usr/bin/python && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install node modules
-COPY package-lock.json package.json ./
-COPY requirements.txt ./
+# 複製 package.json 與 requirements.txt
+COPY package.json package-lock.json requirements.txt ./
+
+# 安裝 Node.js 套件
 RUN npm ci
-RUN npm install
+
+# 安裝 Python 套件
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Copy application code
+# 複製應用程式碼
 COPY . .
 
-
-
-# Final stage for app image
+# 最終映像，使用 base 映像，減少大小
 FROM base
 
-# Copy built application
+WORKDIR /app
+
+# 複製 build 階段產物
 COPY --from=build /app /app
 
-# Setup sqlite3 on a separate volume & Copy notebooks folder into /notebooks
+# 建立資料庫與筆記資料夾
 RUN mkdir -p /database /notebooks
 VOLUME /database
 
-# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 
-# Set production environment
 ENV NODE_ENV="production"
 ENV DATABASE_URL="file:///data/sqlite.db"
-CMD [ "node", "server.js" ]
+
+CMD ["node", "server.js"]
