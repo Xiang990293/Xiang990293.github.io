@@ -13,7 +13,7 @@ module.exports = (root) => {
         // check python to prevent system break
         if (!fs.existsSync(process.env.PYTHON_PATH)) {
             console.error(`Python not found at ${process.env.PYTHON_PATH}`);
-            console.error(`Current path: ${fs.readdirSync(path.dirname("./"))}`);
+            console.error(`Things in Current dir: ${fs.readdirSync(path.dirname("./venv/"))}`);
             throw new Error('Python not found');
         }
     
