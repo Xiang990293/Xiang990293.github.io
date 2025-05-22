@@ -12,7 +12,7 @@ FROM base AS build
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
-        python3 python3-pip python3-venv \
+        python3 python3-pip python3-venv libexpat1 \
         build-essential node-gyp pkg-config python-is-python3 && \
     ln -sf python3 /usr/bin/python && \
     apt-get clean && rm -rf /var/lib/apt/lists/*

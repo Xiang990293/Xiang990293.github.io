@@ -31,7 +31,7 @@ module.exports = (root) => {
     
             py.stderr.on('data', (data) => {
                 console.error(`[python] stderr: ${data}`);
-                reject(`Error occured in ${script}`);
+                reject(`Error occured in ${scriptPath}`);
             });
     
             py.on('exit', (code) => {
