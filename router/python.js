@@ -10,15 +10,16 @@ module.exports = (root) => {
     const execPython = async (scriptPath, args) => {
         const arguments = args.map(arg => arg.toString());
 
+        py_abs_path = path.resolve(process.env.PYTHON_PATH);
         // check python to prevent system break
-        if (!fs.existsSync(process.env.PYTHON_PATH)) {
-            console.error(`Python not found at ${process.env.PYTHON_PATH}`);
+        if (!fs.existsSync(py_abs_path)) {
+            console.error(`Python not found at ${py_abs_path}`);
             let Path = "./venv/bin/"
             console.error(`Things in ${Path}: ${fs.readdirSync(Path)}`);
             throw new Error('Python not found');
         }
     
-        const py = spawn(process.env.PYTHON_PATH, [scriptPath, ...arguments]);
+        const py = spawn(py_abs_path, [scriptPath, ...arguments]);
     
         return await new Promise((resolve, reject) => {
     
