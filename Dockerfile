@@ -38,7 +38,6 @@ WORKDIR /app
 
 # 複製 build 階段產物
 COPY --from=build /app /app
-COPY --from=build /venv /venv
 
 # 建立資料庫與筆記資料夾
 RUN mkdir -p /database /notebooks
