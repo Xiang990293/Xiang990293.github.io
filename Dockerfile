@@ -34,6 +34,9 @@ COPY . .
 # 最終映像，使用 base 映像，減少大小
 FROM base
 
+RUN apt-get update -qq && apt-get install -y libexpat1 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # 複製 build 階段產物
@@ -47,6 +50,6 @@ EXPOSE 3000
 
 ENV NODE_ENV="production"
 ENV DATABASE_URL="file:///data/sqlite.db"
-ENV PYTHON_PATH="./venv/bin/python3"
+ENV PYTHON_PATH="/app/venv/bin/python3"
 
 CMD ["node", "server.js"]

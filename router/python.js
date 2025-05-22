@@ -26,19 +26,32 @@ module.exports = (root) => {
             let errorOutput = '';
     
             py.stdout.on('data', (data) => {
-                output += JSON.parse(data);
+                output += data.toString();
             });
     
             py.stderr.on('data', (data) => {
                 console.error(`[python] stderr: ${data}`);
-                reject(`Error occured in ${scriptPath}`);
+
+                errorOutput += data.toString();
+                // reject(`Error occured in ${scriptPath}`);
+            });
+
+            py.on('error', (err) => {
+                reject(err);
             });
     
-            py.on('exit', (code) => {
+            py.on('close', (code) => {
                 if (code !== 0) {
                     reject(new Error(`Python script exited with code ${code}: ${errorOutput}`));
-                } else {
-                    resolve(output);
+                }
+
+                try {   
+                    const result = JSON.parse(output);
+                    resolve(result);
+                }
+                catch (err) {
+                    console.error(`Error parsing JSON output: ${output}`);
+                    reject(new Error(`Error parsing JSON output: from ${output} to ${output}`));
                 }
             });
         });
