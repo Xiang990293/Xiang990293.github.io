@@ -14,7 +14,7 @@ module.exports = (root) => {
         if (!fs.existsSync(process.env.PYTHON_PATH)) {
             console.error(`Python not found at ${process.env.PYTHON_PATH}`);
             let Path = "./venv/"
-            console.error(`Things in ${Path}: ${fs.readdirSync(path.dirname(Path))}`);
+            console.error(`Things in ${Path}: ${fs.readdirSync(Path)}`);
             throw new Error('Python not found');
         }
     
