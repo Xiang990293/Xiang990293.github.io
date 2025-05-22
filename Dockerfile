@@ -34,7 +34,7 @@ COPY . .
 # 最終映像，使用 base 映像，減少大小
 FROM base
 
-RUN apt-get update -qq && apt-get install -y libexpat1 && \
+RUN apt-get update -qq && apt-get install -y python3 python3-venv python3-pip libexpat1 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
