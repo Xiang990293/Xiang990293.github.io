@@ -11,8 +11,8 @@ module.exports = (root) => {
         const arguments = args.map(arg => arg.toString());
 
         // check python to prevent system break
-        if (!fs.existsSync(py_abs_path)) {
-            console.error(`Python not found at ${py_abs_path}: ${fs.existsSync(py_abs_path)}`);
+        if (!fs.existsSync(process.env.PYTHON_PATH)) {
+            console.error(`Python not found at ${process.env.PYTHON_PATH}: ${fs.existsSync(process.env.PYTHON_PATH)}`);
             let Path = "/app/venv/bin/"
             console.error(`Things in ${Path}: ${fs.readdirSync(Path)}`);
             throw new Error('Python not found');
