@@ -10,12 +10,13 @@ WORKDIR /app
 # Build 階段，安裝 Python 及編譯環境
 FROM base AS build
 
-RUN apt-get update -qq
-RUN apt-get install --no-install-recommends -y \
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
         python3 python3-pip python3-venv \
-        build-essential node-gyp pkg-config python-is-python3
-RUN ln -sf python3 /usr/bin/python
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+        build-essential node-gyp pkg-config python-is-python3 && \
+    ln -sf python3 /usr/bin/python && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 RUN python3 -m venv /venv
 
 # 複製 package.json 與 requirements.txt
@@ -37,6 +38,7 @@ WORKDIR /app
 
 # 複製 build 階段產物
 COPY --from=build /app /app
+COPY --from=build /venv /venv
 
 # 建立資料庫與筆記資料夾
 RUN mkdir -p /database /notebooks
@@ -46,6 +48,6 @@ EXPOSE 3000
 
 ENV NODE_ENV="production"
 ENV DATABASE_URL="file:///data/sqlite.db"
-ENV PYTHON_PATH="/app/venv/bin/python"
+ENV PYTHON_PATH="/venv/bin/python"
 
 CMD ["node", "server.js"]
