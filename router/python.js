@@ -9,6 +9,12 @@ module.exports = (root) => {
     // # python script handler
     const execPython = async (scriptPath, args) => {
         const arguments = args.map(arg => arg.toString());
+
+        // check python to prevent system break
+        if (!fs.existsSync(process.env.PYTHON_PATH)) {
+            console.error(`Python not found at ${process.env.PYTHON_PATH}`);
+            throw new Error('Python not found');
+        }
     
         const py = spawn(process.env.PYTHON_PATH, [scriptPath, ...arguments]);
     
