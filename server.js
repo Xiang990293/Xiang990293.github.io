@@ -41,6 +41,8 @@ const pythonRouter = require('./router/python.js')(ROOT);
 app.use('/tools', toolsRouter);
 app.use('/python', pythonRouter);
 
+fs.
+
 // Serve favicon
 app.get('/favicon.png', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'assets', 'favicon.png'));
