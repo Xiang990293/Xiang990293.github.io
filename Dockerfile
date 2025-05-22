@@ -17,7 +17,7 @@ RUN apt-get update -qq && \
     ln -sf python3 /usr/bin/python && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m venv /app/venv
+RUN python3 -m venv --copies /app/venv
 
 # 複製 package.json 與 requirements.txt
 COPY package.json package-lock.json requirements.txt ./
