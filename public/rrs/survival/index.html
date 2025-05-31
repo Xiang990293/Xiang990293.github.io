@@ -15,7 +15,7 @@
     <script>
         const WebSocket = window.WebSocket || window.MozWebSocket;
 
-        const ws = new WebSocket('ws://172.22.21.48:8765');
+        const ws = new WebSocket('wss://172.22.21.48:8765');
         const log = document.getElementById('log');
 
         ws.onopen = () => {
