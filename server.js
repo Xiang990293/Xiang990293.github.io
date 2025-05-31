@@ -32,9 +32,14 @@ app.use(cookieParser());
 
 
 
+// # express.js setting: view engine
+// 使用 EJS 作為模板引擎
 const ejs = require('ejs');
 app.set('view engine', 'ejs');
 app.set('views', './template');
+
+
+
 // 路由模組 & 路由掛載
 const toolsRouter = require('./router/tools.js')(ROOT);
 const pythonRouter = require('./router/python.js')(ROOT);
