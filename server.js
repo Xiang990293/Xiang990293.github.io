@@ -330,13 +330,19 @@ app.post('/reseting_password', async (req, res) => {
 });
 
 // # 
-const minecraft_server_upload = require('./modules/minecraft_server_upload.js')(ROOT);
+const minecraft_server_map = require('./modules/minecraft_server_map.js')(ROOT);
 const bodyParser = require('body-parser');
 app.use(bodyParser.json()); // 處理 application/x-www-form-urlencoded
 app.post('/rippou-ripple-server/survival/upload', (req, res) => {
-    minecraft_server_upload.upload_map(req.body)
+    req.query.map_name = req.query.map_name || 'new_file';
     console.log('收到資料:', req.body);
-    res.send('資料已收到');
+    try {
+        minecraft_server_map.upload_map(req.query.map_name, req.body);
+        res.send('資料已收到');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('上傳地圖時發生錯誤');
+    }
 });
 
 // Error handling for 404
