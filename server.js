@@ -178,8 +178,6 @@ app.get('/user/:id', (req, res) => {
 // # sqlite3 setting
 // 載入 sqlite3 secure database module
 const securedbmod = require('./modules/sqlite_secure.js')(ROOT);
-app.use(express.urlencoded({ extended: true })); // 處理 form-urlencoded（表單）資料
-app.use(express.json()); // 處理 JSON 資料（如果有用到）
 app.post('/auth', async (req, res) => {
     if (req.body.password === undefined || req.body.username === undefined) {
         res.json({ success: false, message: '帳號/密碼缺失' });
@@ -332,10 +330,11 @@ app.post('/reseting_password', async (req, res) => {
 // # 
 const minecraft_server_map = require('./modules/minecraft_server_map.js')(ROOT);
 const bodyParser = require('body-parser');
-// 調整 JSON 請求體大小限制，例如設定 50mb
-// 調整 URL-encoded 請求體大小限制及參數數量
-app.use(bodyParser.json({ limit: '50mb' })); // 處理 application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+// // 調整 JSON 請求體大小限制，例如設定 50mb
+// // 調整 URL-encoded 請求體大小限制及參數數量
+app.use(bodyParser.json({ limit: '500mb' })); // 處理 application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ limit: '500mb', extended: true, parameterLimit: 10000000 }));
+
 app.post('/rippou-ripple-server/survival/upload', (req, res) => {
     req.query.map_name = req.query.map_name || 'new_file';
     console.log('收到資料:', req.body);
