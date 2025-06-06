@@ -28,7 +28,7 @@ module.exports = (root) => {
         // 獲取上傳的地圖數據
         console.log(`獲取地圖：${map_name}`);
         try {
-            const map_data = fs.readFileSync(`${dbDir}/rippou-ripple-server/survival/${map_name}.txt`, 'utf8');
+            const map_data = fs.readFileSync(`${dbDir}/rippou-ripple-server/survival/${map_name}.json`, 'utf8');
             return map_data;
         } catch (err) {
             console.error('獲取地圖時發生錯誤：', err.message);

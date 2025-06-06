@@ -344,6 +344,16 @@ app.post('/rippou-ripple-server/survival/upload', (req, res) => {
         res.status(500).send('上傳地圖時發生錯誤');
     }
 });
+app.get('/rippou-ripple-server/survival/query/:map_name', (req, res) => {
+    map_name = req.params.map_name;
+    try {
+        const map_data = minecraft_server_map.get_map(map_name);
+        res.status(200).json(map_data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('獲取地圖時發生錯誤');
+    }
+});
 
 // Error handling for 404
 app.use((req, res, next) => {
