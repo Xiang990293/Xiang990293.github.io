@@ -332,7 +332,10 @@ app.post('/reseting_password', async (req, res) => {
 // # 
 const minecraft_server_map = require('./modules/minecraft_server_map.js')(ROOT);
 const bodyParser = require('body-parser');
-app.use(bodyParser.json()); // 處理 application/x-www-form-urlencoded
+// 調整 JSON 請求體大小限制，例如設定 50mb
+// 調整 URL-encoded 請求體大小限制及參數數量
+app.use(bodyParser.json({ limit: '50mb' })); // 處理 application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.post('/rippou-ripple-server/survival/upload', (req, res) => {
     req.query.map_name = req.query.map_name || 'new_file';
     console.log('收到資料:', req.body);
