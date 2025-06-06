@@ -55,8 +55,8 @@ export default function Grid() {
                     return (
                         <rect
                             key={idx}
-                            x={x}
-                            y={y}
+                            x={baseSize * x}
+                            y={baseSize * y}
                             width={size}
                             height={size}
                             fill={isHovered ? 'orange' : 'blue'}
