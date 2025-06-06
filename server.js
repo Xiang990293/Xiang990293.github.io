@@ -24,7 +24,7 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const cookieParser = require('cookie-parser');
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/web_content', express.static('web_content'));
 app.use('/code_tutorial', express.static('code_tutorial'));
 app.use('/template', express.static('template'));
@@ -327,6 +327,16 @@ app.post('/reseting_password', async (req, res) => {
     // 3. 刪除 token 或標記已使用
     await securedbmod.deleteVerifyingEmailToken(token);
     res.json({ success: true, message: '密碼已成功重設' });
+});
+
+// # 
+const minecraft_server_upload = require('./modules/minecraft_server_upload.js')(ROOT);
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // 處理 application/x-www-form-urlencoded
+app.post('/rippou-ripple-server/survival/upload', (req, res) => {
+    minecraft_server_upload.upload_map(req.body)
+    console.log('收到資料:', req.body);
+    res.send('資料已收到');
 });
 
 // Error handling for 404

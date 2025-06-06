@@ -4,13 +4,20 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@flydotio/node-demo": "^0.2.1"
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
+    "@flydotio/node-demo": "^0.2.1",
+    "babel-loader": "^10.0.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -32,6 +39,8 @@
     "nodemailer": "^6.10.1",
     "nodom": "^2.4.0",
     "python-shell": "^5.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "sqlite3": "^5.1.7",
     "ssi": "^0.3.0",
     "url": "^0.11.4",

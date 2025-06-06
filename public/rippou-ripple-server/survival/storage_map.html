@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>全物品倉庫地圖</title>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+
+    <script src="/js/react-widget.bundle.js"></script>
+
+</head>
+
+<body>
+    <div class="constainer">
+        <h1 style="text-align: center;">全物品倉庫地圖</h1>
+        <div id="react-widget"></div>
+    </div>
+    <script>
+
+        const root = ReactDOM.createRoot(document.getElementById('react-widget'));
+        console.log('ReactWidget:', ReactWidget);
+        console.log('ReactWidget.default:', ReactWidget.default);
+
+        root.render(React.createElement(ReactWidget));
+    </script>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            /* 垂直排列 */
+            align-items: center;
+            /* 水平置中 */
+            height: 100vh;
+            /* 讓容器高度填滿視窗 */
+            gap: 20px;
+            /* 標題與地圖間距 */
+            width: fit-content
+        }
+
+        .title {
+            margin: 0;
+            text-align: center;
+            /* 文字置中 */
+        }
+
+        #react-widget {
+            display: flex;
+            justify-content: center;
+            /* 水平置中 */
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(136, 6px);
+            /* 每格10px寬度 */
+            grid-template-rows: repeat(136, 6px);
+            gap: 1px;
+            width: max-content;
+            border: none;
+        }
+
+        .grid-cell {
+            width: 7px;
+            height: 7px;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            margin: none;
+            padding: none;
+        }
+
+        .grid-cell:hover {
+            transform: scale(1.5);
+            z-index: 10;
+        }
+
+        .grid-cell.red {
+            background-color: #f44336;
+        }
+
+        .grid-cell.green {
+            background-color: #4caf50;
+        }
+
+        .grid-cell.blue {
+            background-color: #2196f3;
+        }
+
+        .info-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 150px;
+            font-size: 14px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+    </style>
+</body>
+
+</html>
