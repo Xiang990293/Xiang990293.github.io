@@ -70,7 +70,17 @@ export default function Grid() {
                 })}
             </svg>
 
-            <div style={{ marginLeft: 20, minWidth: 200 }}>
+            <div style={{
+                position: 'fixed',
+                top: 40,
+                right: 40,
+                width: 220,
+                background: '#fff',
+                border: '1px solid #ddd',
+                borderRadius: 8,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                padding: 16,
+                zIndex: 1000}}>
                 {hoverInfo !== null ? (
                     <>
                         <h3>物品詳細資訊</h3>
