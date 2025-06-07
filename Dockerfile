@@ -47,9 +47,9 @@ RUN mkdir -p /database /notebooks
 VOLUME /database
 
 EXPOSE 3000
-
 ENV NODE_ENV="production"
 ENV DATABASE_URL="file:///data/sqlite.db"
 ENV PYTHON_PATH="/app/venv/bin/python3"
+RUN npm run build
 
 CMD ["node", "server.js"]
