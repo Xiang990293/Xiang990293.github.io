@@ -17,7 +17,7 @@ module.exports = (root) => {
         
         try {
             fs.mkdirSync(`${dbDir}/rippou-ripple-server/survival`, { recursive: true });
-            fs.writeFileSync(`${dbDir}/rippou-ripple-server/survival/${map_name}.json`, JSON.stringify(map_data, null, 2), 'utf8')
+            fs.writeFileSync(`${dbDir}/rippou-ripple-server/survival/${map_name}.json`, JSON.stringify(map_data), 'utf8')
             console.log(`地圖 ${map_name} 已成功上傳`);
         } catch (err) {
             console.error('上傳地圖時發生錯誤：', err.message);
