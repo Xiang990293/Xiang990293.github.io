@@ -7,7 +7,29 @@ console.log('Grid.js loaded')
 // 假設每格物品種類與數量資料
 
 
-const genre = ['wood', 'color', 'stone', 'mineral', 'redstone', 'naturals', 'food', 'combat', 'ingridients', 'functionals', 'plants', 'void', 'none'];
+const genre_color = {
+    'building': '#0044ff',
+    'colored': '#a200ff',
+    'combat': '#ff6788',
+    'edible': '#ff8800',
+    'functional': '#ffff00',
+    'ingridients': '#fff7b0',
+    'natural': '#116800',
+    'redstone': '#ff0000',
+    'tools': '#666666'
+};
+
+const genre_chinese = {
+    'building': "建築",
+    'colored': "彩色",
+    'combat': "戰鬥",
+    'edible': "飲食",
+    'functional': "功能",
+    'ingridients': "材料",
+    'natural': "自然",
+    'redstone': "紅石",
+    'tools': "工具",
+}
 
 export default function Grid() {
     const [topLeftCoor, setTopLeftCoor] = useState(null);
@@ -59,8 +81,8 @@ export default function Grid() {
                             y={baseSize * y}
                             width={size}
                             height={size}
-                            fill={isHovered ? 'orange' : 'blue'}
-                            stroke="black"
+                            fill={genre_color[item.genre]}
+                            stroke={isHovered ? 'white' : 'black'}
                             strokeWidth={0.5}
                             onMouseEnter={() => setHoverInfo(idx)}
                             onMouseLeave={() => setHoverInfo(null)}
@@ -80,10 +102,12 @@ export default function Grid() {
                 borderRadius: 8,
                 boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
                 padding: 16,
-                zIndex: 1000}}>
+                zIndex: 1000
+            }}>
                 {hoverInfo !== null ? (
                     <>
                         <h3>物品詳細資訊</h3>
+                        <p>類別: {genre_chinese[items[hoverInfo].genre]}</p>
                         <p>名稱: {items[hoverInfo].item}</p>
                         <p>座標: ({items[hoverInfo].x}, {items[hoverInfo].z})</p>
                     </>
