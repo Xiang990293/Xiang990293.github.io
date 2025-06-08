@@ -102,25 +102,26 @@ export default function Grid() {
 
             <div style={{
                 position: 'fixed',
-                top: 40,
-                right: 40,
-                width: 220,
-                background: '#fff',
+                top: "1vw",
+                right: "1vw",
+                width: "10vw",
+                background: '#fff8',
                 border: '1px solid #ddd',
-                borderRadius: 8,
+                borderRadius: "1vw",
                 boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                padding: 16,
-                zIndex: 1000
+                padding: "0.5vw",
+                zIndex: 1000,
+                pointerEvents: "none"
             }}>
                 {hoverInfo !== null ? (
                     <>
-                        <h3>物品詳細資訊</h3>
-                        <p>類別: {genre_chinese[items[hoverInfo].genre]}</p>
-                        <p>名稱: {items[hoverInfo].item}</p>
-                        <p>座標: ({items[hoverInfo].x}, {items[hoverInfo].z})</p>
+                        <div style={{ fontWeight: 'bold' }}>物品詳細資訊</div>
+                        <div>類別: {genre_chinese[items[hoverInfo].genre]}</div>
+                        <div>名稱: {items[hoverInfo].item}</div>
+                        <div>座標: ({items[hoverInfo].x}, {items[hoverInfo].z})</div>
                     </>
                 ) : (
-                    <p>將滑鼠移到方塊上查看詳細資訊</p>
+                    <div>將滑鼠移到方塊上查看詳細資訊</div>
                 )}
             </div>
         </div>
