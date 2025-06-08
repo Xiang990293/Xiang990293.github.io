@@ -67,13 +67,13 @@ export default function Grid() {
     return (
         <div style={{ display: 'flex' }}>
             <svg width={width} height={height} style={{ border: '1px solid black' }}>
-<polygon style='fill: gray; stroke: none' points="0,0 680,0 340,340"/>
-<polygon style='fill: aqua; stroke: none' points="0,0 0,680 340,340"/>
-<polygon style='fill: lime; stroke: none' points="680,680 680,0 340,340"/>
-<polygon style='fill: gold; stroke: none' points="680,680 0,680 340,340"/>
-<rect width="270" height="270" x="164" y="164" style='fill: white' />
-<rect width="340" height="340" x="170" y="170" style='fill: none; stroke: white; stroke-width: 5px'/>
-<rect width="530" height="530" x="75" y="75" style='fill: none; stroke : white; stroke-width: 5px'/>
+                <polygon style={{fill: "#ffd70080", stroke: "none"}} points="0,0 680,0 340,340"/>
+                <polygon style={{fill: "#80808080", stroke: "none"}} points="0,0 0,680 340,340"/>
+                <polygon style={{fill: "#00ffff80", stroke: "none"}} points="680,680 680,0 340,340"/>
+                <polygon style={{fill: "#00ff0080", stroke: "none"}} points="680,680 0,680 340,340"/>
+                <rect width="270" height="270" x="205" y="205" style={{fill: "white"}} />
+                <rect width="340" height="340" x="170" y="170" style={{fill: "none", stroke: "white", strokeWidth: 5}}/>
+                <rect width="540" height="540" x="70" y="70" style={{fill: "none", stroke: "white", strokeWidth: 5}}/>
 
                 {console.log(items)}
                 {items.map((item, idx) => {
