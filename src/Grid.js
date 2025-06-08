@@ -13,7 +13,7 @@ const genre_color = {
     'combat': '#ff6788',
     'edible': '#ff8800',
     'functional': '#ffff00',
-    'ingridients': '#fff7b0',
+    'ingredients': '#fff7b0',
     'natural': '#116800',
     'redstone': '#ff0000',
     'tools': '#666666'
@@ -25,7 +25,7 @@ const genre_chinese = {
     'combat': "戰鬥",
     'edible': "飲食",
     'functional': "功能",
-    'ingridients': "材料",
+    'ingredients': "材料",
     'natural': "自然",
     'redstone': "紅石",
     'tools': "工具",
