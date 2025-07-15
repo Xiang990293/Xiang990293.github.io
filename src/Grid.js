@@ -65,6 +65,16 @@ export default function Grid() {
     const width = 136 * baseSize;
     const height = 136 * baseSize;
 
+    // 依關鍵字過濾顯示的物品
+    const filteredItems = items.filter(item => {
+        const query = searchQuery.trim().toLowerCase();
+        if (!query) return true; // 沒有輸入就顯示全部
+        return (
+            item.item.toLowerCase().includes(query) ||
+            genre_chinese[item.genre].includes(query)
+        );
+    });
+
     return (
         // <div style={{ display: 'flex' }}>
         //     <svg width={width} height={height} style={{ border: '1px solid black' }}>
