@@ -42,7 +42,6 @@ export default function Grid() {
             .then(response => response.json())
             .then(data => {
                 data = JSON.parse(data);
-                console.log(typeof data);
 
                 setTopLeftCoor(data["root"]);
                 setItems(data["Items"]);
@@ -70,8 +69,9 @@ export default function Grid() {
         const query = searchQuery.trim().toLowerCase();
         if (!query) return true; // 沒有輸入就顯示全部
         return (
-            item.item.toLowerCase().includes(query) ||
-            genre_chinese[item.genre].includes(query)
+            item.id.includes(query) ||
+            genre_chinese[item.genre].includes(query) ||
+            item.item.includes(query)
         );
     });
 
