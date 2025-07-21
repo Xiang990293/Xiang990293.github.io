@@ -4,7 +4,7 @@
 #
 
 app = 'rippou-ripple-web'
-primary_region = 'hkg'
+primary_region = 'syd'
 
 [mounts]
 source="member_access"
