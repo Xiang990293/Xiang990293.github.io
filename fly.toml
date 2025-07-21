@@ -4,7 +4,7 @@
 #
 
 app = 'rippou-ripple-web'
-primary_region = 'syd'
+primary_region = 'hkg'
 
 [mounts]
 source="member_access"
@@ -28,4 +28,4 @@ DATABASE_PATH = "/database"
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
-  memory_mb = 1024
+  memory_mb = 256
