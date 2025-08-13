@@ -29,8 +29,21 @@ module.exports = (root) => {
     })
 
     // request entry point
-    router.get('/tools', (req, res) => {
-        const data = query_handler(req.query);
+    // router.get('/tools', (req, res) => {
+    //     const data = query_handler(req.query);
+    //     console.log(genre);
+
+    //     res.render('general_template', data);
+    // });
+
+    router.get('/:genre', (req, res) => {
+        const genre = req.params.genre;
+
+        data = {
+            title: `${genre} - 立方漣漪研究社`,
+            heading: `${genre}`,
+            content: fs.readFileSync(path.join(root, `public/tools/${genre}/root.html`), 'utf8')
+        }
 
         res.render('general_template', data);
     });
@@ -48,17 +61,6 @@ module.exports = (root) => {
         res.render('general_template', data);
     });
 
-    router.get('/:genre', (req, res) => {
-        const genre = req.params.genre;
-
-        data = {
-            title: `${genre} - 立方漣漪研究社`,
-            heading: `${genre}`,
-            content: fs.readFileSync(path.join(root, `public/tools/${genre}/index.html`), 'utf8')
-        }
-
-        res.render('general_template', data);
-    });
 
 
     return router
