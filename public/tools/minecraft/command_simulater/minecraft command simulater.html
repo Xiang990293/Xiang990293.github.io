@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title id="title"></title>
+        <link rel="stylesheet" href="minecraft_command_simulater.css" />
+    </head>
+    <body>
+        <div id="command_simulater">
+            <span id="command_block_ui">
+                <textarea class="textbox" id="command_text" placeholder="指令輸入(前面不用打斜線)..."></textarea>
+                <button id="execute_button" onclick="execute();">執行</button>
+            </span>
+            <span id="player_setting">
+                <p>玩家名稱：</p>
+                <input class="input_setting" id="player_id" type="text" value="Xiang990293"/>
+                <p>座標：</p>
+                <input class="input_setting" id="position_x" type="text" placeholder="x" value="0"/>
+                <input class="input_setting" id="position_y" type="text" placeholder="y" value="0"/>
+                <input class="input_setting" id="position_z" type="text" placeholder="z" value="0"/>
+            </span>
+            <span id="command_result_textbox">
+                <textarea class="textbox" id="command_result" placeholder="輸入完指令後，按執行"></textarea>
+            </span>
+            <span id="copy_selection">
+                <button id="1_button" onclick="">1</button>
+                <button id="2_button" onclick="">2</button>
+                <button id="3_button" onclick="">3</button>
+                <button id="4_button" onclick="">4</button>
+                <button id="5_button" onclick="">5</button>
+            </span>
+        </div>
+        <script src="../js/all.js"></script>
+        <script src="../js/tools/minecraft_command_simulater.js"></script>
+        <script src="../js/tools/command_block_status.js"></script>
+        <script src="../js/tools/class_entity.js"></script>
+    </body>
+</html>

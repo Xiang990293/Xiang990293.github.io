@@ -1,0 +1,466 @@
+﻿<head>
+    <meta charset="UTF-8" />
+    <title>凱薩密碼工具與解說</title>
+</head>
+<section id="tool_section">
+    <h1>凱薩密碼</h1>
+
+    <div id="input_area">
+        <label for="inputText">輸入文字：</label>
+        <textarea id="inputText" rows="3" placeholder="請輸入文字"></textarea>
+
+        <label for="shift">位移量 (正數往右位移)：</label>
+        <input type="number" id="shift" value="3" min="0" max="25" />
+        <div id="button_group">
+            <button onclick="encrypt()">加密</button>
+            <button onclick="decrypt()">解密</button>
+        </div>
+    </div>
+
+    <label for="outputText">結果：</label>
+    <textarea id="outputText" rows="3" readonly></textarea>
+
+    <!-- 折疊選單 -->
+    <details id="animation_details">
+        <summary class="toggle-summary" tabindex="0">動畫設定</summary>
+        <div id="animation-settings">
+            <label>
+                <input type="checkbox" id="enableAnimation" checked onclick="toggleAnimation()" />
+                啟用動畫效果
+            </label>
+            <div id="animation-speed-inline">
+                <label for="animationSpeed">動畫速度</label>
+                <span title="快速">🐇</span>
+                <input type="range" id="animationSpeed" min="10" max="500" value="255" />
+                <span title="慢速">🐢</span>
+            </div>
+        </div>
+    </details>
+
+    <!-- 新增字母格子 -->
+    <div id="animation_letter_grid">
+        <div class="letter-row uppercase-row"></div>
+        <div class="letter-row lowercase-row"></div>
+        <div class="letter-row exception-row"></div>
+    </div>
+
+</section>
+<section id="explanation">
+    <h2>凱薩密碼介紹</h2>
+    <p>
+        凱薩密碼（Caesar Cipher）是一種古老且簡單的加密方法，通過將字母表中的字母向右（或左）移動固定的位數來加密訊息。
+        例如，位移量為3時，字母A會變成D，字母B會變成E，依此類推。
+    </p>
+    <p>
+        注意：凱薩密碼對大小寫字母都會進行位移，且非英文字母字符（例如數字及符號）會保持不變。
+    </p>
+</section>
+<script>
+    // 修正負數位移無限迴圈問題，對shift做mod 26
+    function modShift(shift) {
+        return ((shift % 26) + 26) % 26;
+    }
+    let animationRunning = false; // 全域動畫狀態旗標
+    let animationCancelToken = 0; // 用於中止前個動畫的 ID
+
+    async function animateCaesarShift(text, shift, isEncrypt = true) {
+        const outputElem = document.getElementById('outputText');
+        const enableAnimation = document.getElementById('enableAnimation').checked;
+        const speed = parseInt(document.getElementById('animationSpeed').value, 10);
+
+        const animationLetterGrid = document.getElementById('animation_letter_grid');
+        animationLetterGrid.style.display = enableAnimation ? 'block' : 'none';
+        animationCancelToken++; // 啟動新動畫時取消之前動畫
+        const currentToken = animationCancelToken; // 本次動畫令牌
+
+
+        // 只呼叫一次, 確保格子產生
+        if (enableAnimation && animationLetterGrid.children[0].children.length === 0) {
+            createLetterGrid();
+        }
+
+        // 其他程式碼不變...
+        // 欄位字串初始化等...
+
+        let finalResult = '';
+        const normalizedShift = ((shift % 26) + 26) % 26;
+        for (let ch of text) {
+            if (ch.match(/[a-z]/i)) {
+                let code = ch.charCodeAt(0);
+                let endCode;
+                if (code >= 65 && code <= 90) {
+                    endCode = isEncrypt ? ((code - 65 + normalizedShift) % 26) + 65 : ((code - 65 + (26 - normalizedShift)) % 26) + 65;
+                } else if (code >= 97 && code <= 122) {
+                    endCode = isEncrypt ? ((code - 97 + normalizedShift) % 26) + 97 : ((code - 97 + (26 - normalizedShift)) % 26) + 97;
+                }
+                finalResult += String.fromCharCode(endCode);
+            } else {
+                finalResult += ch;
+            }
+        }
+
+        if (!enableAnimation) {
+            outputElem.value = finalResult;
+
+            // 隱藏字母格子
+            animationLetterGrid.style.display = 'none';
+            return;
+        }
+
+        outputElem.value = '';
+        const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+        let accumulated = '';
+        let currentDisplay = Array(text.length).fill(' ');
+
+        for (let i = 0; i < text.length; i++) {
+            if (currentToken !== animationCancelToken) {
+                animationRunning = false;
+                return;
+            }
+            let c = text[i];
+            if (c.match(/[a-z]/i)) {
+                let code = text.charCodeAt(i);
+                let startCode = code;
+                let endCode;
+
+                if (code >= 65 && code <= 90) {
+                    endCode = isEncrypt ? ((code - 65 + normalizedShift) % 26) + 65 : ((code - 65 + (26 - normalizedShift)) % 26) + 65;
+                } else if (code >= 97 && code <= 122) {
+                    endCode = isEncrypt ? ((code - 97 + normalizedShift) % 26) + 97 : ((code - 97 + (26 - normalizedShift)) % 26) + 97;
+                }
+
+                let currentCode = startCode;
+                while (currentCode !== endCode) {
+                    if (currentToken !== animationCancelToken) {
+                        animationRunning = false;
+                        return;
+                    }
+
+                    const currentChar = String.fromCharCode(currentCode);
+
+                    // 更新結果輸出
+                    outputElem.value = accumulated + currentChar;
+
+                    // 更新動畫字串展示
+                    currentDisplay[i] = currentChar;
+
+                    // 動態更新字母格子著色
+                    updateLetterGridHighlight(c, currentChar, String.fromCharCode(endCode));
+
+                    await wait(speed);
+                    currentCode++;
+                    if ((startCode <= 90 && currentCode > 90) || (startCode >= 97 && currentCode > 122)) {
+                        currentCode = (startCode <= 90) ? 65 : 97;
+                    }
+                }
+                
+                // 這裡補上：
+                // 補上這一行，立即更新最終字元到結果框：
+                accumulated += String.fromCharCode(endCode);
+                outputElem.value = accumulated;
+                currentDisplay[i] = String.fromCharCode(endCode);
+                
+                updateLetterGridHighlight(c, String.fromCharCode(endCode), String.fromCharCode(endCode));
+                await wait(speed);
+            } else {
+                accumulated += c;
+                outputElem.value = accumulated;
+                currentDisplay[i] = c;
+
+                updateLetterGridHighlight(null, c, c);
+            }
+            await wait(speed);
+        }
+
+        animationRunning = false;
+    }
+
+
+    function encrypt() {
+        const input = document.getElementById('inputText').value;
+        const shift = parseInt(document.getElementById('shift').value, 10);
+        animateCaesarShift(input, shift, true);
+    }
+
+    function decrypt() {
+        const input = document.getElementById('inputText').value;
+        const shift = parseInt(document.getElementById('shift').value, 10);
+        animateCaesarShift(input, shift, false);
+    }
+
+    function toggleAnimation() {
+        enableAnimation = document.getElementById('enableAnimation').checked;
+        document.getElementById('animation_letter_grid').style.display = enableAnimation ? 'block' : 'none';
+    }
+
+    // 產生字母格子（只呼叫一次）
+    function createLetterGrid() {
+        const upperRow = document.querySelector('#animation_letter_grid .uppercase-row');
+        const lowerRow = document.querySelector('#animation_letter_grid .lowercase-row');
+        const exceptRow = document.querySelector('#animation_letter_grid .exception-row');
+
+        upperRow.innerHTML = '';
+        lowerRow.innerHTML = '';
+        exceptRow.innerHTML = '';
+
+        for (let i = 65; i <= 90; i++) { // A-Z
+            const span = document.createElement('span');
+            span.classList.add('letter-cell');
+            span.textContent = String.fromCharCode(i);
+            upperRow.appendChild(span);
+        }
+
+        for (let i = 97; i <= 122; i++) { // a-z
+            const span = document.createElement('span');
+            span.classList.add('letter-cell');
+            span.textContent = String.fromCharCode(i);
+            lowerRow.appendChild(span);
+        }
+
+        const span = document.createElement('span');
+        span.classList.add('message-cell');
+        span.textContent = '不是英文字母，跳過';
+        exceptRow.appendChild(span);
+    }
+
+    // 更新格子顏色狀態（每幀呼叫）
+    // 只針對當前動畫字元索引作更新，三色區分
+    function updateLetterGridHighlight(originalChar, currentChar, finalChar) {
+
+        updateLetterGridVisibilityByChar(currentChar);
+
+        // 清除所有格子的顏色
+        document.querySelectorAll('#animation_letter_grid .letter-cell').forEach(cell => {
+            cell.classList.remove('active-original', 'active-current', 'active-final');
+        });
+
+        // 原字元標色（淺藍）
+        if (originalChar) {
+            if (originalChar >= 'A' && originalChar <= 'Z') {
+                const upperCells = document.querySelectorAll('#animation_letter_grid .uppercase-row .letter-cell');
+                upperCells[originalChar.charCodeAt(0) - 65]?.classList.add('active-original');
+            } else if (originalChar >= 'a' && originalChar <= 'z') {
+                const lowerCells = document.querySelectorAll('#animation_letter_grid .lowercase-row .letter-cell');
+                lowerCells[originalChar.charCodeAt(0) - 97]?.classList.add('active-original');
+            }
+        }
+
+        // 目前字元標色（淺黃）
+        if (currentChar) {
+            if (currentChar >= 'A' && currentChar <= 'Z') {
+                const upperCells = document.querySelectorAll('#animation_letter_grid .uppercase-row .letter-cell');
+                upperCells[currentChar.charCodeAt(0) - 65]?.classList.add('active-current');
+            } else if (currentChar >= 'a' && currentChar <= 'z') {
+                const lowerCells = document.querySelectorAll('#animation_letter_grid .lowercase-row .letter-cell');
+                lowerCells[currentChar.charCodeAt(0) - 97]?.classList.add('active-current');
+            }
+        }
+
+        // 最終字元標色（淺綠）
+        if (finalChar) {
+            if (finalChar >= 'A' && finalChar <= 'Z') {
+                const upperCells = document.querySelectorAll('#animation_letter_grid .uppercase-row .letter-cell');
+                upperCells[finalChar.charCodeAt(0) - 65]?.classList.add('active-final');
+            } else if (finalChar >= 'a' && finalChar <= 'z') {
+                const lowerCells = document.querySelectorAll('#animation_letter_grid .lowercase-row .letter-cell');
+                lowerCells[finalChar.charCodeAt(0) - 97]?.classList.add('active-final');
+            }
+        }
+    }
+
+    // 動畫字元顯示判斷函式，根據字元決定顯示哪一行
+    function updateLetterGridVisibilityByChar(char) {
+        const upperRow = document.querySelector('#animation_letter_grid .uppercase-row');
+        const lowerRow = document.querySelector('#animation_letter_grid .lowercase-row');
+        const exceptRow = document.querySelector('#animation_letter_grid .exception-row');
+
+        if (!char) {
+            // 無字元，皆顯示
+            upperRow.style.display = 'none';
+            lowerRow.style.display = 'none';
+            exceptRow.style.display = 'flex';
+        } else if (char >= 'A' && char <= 'Z') {
+            upperRow.style.display = 'flex';   // 顯示大寫行
+            lowerRow.style.display = 'none';   // 隱藏小寫行
+            exceptRow.style.display = 'none';
+        } else if (char >= 'a' && char <= 'z') {
+            upperRow.style.display = 'none';   // 隱藏大寫行
+            lowerRow.style.display = 'flex';   // 顯示小寫行
+            exceptRow.style.display = 'none';
+        } else {
+            // 若當前字元非英文大小寫(有可能是其他符號)
+            upperRow.style.display = 'none';
+            lowerRow.style.display = 'none';
+            exceptRow.style.display = 'flex';
+        }
+    }
+
+
+</script>
+<style>
+    #tool_section {
+        background-color: #c6f2ffd2;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        /* 讓區塊上下排列 */
+        gap: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+    }
+
+    textarea,
+    input[type="number"],
+    input[type="range"] {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+
+    /* 上方輸入及按鈕區 */
+    #input_area {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* 按鈕置中與間距 */
+    #button_group {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+    }
+
+    #button_group button {
+        flex: 1;
+        padding: 10px 15px;
+        font-size: 1rem;
+        background-color: #3ca7d8;
+        /* 按鈕藍 */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        /* 與凱薩一致 */
+        cursor: pointer;
+        transition: background-color 0.25s ease;
+    }
+    
+    #button_group button:hover {
+        background-color: #2a7bb7;
+    }
+
+    /* summary 標題樣式 */
+    .toggle-summary {
+        cursor: pointer;
+        font-weight: bold;
+        outline: none;
+    }
+
+    /* 結果 textarea */
+    #outputText {
+        margin-top: 10px;
+        width: 100%;
+        resize: vertical;
+        font-size: 1rem;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    textarea,
+    input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+    
+    
+    #animation_details {
+        flex-grow: 1;
+        /* 動畫設定區域可拉伸 */
+        border: 1px solid #b0c4de;
+        border-radius: 5px;
+        padding: 10px 15px;
+        background-color: #e6f0ff;
+        color: #004080;
+    }
+
+    /* 動畫設定折疊面板 */
+    #animation-speed-inline {
+        display: flex;
+        width: fit-content;
+        padding: 10px;
+    }
+
+    #animation-speed-inline span {
+        filter: grayscale(100%) brightness(0) saturate(100%);
+        font-size: 20px;
+    }
+
+    #animation-settings {
+        padding: 10px;
+    }
+
+    /* 內部動畫設定項目垂直排列 */
+    #animation-settings label,
+    #animation-settings input[type="range"] {
+        width: fit-content;
+        height: fit-content;
+        margin: unset;
+        padding: unset;
+    }
+
+    #animation_letter_grid {
+        font-family: monospace;
+        display: flex;
+        margin-top: 15px;
+        align-content: center;
+        font-size: 16pt;
+        line-height: 26px;
+    }
+
+    .letter-row {
+        gap: 4px;
+        justify-content: center;
+    }
+
+    .letter-cell {
+        width: 2%;
+        border: 1px solid #0000;
+        text-align: center;
+        border-radius: 3px;
+        transition: background-color 0.05s ease;
+    }
+
+    .message-cell {
+        border: 1px solid #0000;
+        text-align: center;
+        border-radius: 3px;
+        transition: background-color 0.05s ease;}
+
+    .letter-cell.active-original {
+        background-color: #ffa67d;
+    }
+
+    .letter-cell.active-final {
+        background-color: #a0f7a4;
+    }
+
+    .letter-cell.active-current {
+        background-color: #f7d87a;
+    }
+
+    section#explanation {
+        background-color: #e6f0ff;
+        padding: 15px;
+        border-radius: 5px;
+    }
+</style>

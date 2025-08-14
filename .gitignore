@@ -5,7 +5,7 @@ loot_tables
 recipes
 textures
 node_modules
-tools
+
 .vscode/
 database/
 npm

@@ -1,0 +1,66 @@
+﻿<div id="tools">
+    <section id="equation">
+        <button id="add_equation">+x=</button>
+        <button id="delete_equation">-x=</button>
+        <button id="simultaneous_equation_tool">{</button>
+        <button id="clear_equation">DEL</button>
+    </section>
+    <section id="basic_operations">
+        <button id="addition">+</button>
+        <button id="subtraction">-</button>
+        <button id="multiplication">x</button>
+        <button id="division/fraction">/</button>
+        <button id="exponent">^</button>
+        <button id="square_root">√</button>
+        <button id="parentheses">()</button>
+        <button id="absolute value">|x|</button>
+        <button id="factorial">!</button>
+        <button id="modulus">mod</button>
+        <button id="floor">⌊x⌋</button>
+        <button id="ceiling">⌈x⌉</button>
+        <button id="logarithm">log</button>
+        <button id="natural_logarithm">ln</button>
+        <button id="trigonometric_functions">sin/cos/tan</button>
+        <button id="inverse_trigonometric_functions">arcsin/arccos/arctan</button>
+        <button id="hyperbolic_functions">sinh/cosh/tanh</button>
+        <button id="inverse_hyperbolic_functions">arcsinh/arccosh/arctanh</button>
+        <button id="polar_coordinates">r, θ</button>
+        <button id="complex_numbers">a + bi</button>
+        <button id="matrix">matrix</button>
+        <button id="vector">vector</button>
+        <button id="set">set</button>
+        <button id="function">f(x)</button>
+    </section>
+    <section id="calculus">
+        <button id="definite_integral">∫</button>
+        <button id="indefinite_integral">∫</button>
+        <button id="derivative">d/dx</button>
+        <button id="limit">lim</button>
+        <button id="sum">Σ</button>
+        <button id="product">Π</button>
+    </section>
+</div>
+<div id="math-field" style="border: 1px solid #ccc; min-height: 40px; padding: 5px;"><span id="input">x=</span></div>
+<button id="getLatex">計算</button>
+<!-- 引入 MathQuill JS -->
+<link rel="stylesheet" href="/lib/mathquill-0.10.1/mathquill.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/lib/mathquill-0.10.1/mathquill.js"></script>
+<script>
+    var MQ = MathQuill.getInterface(2);
+    var inputSpan = document.getElementById('input');
+    var inputMathField = MQ.MathField(inputSpan, {
+        handlers: {
+            edit: function () {
+                var enteredMath = inputMathField.latex(); // Get entered math in LaTeX format
+                checkAnswer(enteredMath);
+            }
+        }
+    });
+</script>
+<style>
+    #answer {
+        font-size: 30px;
+        color: #000;
+    }
+</style>
