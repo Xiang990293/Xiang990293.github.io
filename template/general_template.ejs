@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,7 +9,6 @@
     <link rel="stylesheet" href="/template/general_template.css" />
     <link rel="icon" href="/favicon.png" />
 </head>
-
 <body onload="ShowTime();">
     <%-include('header.html')%>
     <main id="contents">
@@ -18,57 +16,90 @@
     </main>
     <%-include('footer.html')%>
 
-    <script>
-        // <button class="導航欄-btn" onclick="window.location.href='/home';">首頁</button> 
-        function darkmode() {
-            var element = document.body;
-            element.classList.toggle("dark-mode");
-        }
-
-    </script>
-    <style>
-        #contents {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: white;
-        }
-
-        .grid-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;                 /* 水平和垂直間距一致 */
-            justify-content: center;   /* 水平置中對齊 */
-            align-content: center;     /* 多行垂直置中 */
-        }
-
-        .grid-element {
-            flex: 0 0 250px;           /* 固定寬度250px */
-            height: 250px;             /* 固定高度250px，寬高一致 */
-            padding: 16px;
-            background-color: #f0f0f0;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            transition: background-color 0.3s;
-            box-sizing: border-box;    /* padding不影響尺寸 */
-            display: flex;
-            flex-direction: column;    /* 讓h3, p垂直排列 */
-            justify-content: flex-start;
-        }
-
-        .grid-element:hover {
-            background-color: #e0e0e0;
-        }
-
-        @media (max-width: 600px) {
-            .grid-element {
-                flex: 1 1 100%;        /* 手機螢幕上寬度100% */
-                height: auto;          /* 高度自適應 */
-            }
-        }
-
-    </style>
 </body>
+<script>
+    // <button class="導航欄-btn" onclick="window.location.href='/home';">首頁</button> 
+    function darkmode() {
+        var element = document.body;
+        element.classList.toggle("dark-mode");
+    }
+
+</script>
+<style>
+
+    html, body {
+        height:100%;
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main#contents {
+        flex: 1 0 auto;
+    }
+
+    footer {
+        background-color: gray;
+        width: 100%;
+        margin-top: 0;
+
+    }
+
+    #contents {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: white;
+    }
+
+    .grid-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        /* 水平和垂直間距一致 */
+        justify-content: center;
+        /* 水平置中對齊 */
+        align-content: center;
+        /* 多行垂直置中 */
+    }
+
+    .grid-element {
+        flex: 0 0 250px;
+        /* 固定寬度250px */
+        height: 250px;
+        /* 固定高度250px，寬高一致 */
+        padding: 16px;
+        background-color: #f0f0f0;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: left;
+        transition: background-color 0.3s;
+        box-sizing: border-box;
+        /* padding不影響尺寸 */
+        display: flex;
+        flex-direction: column;
+        /* 讓h3, p垂直排列 */
+        justify-content: flex-start;
+    }
+
+    .grid-element:hover {
+        background-color: #e0e0e0;
+    }
+
+    @media (max-width: 600px) {
+        .grid-element {
+            flex: 1 1 100%;
+            /* 手機螢幕上寬度100% */
+            height: auto;
+            /* 高度自適應 */
+        }
+    }
+</style>
 
 </html>
