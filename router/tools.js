@@ -14,27 +14,8 @@ module.exports = (root) => {
             content: fs.readFileSync(path.join(root, "public/tools/tools.html"), 'utf8') //tools.html
         }
 
-        res.render('general_template', data);
-        // const html = await ejs.renderFile(path.join(root, "template/pure_text_content.ejs"), { content_url: '/tools/tools.txt' });
-        // data = {
-        //     title: '實用工具 - 立方漣漪研究社',
-        //     heading: '實用工具',
-        //     content: html
-        // }
-            
-        //     res.render('general_template', data);
-        // res.sendFile(path.join(root, "template/general_template.css"))
-        // res.render('pure_text_content', { content_url: '/tools/tools.txt' })
-        
+        res.render('general_template', data);        
     })
-
-    // request entry point
-    // router.get('/tools', (req, res) => {
-    //     const data = query_handler(req.query);
-    //     console.log(genre);
-
-    //     res.render('general_template', data);
-    // });
 
     router.get('/:genre', (req, res) => {
         const genre = req.params.genre;
