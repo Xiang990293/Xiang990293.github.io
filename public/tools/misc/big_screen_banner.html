@@ -1,29 +1,81 @@
 <input id="show_content" type="text" placeholder="放任何你想要的文字" />
-<div id="show_container" class=""></div>
+<div id="show_container" class="">
+    <div id="scroll_text"></div>
+</div>
 
 
 <script>
-document.getbElementById("show_content").addEventListener("focusout",event=>{
-  document.getElementById("show_container"). innerHtml=event.target.value;
-  document.getElementById("show_container").classList+="show";
-});
+    const showContainer = document.getElementById("show_container");
+    const scrollText = document.getElementById("scroll_text");
+    document.getElementById("show_content").addEventListener("focusout", event => {
+        scrollText.textContent = event.target.value;
+        showContainer.classList.add("show");
 
-document.getElementById("show_container").addEventListener("click", event=>{
-  event.target.classList.pop("show")
-});
+        
+        // 取得容器及文字寬度
+        const containerWidth = showContainer.clientWidth;
+        const textWidth = scrollText.scrollWidth;
+        scrollText.style.setProperty('--text-width', `${textWidth}px`);
+        
+        // 動畫從右側完全外面開始(位置為container寬度)
+        // 到左側完全隱藏結束（位置為 -textWidth）
+        // 使用 transform: translateX，從 containerWidth 到 -textWidth
+
+
+        // 重新設定CSS動畫，時間可依字串長度調整（例如每100px 3秒）
+        
+        const duration = (containerWidth + textWidth) / 1000 * 3;
+
+        // 重設動畫，使每次輸入都會重新啟動跑馬燈
+        scrollText.style.animation = 'none';
+        scrollText.offsetHeight; // 強制重繪
+        //scrollText.style.animation = null;
+        scrollText.style.animation = `marquee ${duration}s linear infinite`;
+
+    });
+
+    scrollText.addEventListener("click", event => {
+        showContainer.classList.remove("show");
+    });
 
 </script>
 <style>
-#show_container.show {
-  display: flex;
-}
+    #show_container.show {
+        display: flex;
+    }
 
-#show_container {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  display: none;
-}
+    #show_container {
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+        display: none;
+        font-size: 100vh;
+        background-color: black;
+        color: white;
+        z-index: 1;
+        scrollbar-width: none;
+        position: fixed;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #scroll_text {
+        font-size: 80vh;
+        white-space: nowrap;
+        position: relative;
+        /* 動畫先移除，靠腳本動態設定 */
+        will-change: transform;
+    }
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(calc(var(--text-width, 100vw)));
+        }
+
+        100% {
+            transform: translateX(calc(-1 * var(--text-width, 100vw)));
+        }
+    }
 </style>
