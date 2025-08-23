@@ -1,0 +1,29 @@
+<input id="show_content" type="text" placeholder="放任何你想要的文字" />
+<div id="show_container" class=""></div>
+
+
+<script>
+document.getbElementById("show_content").addEventListener("focusout",event=>{
+  document.getElementById("show_container"). innerHtml=event.target.value;
+  document.getElementById("show_container").classList+="show";
+});
+
+document.getElementById("show_container").addEventListener("click", event=>{
+  event.target.classList.pop("show")
+});
+
+</script>
+<style>
+#show_container.show {
+  display: flex;
+}
+
+#show_container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+}
+</style>
