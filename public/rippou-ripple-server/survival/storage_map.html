@@ -7,23 +7,14 @@
     <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
 
-    <script src="/js/react-widget.bundle.js"></script>
 
 </head>
 
 <body>
     <div class="constainer">
         <h1 style="text-align: center;">全物品倉庫地圖</h1>
-        <div id="react-widget"></div>
+        <div id="grid-root"></div>
     </div>
-    <script>
-
-        const root = ReactDOM.createRoot(document.getElementById('react-widget'));
-        console.log('ReactWidget:', ReactWidget);
-        console.log('ReactWidget.default:', ReactWidget.default);
-
-        root.render(React.createElement(ReactWidget));
-    </script>
     <style>
         .container {
             display: flex;
@@ -101,4 +92,5 @@
     </style>
 </body>
 
+<script src="/js/react-widget.bundle.js"></script>
 </html>

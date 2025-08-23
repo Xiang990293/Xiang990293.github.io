@@ -2,7 +2,7 @@
 
 module.exports = {
     mode: 'development', // 或 'production'
-    entry: './src/Grid.js', // 你的 React 組件入口
+    entry: './src/entry.js', // 你的 React 組件入口
     output: {
         path: path.resolve(__dirname, 'public/js'),
         filename: 'react-widget.bundle.js',

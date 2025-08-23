@@ -1,66 +1,173 @@
-﻿<div id="tools">
+﻿<!-- <div id="tools">
     <section id="equation">
-        <button id="add_equation">+x=</button>
-        <button id="delete_equation">-x=</button>
-        <button id="simultaneous_equation_tool">{</button>
-        <button id="clear_equation">DEL</button>
+        <button class="math-operator" id="=">＝</button>
+        <button class="math-operator" id=">">></button>
+        <button class="math-operator" id="<"><</button>
+        <button class="math-operator" id="\ge">≧</button>
+        <button class="math-operator" id="\le">≦</button>
     </section>
     <section id="basic_operations">
-        <button id="addition">+</button>
-        <button id="subtraction">-</button>
-        <button id="multiplication">x</button>
-        <button id="division/fraction">/</button>
-        <button id="exponent">^</button>
-        <button id="square_root">√</button>
-        <button id="parentheses">()</button>
-        <button id="absolute value">|x|</button>
-        <button id="factorial">!</button>
-        <button id="modulus">mod</button>
-        <button id="floor">⌊x⌋</button>
-        <button id="ceiling">⌈x⌉</button>
-        <button id="logarithm">log</button>
-        <button id="natural_logarithm">ln</button>
-        <button id="trigonometric_functions">sin/cos/tan</button>
-        <button id="inverse_trigonometric_functions">arcsin/arccos/arctan</button>
-        <button id="hyperbolic_functions">sinh/cosh/tanh</button>
-        <button id="inverse_hyperbolic_functions">arcsinh/arccosh/arctanh</button>
-        <button id="polar_coordinates">r, θ</button>
-        <button id="complex_numbers">a + bi</button>
-        <button id="matrix">matrix</button>
-        <button id="vector">vector</button>
-        <button id="set">set</button>
-        <button id="function">f(x)</button>
+        <button class="math-operator" id="+">+</button>
+        <button class="math-operator" id="-">-</button>
+        <button class="math-operator" id="*">x</button>
+        <button class="math-operator" id="\div">÷</button>
+        <button class="math-operator" id="\frac{}{}">a/b</button>
+        <button class="math-operator" id="^{}">^</button>
+        <button class="math-operator" id="\sqrt{}">√</button>
+        <button class="math-operator" id="\left(\right)">()</button>
+        <button class="math-operator" id="\pm">±</button>
+    </section>
+    <section id="trigonometric-and-hyperbolic">
+        <button class="math-operator" id="\sin">sin</button>
+        <button class="math-operator" id="\cos">cos</button>
+        <button class="math-operator" id="\tan">tan</button>
+        <button class="math-operator" id="\arcsin">arcsin</button>
+        <button class="math-operator" id="\arccos">arccos</button>
+        <button class="math-operator" id="\arctan">arctan</button>
+        <button class="math-operator" id="\sinh">sinh</button>
+        <button class="math-operator" id="\cosh">cosh</button>
+        <button class="math-operator" id="\tanh">tanh</button>
+        <button class="math-operator" id="\arcsinh">arcsinh</button>
+        <button class="math-operator" id="\arccosh">arccosh</button>
+        <button class="math-operator" id="\arctanh">arctanh</button>
+    </section>
+    <section id="special_operator">
+        <button class="math-operator" id="|{}|">|x|</button>
+        <button class="math-operator" id="!">!</button>
+        <button class="math-operator" id="\text{mod}">mod</button>
+        <button class="math-operator" id="\lfloor{}\rfloor">⌊x⌋</button>
+        <button class="math-operator" id="\lceil{}\rceil">⌈x⌉</button>
+        <button class="math-operator" id="\log">log</button>
+        <button class="math-operator" id="\ln">ln</button>
+        <button class="math-operator" id="matrix">matrix</button>
+        <button class="math-operator" id="vector">vector</button>
+        <button class="math-operator" id="set">set</button>
+        <button class="math-operator" id="f(x)">f(x)</button>
     </section>
     <section id="calculus">
-        <button id="definite_integral">∫</button>
-        <button id="indefinite_integral">∫</button>
-        <button id="derivative">d/dx</button>
-        <button id="limit">lim</button>
-        <button id="sum">Σ</button>
-        <button id="product">Π</button>
+        <button class="math-operator" id="\int{d}">∫</button>
+        <button class="math-operator" id="\int_{}^{}{d}">∫</button>
+        <button class="math-operator" id="\frac{d}{dx}">d/dx</button>
+        <button class="math-operator" id="\prod_{=}^{}">Π</button>
+        <button class="math-operator" id="\lim">lim</button>
+        <button class="math-operator" id="\sum_{=}^{}">Σ</button>
     </section>
+</div> -->
+<div id="equation-functions-variables">
+    <span id="equation-list-container">
+        <h3>方程式列表</h3>
+        <div id="equation-list">
+            <math-input></math-input>
+        </div>
+        <button id="add-equation">+ 新增方程式</button>
+    </span>
+    <span id="function-variable-list-container">
+        <div id="function-list">
+            <h3>函數列表</h3>
+            <input type="text" name="function-input" id="function-input" placeholder="f, g, h">
+        </div>
+        <div id="variable-list">
+            <h3>變數列表</h3>
+            <input type="text" name="variable-input" id="variable-input" placeholder="x, y, z">
+        </div>
+    </span>
 </div>
-<div id="math-field" style="border: 1px solid #ccc; min-height: 40px; padding: 5px;"><span id="input">x=</span></div>
 <button id="getLatex">計算</button>
+
 <!-- 引入 MathQuill JS -->
-<link rel="stylesheet" href="/lib/mathquill-0.10.1/mathquill.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="/lib/mathquill-0.10.1/mathquill.js"></script>
+<script src="/js/math-input.js"></script>
 <script>
-    var MQ = MathQuill.getInterface(2);
-    var inputSpan = document.getElementById('input');
-    var inputMathField = MQ.MathField(inputSpan, {
-        handlers: {
-            edit: function () {
-                var enteredMath = inputMathField.latex(); // Get entered math in LaTeX format
-                checkAnswer(enteredMath);
-            }
-        }
-    });
+    let equationCount = 0;
+    let equationList = [];
+    document.getElementById("add-equation").onclick = () => {
+        equationCount++;
+        const newDiv = document.createElement("math-input");
+        document.getElementById("equation-list").appendChild(newDiv);
+    }
+
+    function getAllLatex() {
+        let allLatex = [];
+        document.querySelectorAll('math-input').forEach(span => {
+            allLatex.push(span.latex);
+        });
+        return allLatex;
+    }
+
+    document.getElementById("getLatex").onclick = () => {
+        const results = getAllLatex();
+        const functions = document.getElementById("function-input").value.replaceAll(" ", "").split(",");
+        const variables = document.getElementById("variable-input").value.replaceAll(" ", "").split(",");
+
+        const payload = {
+            results,
+            functions,
+            variables
+        };
+        console.log(results);
+        alert(results.join('\n'));
+    }
+
+    document.getElementById("function-input").addEventListener("focusout", () => {
+        document.getElementById("function-input").value = document.getElementById("function-input").value.replaceAll(" ", "");
+    })
+
+    document.getElementById("variable-input").addEventListener("focusout", () => {
+        document.getElementById("variable-input").value = document.getElementById("variable-input").value.replaceAll(" ", "");
+    })
+
 </script>
 <style>
-    #answer {
-        font-size: 30px;
-        color: #000;
+    #equation-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    div#equation-functions-variables {
+        display: flex;
+        flex-direction: row;
+        justify-content:center;
+        align-items: flex-start;
+        margin: 20px;
+        gap: 20px;
+    }
+
+    div#equation-functions-variables span {
+        background-color: #3ff5;
+        padding: 10px;
+        border-radius: 10px;
+        width: 200px;
+        min-height: 300px;
+        height: fit-content;
+    }
+
+    span#equation-list-container {
+        display: flex;
+        flex-direction: column;
+        flex:3;
+    }
+
+    span#equation-list-container math-input{
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    span#equation-list-container button#add-equation {
+        margin-top: 10px;
+        background-color: #cccc;
+        height: 36px;
+    }
+
+    span#equation-list-container button#add-equation:hover {
+        margin-top: 10px;
+        background-color: #ccc5;
+    }
+
+    span#function-variable-list-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
     }
 </style>

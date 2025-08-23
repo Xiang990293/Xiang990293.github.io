@@ -38,7 +38,7 @@ export default function Grid() {
     const [searchQuery, setSearchQuery] = useState(''); // 新增搜尋文字 state
 
     useEffect(() => {
-        fetch('/rippou-ripple-server/survival/query/inventory_data')
+        fetch('https://rippou-ripple-web.fly.dev/rippou-ripple-server/survival/query/inventory_data')
             .then(response => response.json())
             .then(data => {
                 data = JSON.parse(data);
@@ -68,6 +68,8 @@ export default function Grid() {
     const filteredItems = items.filter(item => {
         const query = searchQuery.trim().toLowerCase();
         if (!query) return true; // 沒有輸入就顯示全部
+        if (!item.id) return true;
+        if (!item.item) return true;
         return (
             item.id.includes(query) ||
             genre_chinese[item.genre].includes(query) ||
