@@ -1,0 +1,344 @@
+<div id="chart-container">
+	<svg xmlns="http://www.w3.org/2000/svg" versoin="1.1" id="connections-container">
+		<!-- <defs>
+			<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+				<path d="M0,0 L0,6 L9,3 z" fill="#000" />
+			</marker>
+		</defs> -->
+	</svg>
+</div>
+<script src="https://unpkg.com/gojs/release/go.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+	var title = document.getElementById("title")
+	title.innerHTML = "麥快研究團隊 - 工具";
+	var btitle = document.getElementsByClassName("big-title")[0]
+	btitle.innerHTML = "工具 - 合成路徑圖";
+	// var subtitle = document.getElementById("subtitle")
+	// subtitle.innerHTML = "顯示所有的配方";
+
+	var dragOffsetX, dragOffsetY;
+	function drag(event) {
+		dragOffsetX = event.clientX;
+		dragOffsetY = event.clientY;
+		event.dataTransfer.setData("text", event.target.id);
+	}
+
+	function getHighestZIndex() {
+		const nodes = document.querySelectorAll(".node");
+		let maxIndex = 0;
+		nodes.forEach(node => {
+			const zIndex = parseInt(window.getComputedStyle(node).zIndex);
+			maxIndex = Math.max(maxIndex, zIndex || 0);
+		});
+		return maxIndex;
+	}
+
+	function updateConnection(line, x1, y1, x2, y2) {
+		line.setAttribute("x1", x1);
+		line.setAttribute("y1", y1);
+		line.setAttribute("x2", x2);
+		line.setAttribute("y2", y2);
+		line.setAttribute("marker-end", "url(#arrow)");
+	}
+
+	function move_path(mode, movedNodeId) {
+		var connectedLines
+		if (mode == "all") {
+			connectedLines = document.querySelectorAll(`.connection`);
+		} else if (mode == "only") {
+			connectedLines = document.querySelectorAll(`.connection[data-start-node="${movedNodeId}"], .connection[data-end-node="${movedNodeId}"]`);
+		}
+
+		connectedLines.forEach(path => {
+			const startNode = document.getElementById(path.dataset.startNode);
+			const endNode = document.getElementById(path.dataset.endNode);
+
+			const startX = getCenterX(startNode);
+			const startY = getCenterY(startNode);
+			const endX = getCenterX(endNode);
+			const endY = getCenterY(endNode);
+			const midX = (startX + endX) / 2;
+			const midY = (startY + endY) / 2;
+			const d = `M ${startX},${startY} L ${midX},${midY} L ${endX},${endY}`;
+
+			path.setAttribute("d", d);
+		});
+	}
+
+	// window.addEventListener('resize', () => {
+	// 	move_path("all", "")
+	// });
+
+	let zoomLevel = 1.0; // Initial zoom level
+	// Add event listener to the chart container for mouse wheel scrolling
+	// document.getElementById('chart-container').addEventListener('wheel', event => {
+	// 	event.preventDefault();
+	// 	const delta = event.deltaY;
+	// 	let newZoomLevel = zoomLevel;
+
+	// 	// Adjust zoom level based on scroll direction
+	// 	if (delta > 0) newZoomLevel -= 0.1; // Zoom out
+	// 	else newZoomLevel += 0.1; // Zoom in
+
+	// 	// Set limits to the zoom level to prevent extreme scaling
+	// 	if (newZoomLevel < 0.5) newZoomLevel = 0.5;
+	// 	else if (newZoomLevel > 3.0) newZoomLevel = 3.0;
+
+	// 	// Apply the zoom level to the chart
+	// 	document.getElementById('chart-container').style.transform = `scale(${newZoomLevel})`;
+	// 	move_path("all", "");
+
+	// 	const nodes = document.querySelectorAll('.node');
+	// 	zoomLevel = newZoomLevel;
+	// });
+
+	var isDragging, initialMouseX, initialMouseY;
+	// document.addEventListener('mousedown', function (event) {
+	// 	const clickedElement = event.target;
+
+	// 	// Check if the clicked element is the chart container
+	// 	if (clickedElement.id === 'chart-container') {
+	// 		isDragging = true;
+	// 		initialMouseX = event.clientX;
+	// 		initialMouseY = event.clientY;
+	// 	}
+	// });
+
+
+	let deltaX = 0;
+	let deltaY = 0;
+	// document.addEventListener('mousemove', function (event) {
+	// 	if (isDragging) {
+	// 		const mouseX = event.clientX;
+	// 		const mouseY = event.clientY;
+
+	// 		deltaX = mouseX - initialMouseX;
+	// 		deltaY = mouseY - initialMouseY;
+
+	// 		// Get all nodes
+	// 		const nodes = document.querySelectorAll('.node');
+	// 		initialMouseX = mouseX;
+	// 		initialMouseY = mouseY;
+	// 	}
+	// });
+
+	// document.addEventListener('mouseup', () => {
+	// 	isDragging = false;
+	// });
+
+	// document.addEventListener("drop", function (event) {
+	// 	event.preventDefault();
+	// 	const data = event.dataTransfer.getData("text");
+	// 	const draggedNode = document.getElementById(data);
+	// 	const chartContainer = document.getElementById("chart-container");
+
+	// 	const rect = chartContainer.getBoundingClientRect();
+
+	// 	const offsetX = (event.clientX - dragOffsetX) / zoomLevel + Number(draggedNode.style.left.substring(0, draggedNode.style.left.length - 2));
+	// 	const offsetY = (event.clientY - dragOffsetY) / zoomLevel + Number(draggedNode.style.top.substring(0, draggedNode.style.top.length - 2));
+
+	// 	draggedNode.style.left = offsetX + "px";
+	// 	draggedNode.style.top = offsetY + "px";
+
+	// 	draggedNode.style.zIndex = getHighestZIndex() + 1;
+
+	// 	const movedNodeId = draggedNode.id;
+
+	// 	// Get all lines connected to the moved node
+	// 	move_path("only", movedNodeId)
+	// });
+
+	document.addEventListener("DOMContentLoaded", () => {
+		fetch('./chart.json')
+			.then(res => res.json())
+			.then(data => {
+				const nodes = data.nodes;
+				// 把paths改成links，key名換成符合D3標準
+				const links = data.paths.map(p => ({
+					source: p.startNodeId,
+					target: p.endNodeId
+				}));
+
+				const container = document.getElementById('chart-container');
+
+				const width = container.clientWidth - deltaX;
+				const height = container.clientHeight - deltaY;
+				const svg = d3.select("svg")
+					.attr("width", width)
+					.attr("height", height);
+
+				// 建立一個群組容器，包節點和連線
+				const containerGroup = svg.append("g");
+
+				const simulation = d3.forceSimulation(nodes)
+					.force("link", d3.forceLink(links).id(d => d.id).distance(50).strength(0.7))
+					.force("charge", d3.forceManyBody().strength(-1))
+					.force("center", d3.forceCenter(width / 2, height / 2));
+
+				const link = containerGroup.append("g")
+					.selectAll("line")
+					.data(links)
+					.join("line")
+					.attr("stroke", "#999")
+					.attr("stroke-width", 2);
+
+				const node = containerGroup.append("g")
+					.selectAll("circle")
+					.data(nodes)
+					.join("circle")
+					.attr("r", 10)
+					.attr("fill", "steelblue")
+					.call(d3.drag()
+						.on("start", (event, d) => {
+							if (!event.active) simulation.alphaTarget(0.3).restart();
+							d.fx = d.x; d.fy = d.y;
+						})
+						.on("drag", (event, d) => {
+							d.fx = event.x; d.fy = event.y;
+						})
+						.on("end", (event, d) => {
+							if (!event.active) simulation.alphaTarget(0);
+							d.fx = null; d.fy = null;
+						}));
+
+				// 建立zoom行為
+				const zoom = d3.zoom()
+					.scaleExtent([0.5, 3]) // 縮放區間 0.5~3倍
+					.on("zoom", (event) => {
+						// d3的原生transform事件會帶 transform 物件
+						containerGroup.attr("transform", event.transform);
+					});
+
+				// 綁定zoom事件到svg
+				svg.call(zoom);
+
+				const label = containerGroup.append("g")
+					.selectAll("text")
+					.data(nodes)
+					.join("text")
+					.text(d => d.name)
+					.attr("font-size", 12)
+					.attr("text-anchor", "middle")
+					.attr("dy", "-25px")
+					.attr("selectable", "none");
+
+				simulation.on("tick", () => {
+					link
+						.attr("x1", d => d.source.x)
+						.attr("y1", d => d.source.y)
+						.attr("x2", d => d.target.x)
+						.attr("y2", d => d.target.y);
+
+					node
+						.attr("cx", d => d.x)
+						.attr("cy", d => d.y);
+
+					label
+						.attr("x", d => d.x)
+						.attr("y", d => d.y);
+				});
+			})
+			.catch(error => {
+				console.error('Error fetching data:', error);
+			});
+	});
+
+	function getCenterX(element) {
+		const rect = element.getBoundingClientRect();
+		return rect.left + rect.width / 2;
+	}
+
+	function getCenterY(element) {
+		const rect = element.getBoundingClientRect();
+		return rect.top + rect.height / 2;
+	}
+
+	function connectNodes(rootNodeId, subNodeId) {
+		const rootNode = document.getElementById(rootNodeId);
+		const subNode = document.getElementById(subNodeId);
+
+		const svgPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		const startX = getCenterX(rootNode);
+		const startY = getCenterY(rootNode);
+		const endX = getCenterX(subNode);
+		const endY = getCenterY(subNode);
+		const midX = (startX + endX) / 2;
+		const midY = (startY + endY) / 2;
+		const d = `M ${startX},${startY} L ${midX},${midY} L ${endX},${endY}`;
+
+		svgPath.setAttribute("d", d);
+		svgPath.setAttribute("style", "stroke: black; stroke-width:2");
+		svgPath.setAttribute("min-height", "20px");
+		svgPath.setAttribute("min-width", "20px");
+		svgPath.setAttribute("data-start-node", rootNodeId);
+		svgPath.setAttribute("data-end-node", subNodeId);
+		svgPath.setAttribute("class", "connection");
+		svgPath.setAttribute("marker-mid", "url(#arrow)");
+		document.getElementById("connections-container").appendChild(svgPath);
+	}
+
+	// Call the connectNodes function with IDs of root and subnodes
+	// Add more connections as needed
+</script>
+<style>
+	main#contents {
+		background-color: #0000;
+	}
+
+	#chart-container {
+		width: 100%;
+		/* display: flex; */
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		/* top: 0px; */
+		left: 0px;
+		width: 100vw;
+		height: 100vw;
+	}
+
+	/* .node {
+		border: 0px solid #ccc;
+		padding: 10px;
+		margin: 10px;
+		background-color: lightblue;
+		border-radius: 10px;
+		text-align: center;
+		min-width: 75px;
+		min-height: 75px;
+		left: 50vw;
+		cursor: pointer;
+		position: absolute;
+		background-image: url(/assets/favicon.png);
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: bottom;
+		font-size: 20px;
+		text-align: center;
+		image-rendering: pixelated;
+		z-index: 1;
+	} */
+
+	#connections-container {
+		position: fixed;
+		top: 0px;
+		/* width: 100%;
+		height: 100%; */
+		z-index: 10;
+	}
+
+	/* .node span {
+		display: flex;
+		text-align: inline-center;
+	} */
+
+	/* .node:hover {
+		border: 5px solid #999999;
+	} */
+
+	canvas {
+		position: absolute;
+		left: -100%;
+	}
+</style>
