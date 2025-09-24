@@ -50,6 +50,10 @@
     input.addEventListener('keydown', e => {
       if (e.key === 'Enter' && !input.disabled) {
         e.preventDefault();
+        if (input.value !== str(2^count)) {
+input.value = '';
+return;
+}
 
         // 清除輸入框
         input.value = '';
@@ -75,7 +79,7 @@
     });
 
     // 啟動初始倒數計時
-    startTimer();
+    //startTimer();
   });
 </script>
 
