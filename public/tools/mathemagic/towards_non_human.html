@@ -41,7 +41,7 @@
           clearInterval(timer);
           input.disabled = true;
           resetBtn.style.display = 'inline-block';
-          timerDisplay.textContent = "已結束";
+          timerDisplay.textContent = "--";
         }
       }, 1000);
     }
@@ -50,7 +50,7 @@
     input.addEventListener('keydown', e => {
       if (e.key === 'Enter' && !input.disabled) {
         e.preventDefault();
-        if (input.value !== str(2^count)) {
+        if (input.value !== (2**count).toString()) {
 input.value = '';
 return;
 }
@@ -79,7 +79,7 @@ return;
     });
 
     // 啟動初始倒數計時
-    //startTimer();
+    // startTimer();
   });
 </script>
 
