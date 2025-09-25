@@ -1,0 +1,103 @@
+<h2>我不當人類啦！</h2>
+<p>選擇以下項目，看看你能夠在不計算的情況下，背誦到什麼程度？</p>
+
+<section class="test_section" id="twos_power" data-count="1">
+  <span>2次冪 數列</span>
+  <p>2<sup><span class="count_value">1</span></sup>=</p>
+  <input type="text" placeholder="按enter送出" />
+  <div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
+  <button class="reset_btn" style="display:none;">重置數值</button>
+</section>
+
+
+
+<script>
+  // 倒數計時秒數設定
+  const COUNTDOWN_SECONDS = 10;
+
+  // 初始化每個區段
+  document.querySelectorAll('.test_section').forEach(section => {
+    let count = parseInt(section.getAttribute('data-count')) || 0;
+    let countDisplay = section.querySelector('.count_value');
+    let timerDisplay = section.querySelector('.timer_value');
+    let input = section.querySelector('input');
+    let resetBtn = section.querySelector('.reset_btn');
+
+    countDisplay.textContent = count;
+    timerDisplay.textContent = COUNTDOWN_SECONDS;
+
+    let timer = null;
+    let timeLeft = COUNTDOWN_SECONDS;
+
+    // 重新啟動倒數計時功能
+    function startTimer() {
+      clearInterval(timer);
+      timeLeft = COUNTDOWN_SECONDS;
+      timerDisplay.textContent = timeLeft;
+      timer = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          input.disabled = true;
+          resetBtn.style.display = 'inline-block';
+          timerDisplay.textContent = "--";
+        }
+      }, 1000);
+    }
+
+    // 按下Enter鍵處理
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !input.disabled) {
+        e.preventDefault();
+        if (input.value !== (2**count).toString()) {
+input.value = '';
+return;
+}
+
+        // 清除輸入框
+        input.value = '';
+
+        // 數值 +1 並更新顯示及 data-count
+        count++;
+        section.setAttribute('data-count', count);
+        countDisplay.textContent = count;
+
+        // 重啟倒數計時
+        startTimer();
+      }
+    });
+
+    // 重置按鈕功能
+    resetBtn.addEventListener('click', () => {
+      count = 0;
+      section.setAttribute('data-count', count);
+      countDisplay.textContent = count;
+      input.disabled = false;
+      resetBtn.style.display = 'none';
+      startTimer();
+    });
+
+    // 啟動初始倒數計時
+    // startTimer();
+  });
+</script>
+
+<style>
+  .test_section {
+    border: 1px solid #aaa;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 200px;
+    position: relative;
+  }
+  input:disabled {
+    background-color: #eee;
+  }
+  .reset_btn {
+    margin-top: 8px;
+  }
+  .timer_display {
+    margin-top: 5px;
+  }
+</style>
