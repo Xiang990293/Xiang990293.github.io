@@ -62,3 +62,23 @@ function query_handler(query) {
 
     return result;
 }
+
+function get_list_of_tools(root) {
+    const toolsDir = path.join(root, 'public', 'tools');
+    let toolsList = {};
+
+    const genres = fs.readdirSync(toolsDir, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
+
+    genres.forEach(genre => {
+        const genrePath = path.join(toolsDir, genre);
+        const tools = fs.readdirSync(genrePath)
+            .filter(file => file.endsWith('.html') && file !== 'root.html')
+            .map(file => path.basename(file, '.html'));
+
+        toolsList[genre] = tools;
+    });
+
+    return toolsList;
+}

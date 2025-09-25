@@ -48,13 +48,24 @@
 <section id="explanation">
     <h2>凱薩密碼介紹</h2>
     <p>
-        凱薩密碼（Caesar Cipher）是一種古老且簡單的加密方法，通過將字母表中的字母向右（或左）移動固定的位數來加密訊息。
+        <a href="https://zh.wikipedia.org/zh-tw/%E5%87%B1%E6%92%92%E5%AF%86%E7%A2%BC">凱薩密碼（Caesar Cipher）</a>是一種古老且簡單的加密方法，通過將字母表中的字母向右（或左）移動固定的位數來加密訊息。
         例如，位移量為3時，字母A會變成D，字母B會變成E，依此類推。
     </p>
     <p>
         注意：凱薩密碼對大小寫字母都會進行位移，且非英文字母字符（例如數字及符號）會保持不變。
     </p>
+
+    <h3>相關變體</h3>
+    <ul>
+        <li>Avocat<auto-fill-in-button fillInElementId="shift" fillInValue="10" title="位移量設定為10"></auto-fill-in-button>：位移量固定為10的凱薩密碼。</li>
+        <li><a href="https://zh.wikipedia.org/zh-tw/ROT13">ROT13</a><auto-fill-in-button fillInElementId="shift" fillInValue="13" title="位移量設定為13"></auto-fill-in-button>：一種特殊的凱薩密碼，位移量固定為13，恰好將英文26字母分兩組相互轉換。</li>
+        <li>Cassis<auto-fill-in-button fillInElementId="shift" fillInValue="-5" title="位移量設定為-5"></auto-fill-in-button>：位移量固定為-5的凱薩密碼。</li>
+        <li>Cassette<auto-fill-in-button fillInElementId="shift" fillInValue="-6" title="位移量設定為-6"></auto-fill-in-button>：位移量固定為-6的凱薩密碼。</li>
+        <li><a href="https://zh.wikipedia.org/wiki/維吉尼亞密碼">維吉尼亞</a>：位移量根據密讑的不同字母決定，更難破解。</li>
+    </ul>
 </section>
+
+<script src="/js/custom_html_element/auto-fill-in-button.js"></script>
 <script>
     // 修正負數位移無限迴圈問題，對shift做mod 26
     function modShift(shift) {
@@ -298,6 +309,17 @@
 
 </script>
 <style>
+    a {
+        color:#000;
+        text-decoration:dotted #333 underline;
+        text-underline-position: under;
+    }
+
+    a:hover {
+        color:#3ca7d8;
+        text-decoration:solid #333 underline;
+    }
+    
     #tool_section {
         background-color: #c6f2ffd2;
         padding: 15px;

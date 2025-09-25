@@ -30,8 +30,6 @@ app.use('/code_tutorial', express.static('code_tutorial'));
 app.use('/template', express.static('template'));
 app.use(cookieParser());
 
-
-
 // # express.js setting: view engine
 // 使用 EJS 作為模板引擎
 const ejs = require('ejs');

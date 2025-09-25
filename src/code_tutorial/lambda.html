@@ -22,29 +22,30 @@ lambda是一種希臘字母，本身並沒有意義。</p>
 </section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input"><pre><code class="lang-python" data-language="python">a = (<span class="hljs-keyword">lambda</span> x: (<span class="hljs-keyword">lambda</span> y: x+y))(<span class="hljs-number">3</span>)
 <span class="hljs-comment"># a = lambda y: 3+y</span>
 <span class="hljs-built_in">print</span>(a(<span class="hljs-number">5</span>))</code></pre></div><div class="nb-output"><pre class="nb-stdout">8
-</pre></div></section><section class="nb-cell nb-markdown-cell"><h2 id="進入lambda領域"><a class="anchor" href="#進入lambda領域" aria-hidden="true"></a>進入lambda領域</h2></section><section class="nb-cell nb-markdown-cell"><p>在踏入完全地lambda領域之前，你需要知道三個概念。</p>
+</pre></div></section><section class="nb-cell nb-markdown-cell"><h2 id="進入lambda領域"><a class="anchor" href="#進入lambda領域" aria-hidden="true"></a>進入lambda領域</h2></section><section class="nb-cell nb-markdown-cell"><p>在踏入完全地lambda領域之前，你需要知道三個基本元素。</p>
 <ol>
 <li><p>變數 a</p>
 <p> 任何一個變數都是一個有效的表達式，可以是任何字元。</p>
 </li>
-<li><p>lambda函數體 lambda a:b</p>
+<li><p>lambda函數體 lambda a: b</p>
 <p> 接受參數a並回傳b。非程式語言會以希臘字母和句號紀錄: λa.b</p>
 </li>
-<li><p>傳遞參數 lambda a:b (c) / (λa.b)(c)</p>
-<p> 將傳入值c代進函數體b中所有a的地方
+<li><p>應用 (a)(b c ...)</p>
+<p> 將傳入值b, c, ...代進函數體a中所有對應的變數
  也有人利用(_ _)代表套用函數，即 (λa.b c)
- 但後者較難以追蹤函數體與傳入值間的關係與差異</p>
+ 但後者較難以追蹤函數體與傳入值間的關係與差異
+ 本教學改用(_)(_)方式表達套用函數</p>
 </li>
 </ol>
 </section><section class="nb-cell nb-markdown-cell"><h2 id="alpha-恆等"><a class="anchor" href="#alpha-恆等" aria-hidden="true"></a>alpha 恆等</h2><p>當表達式彼此間只差在變數名稱的不同，其餘結構相等時，
 稱兩表達式彼此alpha 恆等。</p>
 <p>λa.a &lt;-&gt; λb.b</p>
-</section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input"><pre><code class="lang-python" data-language="python"><span class="hljs-built_in">print</span>((<span class="hljs-keyword">lambda</span> x: x) == (<span class="hljs-keyword">lambda</span> y: y)) </code></pre></div><div class="nb-output"><pre class="nb-stdout">False
+</section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input"><pre><code class="lang-python" data-language="python"><span class="hljs-built_in">print</span>((<span class="hljs-keyword">lambda</span> x: x) == (<span class="hljs-keyword">lambda</span> y: y))</code></pre></div><div class="nb-output"><pre class="nb-stdout">False
 </pre></div></section><section class="nb-cell nb-markdown-cell"><p>well... 即便python不這麼認為w</p>
-<h2 id="beta-簡化"><a class="anchor" href="#beta-簡化" aria-hidden="true"></a>beta 簡化</h2><p>當一表達式經過 beta 簡化，可以與另一表達式 alpha 恆等，則稱為 beta 恆等。</p>
+</section><section class="nb-cell nb-markdown-cell"><h2 id="beta-簡化"><a class="anchor" href="#beta-簡化" aria-hidden="true"></a>beta 簡化</h2><p>當一表達式經過 beta 簡化，可以與另一表達式 alpha 恆等，則稱為 beta 恆等。</p>
 <p>(λa.a)(b) &lt;-&gt; b</p>
 </section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input" data-execution-count="21" data-prompt-number="21"><pre><code class="lang-python" data-language="python"><span class="hljs-built_in">print</span>((<span class="hljs-keyword">lambda</span> x: x)(<span class="hljs-number">3</span>) == <span class="hljs-number">3</span>)</code></pre></div><div class="nb-output" data-execution-count="21" data-prompt-number="21"><pre class="nb-stdout">True
-</pre></div></section><section class="nb-cell nb-markdown-cell"><h2 id="lambda-簡化"><a class="anchor" href="#lambda-簡化" aria-hidden="true"></a>lambda 簡化</h2><p>實質上，lambda 只接受一個變數，
+</pre></div></section><section class="nb-cell nb-markdown-cell"><h2 id="lambda-簡化-curring"><a class="anchor" href="#lambda-簡化-curring" aria-hidden="true"></a>lambda 簡化: curring</h2><p>實質上，lambda 只接受一個變數，
 但是只要讓一個 lambda 函數回傳另一個 lambda 函數，
 即可實現多參數傳遞，
 因此也可以將多個單參數 lambda 簡化合併。</p>
@@ -59,31 +60,82 @@ lambda是一種希臘字母，本身並沒有意義。</p>
 <p>前者是將 3 代入函數後，先回傳一新函數 λy.3+y，
 再將 5 代入 λy.3+y</p>
 <p>後者是同時將 3, 5 作為參數 x, y 傳入。</p>
-<p>雖然簡化後意義改變，但仍然是 beta 恆等的。</p>
-</section><section class="nb-cell nb-markdown-cell"><h2 id="布林值"><a class="anchor" href="#布林值" aria-hidden="true"></a>布林值</h2><p>布林值聽著可怕、單身又醜陋，但其實只是邏輯中的基本概念「真」、「假」/「是」、「否」。</p>
+<p>雖然簡化後意義改變，但結果仍然是 beta 恆等的。</p>
+</section><section class="nb-cell nb-markdown-cell"><h2 id="布林值"><a class="anchor" href="#布林值" aria-hidden="true"></a>布林值</h2><p>布林值聽著可怕、孤獨又醜陋，但其實只是邏輯中的基本概念「真」、「假」/「是」、「否」。</p>
 <p>雖然很突然，但我想跟你說，這兩位其實是個函數。</p>
-<p>真 &lt;-&gt; λab.a
-假 &lt;-&gt; λab.b</p>
+<p>應該說，可以用函數表示。</p>
+<blockquote>
+<p>真 &lt;-&gt; λab.a</p>
+<p>假 &lt;-&gt; λab.b</p>
+</blockquote>
 <p>即：照順序代入 a, b後，返回 a 就是真、b 就是假</p>
 <p>為什麼？因為希望 if A then B else C 表達式中可以完美運作。
 以下帶你建構上述表達式。</p>
 <p>我們希望「真」時返回 B，「假」時返回 C。
 因此需要三個參數同時傳入：</p>
+<blockquote>
 <p>(λxyz.?)(λab.a)(B)(C) &lt;-&gt; B</p>
 <p>(λxyz.?)(λab.b)(B)(C) &lt;-&gt; C</p>
+</blockquote>
 <p>由於「真」、「假」同時具有選擇回傳值的特性，
 讓布林值選擇即可，
 因此：</p>
-<p>(λxyz.(x)(y, z))(λab.a, B, C)
-&lt;-&gt; (λab.a)(B, C)
-&lt;-&gt; B</p>
-<p>(λxyz.(x)(y, z))(λab.b, B, C)
-&lt;-&gt; (λab.b)(B, C)
-&lt;-&gt; C</p>
-</section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input"><pre><code class="lang-python" data-language="python">true = <span class="hljs-keyword">lambda</span> a, b: a
+<blockquote>
+<p>(λxyz.(x)(y, z))(λab.a, B, C)</p>
+<p>&lt;-&gt; (λab.a)(B, C)</p>
+<p>&lt;-&gt; B</p>
+<p>(λxyz.(x)(y, z))(λab.b, B, C)</p>
+<p>&lt;-&gt; (λab.b)(B, C)</p>
+<p>&lt;-&gt; C</p>
+</blockquote>
+</section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input" data-execution-count="5" data-prompt-number="5"><pre><code class="lang-python" data-language="python">true = <span class="hljs-keyword">lambda</span> a, b: a
 false = <span class="hljs-keyword">lambda</span> a, b: b
+if_then_else = <span class="hljs-keyword">lambda</span> x, y, z: x(y, z)
 
-<span class="hljs-built_in">print</span>((<span class="hljs-keyword">lambda</span> x, y, z: x(y, z))(true, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
-<span class="hljs-built_in">print</span>((<span class="hljs-keyword">lambda</span> x, y, z: x(y, z))(false, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))</code></pre></div><div class="nb-output"><pre class="nb-stdout">1
+<span class="hljs-built_in">print</span>(if_then_else(true, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(false, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))</code></pre></div><div class="nb-output" data-execution-count="5" data-prompt-number="5"><pre class="nb-stdout">1
 2
-</pre></div></section></div>
+</pre></div></section><section class="nb-cell nb-markdown-cell"><p>有了真假判斷，我們就能做邏輯閘</p>
+</section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input" data-execution-count="9" data-prompt-number="9"><pre><code class="lang-python" data-language="python">true = <span class="hljs-keyword">lambda</span> a, b: a
+false = <span class="hljs-keyword">lambda</span> a, b: b
+if_then_else = <span class="hljs-keyword">lambda</span> x, y, z: x(y, z)
+
+and_gate = <span class="hljs-keyword">lambda</span> p, q: p(q, false)
+
+<span class="hljs-built_in">print</span>(if_then_else(and_gate(false, false), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(and_gate(true, false), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(and_gate(false, true), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(and_gate(true, true), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))</code></pre></div><div class="nb-output" data-execution-count="9" data-prompt-number="9"><pre class="nb-stdout">2
+2
+2
+1
+</pre></div></section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input"><pre><code class="lang-python" data-language="python">or_gate = <span class="hljs-keyword">lambda</span> p, q: p(true, q)
+
+<span class="hljs-built_in">print</span>(if_then_else(or_gate(false, false), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(or_gate(true, false), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(or_gate(false, true), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(or_gate(true, true), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))</code></pre></div><div class="nb-output"><pre class="nb-stdout">2
+1
+1
+1
+</pre></div></section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input" data-execution-count="10" data-prompt-number="10"><pre><code class="lang-python" data-language="python">not_gate = <span class="hljs-keyword">lambda</span> p: p(false, true)
+
+<span class="hljs-built_in">print</span>(if_then_else(not_gate(false), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(not_gate(true), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))</code></pre></div><div class="nb-output" data-execution-count="10" data-prompt-number="10"><pre class="nb-stdout">1
+2
+</pre></div></section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input" data-execution-count="11" data-prompt-number="11"><pre><code class="lang-python" data-language="python">xor_gate = <span class="hljs-keyword">lambda</span> p, q: p(not_gate(q), q)
+
+<span class="hljs-built_in">print</span>(if_then_else(xor_gate(false, false), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(xor_gate(true, false), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(xor_gate(false, true), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
+<span class="hljs-built_in">print</span>(if_then_else(xor_gate(true, true), <span class="hljs-number">1</span>, <span class="hljs-number">2</span>))</code></pre></div><div class="nb-output" data-execution-count="11" data-prompt-number="11"><pre class="nb-stdout">2
+1
+1
+2
+</pre></div></section><section class="nb-cell nb-markdown-cell"><p>跑題了</p>
+<p>接下來定義數字</p>
+<p>這裡使用以下定義</p>
+</section><section class="nb-cell nb-code-cell"><div class="nb-source nb-input"><pre><code class="lang-python" data-language="python">one = <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: f(x)
+two = <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: f(f(x))
+three = <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: f(f(f(x)))
+succ = <span class="hljs-keyword">lambda</span> n: <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: f(n(f)(x))</code></pre></div></section></div>

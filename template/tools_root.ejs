@@ -1,0 +1,10 @@
+﻿<h2><%= list-title %></h2>
+<p><%= list-description %></p>
+<section id="tool_genre_list" class="grid-container">
+    <% files.forEach(file -> { %>
+    <button type="button" class="grid-element genre" onclick="window.location.href='/tools/<%= genre %>/<%= file.file %>'">
+        <h3><%= file.title %></h3>
+        <p><%= file.description %></p>
+    </button>
+    <% }) %>
+</section>
