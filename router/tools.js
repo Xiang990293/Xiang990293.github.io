@@ -14,32 +14,120 @@ module.exports = (root) => {
             content: fs.readFileSync(path.join(root, "public/tools/tools.html"), 'utf8') //tools.html
         }
 
-        res.render('general_template', data);        
+        res.render('general_template', data);
     })
 
     router.get('/:genre', (req, res) => {
-        const genre = req.params.genre;
+        const folderName = req.params.genre;
+        const folderPath = path.join(root, `public/tools/${folderName}`);
 
-        data = {
-            title: `${genre} - 立方漣漪研究社`,
-            heading: `${genre}`,
-            content: fs.readFileSync(path.join(root, `public/tools/${genre}/root.html`), 'utf8')
-        }
+        fs.readdir(folderPath, (err, files) => {
+            if (err) return res.status(404).send('Folder not found');
 
-        res.render('general_template', data);
+            // the list of non root.html html files
+            const htmlFiles = files.filter(f => f.endsWith('.html'));
+            const otherHtmlFiles = htmlFiles.filter(f => f !== 'root.html');
+
+            Promise.all(otherHtmlFiles.map(file => {
+                return new Promise((resolve, reject) => {
+                    const filePath = path.join(folderPath, file);
+                    fs.readFile(filePath, 'utf-8', (err, data) => {
+                        if (err) return reject(err);
+
+                        let title = null;
+                        const titleMatch = data.match(/<title>(.*?)<\/title>/i);
+                        if (titleMatch) title = titleMatch[1];
+                        else {
+                            const h1Match = data.match(/<h1>(.*?)<\/h1>/i);
+                            if (h1Match) title = h1Match[1];
+                        }
+                        if (!title) title = file.replace(".html", "");
+
+                        let description = null;
+                        const descMatch = data.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']\s*\/?>/i);
+                        if (descMatch) description = descMatch[1];
+
+                        if (!description) description = title.replace(".html", "") + `的工具`;
+
+                        // console.log(`${file.replace(".html","")}`);
+                        resolve({ name: file.replace(".html", ""), title, description });
+                    });
+                });
+            })).then(details => {
+                // 先渲染root.ejs (內容部分)成 HTML 字串
+                res.render(
+                    'tools_root',
+                    {
+                        files: details,
+                        list_title: i18next.t(`tools.${folderName}.title`),
+                        list_description: i18next.t(`tools.${folderName}.title`),
+                        genre: folderName
+                    },
+                    (err, html) => {
+                        if (err) return res.status(500).send("模板渲染錯誤: " + err);
+
+                        // 再用general_template.ejs作為布局，插入body內容
+                        res.render('general_template', {
+                            title: `${i18next.t(`tools.${folderName}.title`)} - ${i18next.t('team.name')}`,
+                            content: html,
+                            heading: i18next.t(`tools.${folderName}.title`)
+                        });
+                    }
+                );
+            }).catch((err) => {
+                res.status(500).send('讀取檔案錯誤' + err);
+            });
+        });
+
+        // data = {
+        //     title: `${genre} - 立方漣漪研究社`,
+        //     heading: `${genre}`,
+        //     content: fs.readFileSync(path.join(root, `public/tools/${genre}/root.html`), 'utf8')
+        // }
+
+        // res.render('general_template', data);
     });
 
     router.get('/:genre/:name', (req, res) => {
         const genre = req.params.genre;
         const toolName = req.params.name;
 
-        data = {
-            title: `${genre} - ${toolName} - 立方漣漪研究社`,
-            heading: `${genre} - ${toolName}`,
-            content: fs.readFileSync(path.join(root, `public/tools/${genre}/${toolName}.html`), 'utf8')
-        }
+        const page = path.join(root, `public/tools/${genre}/${toolName}.html`);
 
-        res.render('general_template', data);
+        new Promise((resolve, reject) => {
+            fs.readFile(page, 'utf-8', (err, data) => {
+                if (err) return reject(err);
+
+                let title = null;
+                const titleMatch = data.match(/<title>(.*?)<\/title>/i);
+                if (titleMatch) title = titleMatch[1];
+                else {
+                    const h1Match = data.match(/<h1>(.*?)<\/h1>/i);
+                    if (h1Match) title = h1Match[1];
+                }
+                if (!title) title = toolName.replace(".html", "");
+
+                let description = null;
+                const descMatch = data.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']\s*\/?>/i);
+                if (descMatch) description = descMatch[1];
+
+                if (!description) description = title.replace(".html", "") + `的工具`;
+
+                // console.log(`${file.replace(".html","")}`);
+                resolve({ name: toolName.replace(".html", ""), title, description });
+            });
+        }).then(details => {
+
+            data = {
+                heading: details.title,
+                title: `${genre} - ${details.title}`,
+                content: fs.readFileSync(path.join(root, `public/tools/${genre}/${toolName}.html`), 'utf8')
+            }
+
+            res.render('general_template', data);
+        }).catch((err) => {
+            res.status(404).send('找不到該工具' + err);
+        });
     });
 
 
@@ -61,24 +149,4 @@ function query_handler(query) {
     });
 
     return result;
-}
-
-function get_list_of_tools(root) {
-    const toolsDir = path.join(root, 'public', 'tools');
-    let toolsList = {};
-
-    const genres = fs.readdirSync(toolsDir, { withFileTypes: true })
-        .filter(dirent => dirent.isDirectory())
-        .map(dirent => dirent.name);
-
-    genres.forEach(genre => {
-        const genrePath = path.join(toolsDir, genre);
-        const tools = fs.readdirSync(genrePath)
-            .filter(file => file.endsWith('.html') && file !== 'root.html')
-            .map(file => path.basename(file, '.html'));
-
-        toolsList[genre] = tools;
-    });
-
-    return toolsList;
 }

@@ -1,103 +1,156 @@
+<head>
+	<title>我不當人類啦！</title>
+	<meta name="description" content="選擇一個項目，看看你能夠在不計算的情況下，背誦到什麼程度？">
+</head>
 <h2>我不當人類啦！</h2>
 <p>選擇以下項目，看看你能夠在不計算的情況下，背誦到什麼程度？</p>
 
 <section class="test_section" id="twos_power" data-count="1">
-  <span>2次冪 數列</span>
-  <p>2<sup><span class="count_value">1</span></sup>=</p>
-  <input type="text" placeholder="按enter送出" />
-  <div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
-  <button class="reset_btn" style="display:none;">重置數值</button>
+	<span>2次冪 數列</span>
+	<p>2<sup><span class="count_value">1</span></sup>=<input type="text" id="2**count" placeholder="按enter送出" /></p>
+	<div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
+	<div class="record_display">最高紀錄：<span class="record_value">--</span></div>
+	<button class="reset_btn" style="display:none;">重置數值</button>
+</section>
+<section class="test_section" id="threes_power" data-count="1">
+	<span>3次冪 數列</span>
+	<p>3<sup><span class="count_value">1</span></sup>=<input type="text" id="3**count" placeholder="按enter送出" /></p>
+	<div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
+	<div class="record_display">最高紀錄：<span class="record_value">--</span></div>
+	<button class="reset_btn" style="display:none;">重置數值</button>
+</section>
+<section class="test_section" id="fives_power" data-count="1">
+	<span>5次冪 數列</span>
+	<p>5<sup><span class="count_value">1</span></sup>=<input type="text" id="5**count" placeholder="按enter送出" /></p>
+	<div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
+	<div class="record_display">最高紀錄：<span class="record_value">--</span></div>
+	<button class="reset_btn" style="display:none;">重置數值</button>
+</section>
+<section class="test_section" id="sevens_power" data-count="1">
+	<span>7次冪 數列</span>
+	<p>7<sup><span class="count_value">1</span></sup>=<input type="text" id="7**count" placeholder="按enter送出" /></p>
+	<div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
+	<div class="record_display">最高紀錄：<span class="record_value">--</span></div>
+	<button class="reset_btn" style="display:none;">重置數值</button>
+</section>
+<section class="test_section" id="elevens_power" data-count="1">
+	<span>11次冪 數列</span>
+	<p>11<sup><span class="count_value">1</span></sup>=<input type="text" id="11**count" placeholder="按enter送出" /></p>
+	<div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
+	<div class="record_display">最高紀錄：<span class="record_value">--</span></div>
+	<button class="reset_btn" style="display:none;">重置數值</button>
+</section>
+<section class="test_section" id="thirteens_power" data-count="1">
+	<span>13次冪 數列</span>
+	<p>13<sup><span class="count_value">1</span></sup>=<input type="text" id="13**count" placeholder="按enter送出" /></p>
+	<div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
+	<div class="record_display">最高紀錄：<span class="record_value">--</span></div>
+	<button class="reset_btn" style="display:none;">重置數值</button>
+</section>
+<section class="test_section" id="thirteens_power" data-count="1">
+	<span>完全平方數 數列</span>
+	<p><span class="count_value">1</span><sup>2</sup>=<input type="text" id="count**2" placeholder="按enter送出" /></p>
+	<div class="timer_display">倒數計時：<span class="timer_value">10</span> 秒</div>
+	<div class="record_display">最高紀錄：<span class="record_value">--</span></div>
+	<button class="reset_btn" style="display:none;">重置數值</button>
 </section>
 
 
 
 <script>
-  // 倒數計時秒數設定
-  const COUNTDOWN_SECONDS = 10;
+	// 倒數計時秒數設定
+	const COUNTDOWN_SECONDS = 10;
 
-  // 初始化每個區段
-  document.querySelectorAll('.test_section').forEach(section => {
-    let count = parseInt(section.getAttribute('data-count')) || 0;
-    let countDisplay = section.querySelector('.count_value');
-    let timerDisplay = section.querySelector('.timer_value');
-    let input = section.querySelector('input');
-    let resetBtn = section.querySelector('.reset_btn');
+	// 初始化每個區段
+	document.querySelectorAll('.test_section').forEach(section => {
+		let count = parseInt(section.getAttribute('data-count')) || 0;
+		let countDisplay = section.querySelector('.count_value');
+		let timerDisplay = section.querySelector('.timer_value');
+		let recordDisplay = section.querySelector('.record_value');
+		let input = section.querySelector('input');
+		let resetBtn = section.querySelector('.reset_btn');
 
-    countDisplay.textContent = count;
-    timerDisplay.textContent = COUNTDOWN_SECONDS;
+		countDisplay.textContent = count;
+		timerDisplay.textContent = COUNTDOWN_SECONDS;
+		recordDisplay.textContent = '--';
 
-    let timer = null;
-    let timeLeft = COUNTDOWN_SECONDS;
+		let timer = null;
+		let timeLeft = COUNTDOWN_SECONDS;
 
-    // 重新啟動倒數計時功能
-    function startTimer() {
-      clearInterval(timer);
-      timeLeft = COUNTDOWN_SECONDS;
-      timerDisplay.textContent = timeLeft;
-      timer = setInterval(() => {
-        timeLeft--;
-        timerDisplay.textContent = timeLeft;
-        if (timeLeft <= 0) {
-          clearInterval(timer);
-          input.disabled = true;
-          resetBtn.style.display = 'inline-block';
-          timerDisplay.textContent = "--";
-        }
-      }, 1000);
-    }
+		// 重新啟動倒數計時功能
+		function startTimer() {
+			clearInterval(timer);
+			timeLeft = COUNTDOWN_SECONDS;
+			timerDisplay.textContent = timeLeft;
+			timer = setInterval(() => {
+				timeLeft--;
+				timerDisplay.textContent = timeLeft;
+				if (timeLeft <= 0) {
+					clearInterval(timer);
+					input.disabled = true;
+					resetBtn.style.display = 'inline-block';
+					timerDisplay.textContent = "--";
+					recordDisplay.textContent = count-1; // 更新最高紀錄
+				}
+			}, 1000);
+		}
 
-    // 按下Enter鍵處理
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !input.disabled) {
-        e.preventDefault();
-        if (input.value !== (2**count).toString()) {
-input.value = '';
-return;
-}
+		// 按下Enter鍵處理
+		input.addEventListener('keydown', e => {
+			if (e.key === 'Enter' && !input.disabled) {
+				e.preventDefault();
 
-        // 清除輸入框
-        input.value = '';
+				if (input.value !== eval(section.querySelector('input').id).toString()) {
+					input.value = '';
+					return;
+				}
 
-        // 數值 +1 並更新顯示及 data-count
-        count++;
-        section.setAttribute('data-count', count);
-        countDisplay.textContent = count;
+				// 清除輸入框
+				input.value = '';
 
-        // 重啟倒數計時
-        startTimer();
-      }
-    });
+				// 數值 +1 並更新顯示及 data-count
+				count++;
+				section.setAttribute('data-count', count);
+				countDisplay.textContent = count;
 
-    // 重置按鈕功能
-    resetBtn.addEventListener('click', () => {
-      count = 0;
-      section.setAttribute('data-count', count);
-      countDisplay.textContent = count;
-      input.disabled = false;
-      resetBtn.style.display = 'none';
-      startTimer();
-    });
+				// 重啟倒數計時
+				startTimer();
+			}
+		});
 
-    // 啟動初始倒數計時
-    // startTimer();
-  });
+		// 重置按鈕功能
+		resetBtn.addEventListener('click', () => {
+			count = 0;
+			section.setAttribute('data-count', count);
+			countDisplay.textContent = count;
+			input.disabled = false;
+			resetBtn.style.display = 'none';
+			startTimer();
+		});
+
+		// 啟動初始倒數計時
+		// startTimer();
+	});
 </script>
 
 <style>
-  .test_section {
-    border: 1px solid #aaa;
-    padding: 10px;
-    margin-bottom: 20px;
-    width: 200px;
-    position: relative;
-  }
-  input:disabled {
-    background-color: #eee;
-  }
-  .reset_btn {
-    margin-top: 8px;
-  }
-  .timer_display {
-    margin-top: 5px;
-  }
+	.test_section {
+		border: 1px solid #aaa;
+		padding: 10px;
+		margin-bottom: 20px;
+		width: 200px;
+		position: relative;
+	}
+
+	input:disabled {
+		background-color: #eee;
+	}
+
+	.reset_btn {
+		margin-top: 8px;
+	}
+
+	.timer_display {
+		margin-top: 5px;
+	}
 </style>

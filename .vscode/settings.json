@@ -1,5 +1,9 @@
 {
     "editor.autoClosingBrackets": "always",
 	"files.encoding": "utf8bom",
-	"code-runner.fileDirectoryAsCwd": false
+	"code-runner.fileDirectoryAsCwd": false,
+	"editor.indentSize": "tabSize",
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false
 }

@@ -12,8 +12,6 @@ const mimeTypes = {
 const ROOT = __dirname;
 require('dotenv').config();
 
-
-
 const ipynb_to_html = require('./modules/ipynb_to_html.js')(ROOT);
 
 
@@ -357,7 +355,7 @@ app.get('/rippou-ripple-server/survival/query/:map_name', (req, res) => {
 
 // Error handling for 404
 app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname, 'public', '404.html')); // 404 Not Found
+    res.status(404).sendFile(path.join(ROOT, 'public', '404.html')); // 404 Not Found
 });
 
 
@@ -385,6 +383,33 @@ function query_handler(querys) {
 
 
 const i18next = require('i18next');
+const i18nBackend = require('i18next-fs-backend');
+// const LangDetector = require('i18next-browser-languagedetector');
+const zhTW = path.join(ROOT, 'public/locales/{{lng}}/{{ns}}.json');
+
+i18next
+    .use(i18nBackend)
+    // .use(LangDetector)
+    .init({
+        fallbackLng: 'zh-TW',
+        fallbackNS: 'translation',
+        backend: {
+            loadPath: zhTW
+            // path.join(ROOT, 'locales/{{lng}}/{{ns}}.json')
+        },
+        debug: true,
+        detection: {
+            // order and from where user language should be detected
+            order: [],
+            caches: [] // we do not want to cache the language
+        },
+        interpolation: {
+            escapeValue: false // not needed for express as it escapes by default
+        }
+    },(err, t) => {
+        if (err) return console.log('something went wrong loading', err);
+        console.log(t('team.name', {lng: "zh-TW"}), "翻譯功能上線"); // -> same as i18next.t
+});
 
 
 
