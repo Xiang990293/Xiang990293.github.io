@@ -90,7 +90,7 @@
 					input.disabled = true;
 					resetBtn.style.display = 'inline-block';
 					timerDisplay.textContent = "--";
-					recordDisplay.textContent = count-1; // 更新最高紀錄
+					recordDisplay.textContent = Math.max(count-1, recordDisplay.textContent); // 更新最高紀錄
 				}
 			}, 1000);
 		}
