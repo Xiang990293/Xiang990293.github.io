@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/web_content', express.static('web_content'));
 app.use('/code_tutorial', express.static('code_tutorial'));
 app.use('/template', express.static('template'));
+app.use('/src/assets', express.static('assets'));
 app.use(cookieParser());
 
 // # express.js setting: view engine
