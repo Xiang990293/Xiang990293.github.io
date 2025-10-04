@@ -250,13 +250,14 @@
 		// startTimer();
 	});
 
-	document.querySelectorAll('.test_section_decimals').forEach(section => {
+	document.querySelectorAll('.test_section_decimals').forEach(async section => {
 		let count = parseInt(section.getAttribute('data-count')) || 1;
 		let countDisplay = section.querySelector('.count_value');
 		let timerDisplay = section.querySelector('.timer_value');
 		let recordDisplay = section.querySelector('.record_value');
 		let input = section.querySelector('input');
 		let resetBtn = section.querySelector('.reset_btn');
+  await fetch(`/tools/query/pi/500`);
 
 		countDisplay.textContent = count;
 		timerDisplay.textContent = COUNTDOWN_SECONDS;
