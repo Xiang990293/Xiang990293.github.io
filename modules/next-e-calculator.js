@@ -1,26 +1,24 @@
-﻿function* pi() {
-	let q = 1n;
-	let r = 180n;
-	let t = 60n;
-	let i = 2n;
+﻿function* euler() {
+	let factorial = 1n
+	let counter = 1n
+	let result = 1n
 
 	while (true) {
-		let digit = ((i * 27n - 12n) * q + r * 5n) / (t * 5n);
+		factorial *= counter++; // 計算 n!，每次乘上下一個數字
 
-		yield Number(digit);
+		// 計算當前項為 (10^20) / n!
+		result += (1n / factorial);
 
-		let u = i * 3n;
-		u = (u + 1n) * 3n * (u + 2n);
-		r = u * 10n * (q * (i * 5n - 2n) + r - t * digit);
-		q *= 10n * i * (i++ * 2n - 1n);
-		t *= u;
+		// yield sum 轉為字串或數字呈現
+		yield result.toString()[Number(counter)-1] || 0; // 如果超過長度，回傳 0
 	}
 }
 
+
 module.exports = (root) => {
-	let gen = pi();
+	let gen = euler();
 	let t = 0;
-	let pi_cache = [];
+	let e_cache = [];
 
 	gen.next().value; // 跳過整數部分3
 
@@ -30,7 +28,7 @@ module.exports = (root) => {
 				const batchSize = 1000; // 每批計算1000位
 				let count = 0;
 				while (t < digit && count < batchSize) {
-					pi_cache.push(gen.next().value);
+					e_cache.push(gen.next().value);
 					t++;
 					count++;
 				}
@@ -38,12 +36,12 @@ module.exports = (root) => {
 				if (t < digit) {
 					setImmediate(step); // 非同步下一批
 				} else {
-					resolve(pi_cache[digit-1]); // 計算完成回傳結果切片
+					resolve(e_cache[digit - 1]); // 計算完成回傳結果切片
 				}
 			}
-			
+
 			if (digit <= t) {
-				resolve(pi_cache[digit-1]); // 已經計算過，直接回傳結果切片
+				resolve(e_cache[digit - 1]); // 已經計算過，直接回傳結果切片
 				return;
 			}
 
@@ -51,5 +49,5 @@ module.exports = (root) => {
 		});
 	}
 
-	return { calculate: calculateAsync };
+	return { e_calculate: calculateAsync };
 };

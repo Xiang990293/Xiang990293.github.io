@@ -1,0 +1,55 @@
+﻿<head>
+	<title>Blockly for Minecraft</title>
+	<meta name="description" content="選擇一個項目，看看你能夠在不計算的情況下，背誦到什麼程度？">
+</head>
+<h2>Blockly 工作區</h2>
+<p></p>
+<div id="blocklyDiv" style="height: 480px; width: 100%;"></div>
+<button id="exportBtn">匯出</button>
+<script src='/npm/blockly/blockly.min.js'></script>
+<script src='/npm/@blockly/theme-dark/dist/index.js'></script>
+<!-- <script src='/npm/@blockly/block-plus-minus/dist/index.js'></script> -->
+<script src="./MathTools/Arrays/Transpose.js"></script>
+<script src="./Fields/EntityInput.js"></script>
+<script src="./Fields/registry.js"></script>
+<script src="./Blocks/Commands.js"></script>
+<script src="./Blocks/Entities.js"></script>
+<!-- <script src="./Blocks/Mutators/TargetSelector.js"></script> -->
+<!-- <script src="./Blocks/Mutators/registry.js"></script> -->
+<script src="./Workspace/Toolbox.js"></script>
+<script src="./Renderer/Minecrafty.js"></script>
+<script src="./Renderer/registry.js"></script>
+<script>
+
+	// toolbox and workspace initialization
+	const blocklyDiv = document.getElementById('blocklyDiv');
+
+	const workspace = new Blockly.WorkspaceSvg(Blockly.inject(blocklyDiv, {
+		renderer: 'minecrafty_renderer',
+		theme: Blockly.Theme.Dark,
+		toolbox: toolbox,
+		connectionChecker: null
+	}));
+
+	// 初始化Blockly工作區
+	// 導出Minecraft命令
+	document.getElementById('exportBtn').addEventListener('click', function () {
+		const code = generateMinecraftCommand(workspace);
+		// 將代碼轉換為文件並下載
+		const blob = new Blob([code], { type: 'text/plain' });
+		const link = document.createElement('a');
+		link.href = URL.createObjectURL(blob);
+		link.download = 'minecraft_command.mcfunction';
+		link.click();
+	});
+
+	/*// 自定義函數，將Blockly代碼轉換為Minecraft命令
+	function generateMinecraftCommand(workspace) {
+		// 這裡實現你的邏輯，將Blockly代碼轉換為Minecraft命令
+		// ...
+		return 'your_minecraft_command_here';
+	}*/
+
+</script>
+<style>
+</style>

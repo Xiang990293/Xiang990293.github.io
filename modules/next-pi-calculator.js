@@ -1,4 +1,9 @@
-﻿function* pi() {
+﻿/* 
+	credit to https://npm.io/package/pi-calculator
+	for the spigot algorithm of pi
+*/
+
+function* pi() {
 	let q = 1n;
 	let r = 180n;
 	let t = 60n;
@@ -51,5 +56,5 @@ module.exports = (root) => {
 		});
 	}
 
-	return { calculate: calculateAsync };
+	return { pi_calculate: calculateAsync };
 };

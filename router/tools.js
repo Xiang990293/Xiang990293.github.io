@@ -133,19 +133,30 @@ module.exports = (root) => {
 
 	// const {pi} = require('pi-calculator');
 	// sorry but let me copy your code prevent auto calculating
-	const { calculate } = require(path.resolve(root, './modules/next-pi-calculator.js'))(root);
+	const { pi_calculate } = require(path.resolve(root, './modules/next-pi-calculator.js'))(root);
 	// let lastCalculated = 10000;
 	router.get('/query/pi/:num', (req, res) => {
 		const num = req.params.num;
 
 		// res.send(calculate(Number(num)));
-		calculate(Number(num)).then(result => {
+		pi_calculate(Number(num)).then(result => {
 			res.send(result);
 		});
 
 	});
 
+	const { e_calculate } = require(path.resolve(root, './modules/next-e-calculator.js'))(root);
+	// let lastCalculated = 10000;
+	router.get('/query/e/:num', (req, res) => {
+		const num = req.params.num;
 
+		// res.send(calculate(Number(num)));
+		e_calculate(Number(num)).then(result => {
+			console.log(result);
+			res.send(result);
+		});
+
+	});
 
 	return router
 }

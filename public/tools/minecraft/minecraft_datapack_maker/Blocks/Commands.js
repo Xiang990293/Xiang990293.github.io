@@ -1,0 +1,114 @@
+﻿/// command definition
+const HUE_COMMAND = 308;
+
+Blockly.Blocks["advancement"] = {
+	init: function () {
+		const Block = this;
+		this.setColour(HUE_COMMAND);
+		this.appendDummyInput()
+			.appendField(new Blockly.FieldLabelSerializable("advancement"), "advancement")
+			.appendField(new Blockly.FieldDropdown([["grant", "grant"], ["revoke", "revoke"]]), "advancement_subcommand");
+		this.appendValueInput("player_selector").setCheck("Player");
+		this.appendDummyInput("main_input")
+			.appendField(new Blockly.FieldDropdown([
+				["everything", "everything"],
+				["from", "from"],
+				["only", "only"],
+				["through", "through"],
+				["until", "until"]
+			], this.validate), "test")
+
+		this.setPreviousStatement(true, null);
+		this.setNextStatement(true, null);
+		this.setOutput(true, "Subcommand");
+	},
+
+	validate: function (newVal) {
+		const block = this.getSourceBlock();
+
+		if (newVal !== "everything") {
+			if (!block.getField("advancement_id")) {
+				block.getInput("main_input").appendField(new Blockly.FieldTextInput("minecraft:story/root"), "advancement_id");
+			}
+		} else {
+			block.getInput("main_input").removeField("advancement_id", true);
+		}
+		return newVal;
+	}
+}
+
+Blockly.Blocks["attribute"] = {
+	init: function () {
+		const Block = this;
+		this.setColour(HUE_COMMAND);
+		this.appendDummyInput()
+			.appendField(new Blockly.FieldLabelSerializable("advancement"), "advancement")
+			.appendField(new Blockly.FieldDropdown([["grant", "grant"], ["revoke", "revoke"]]), "advancement_subcommand");
+		this.appendValueInput("player_selector").setCheck("Player");
+		this.appendDummyInput("main_input")
+			.appendField(new Blockly.FieldDropdown([
+				["everything", "everything"],
+				["from", "from"],
+				["only", "only"],
+				["through", "through"],
+				["until", "until"]
+			], this.validate), "test")
+
+		this.setPreviousStatement(true, null);
+		this.setNextStatement(true, null);
+		this.setOutput(true, "Subcommand");
+	},
+
+	validate: function (newVal) {
+		const block = this.getSourceBlock();
+
+		if (newVal !== "everything") {
+			if (!block.getField("advancement_id")) {
+				block.getInput("main_input").appendField(new Blockly.FieldTextInput("minecraft:story/root"), "advancement_id");
+			}
+		} else {
+			block.getInput("main_input").removeField("advancement_id", true);
+		}
+		return newVal;
+	}
+}
+
+// define with JSON is not recommanded for complex Command type Blocks
+Blockly.defineBlocksWithJsonArray([
+	{   // advancement command
+		"type": "minecraft_command_template",
+		"message0": "advancement %1 %2 %3 ",
+		"args0": [
+			{
+				"type": "field_dropdown",
+				"name": "advancement_subcommand",
+				"options": [
+					["grant", "grant"],
+					["revoke", "revoke"]
+				]
+			},
+			{
+				"type": "input_value",
+				"name": "player_selector",
+				"check": "Player"
+			},
+			{
+				"type": "field_dropdown",
+				"name": "advancement_subcommand",
+				"options": [
+					["everything", "everything"],
+					["from", "from"],
+					["only", "only"],
+					["through", "through"],
+					["until", "until"]
+				]
+			}
+		],
+		"previousStatement": null,
+		"nextStatement": null,
+		"input": "advancement_key",
+		"colour": HUE_COMMAND,
+		"tooltip": "進度指令",
+		"helpUrl": ""
+	}
+]);

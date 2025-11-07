@@ -1,0 +1,1 @@
+﻿Blockly.blockRendering.register('minecrafty_renderer', MinecraftyRenderer);
