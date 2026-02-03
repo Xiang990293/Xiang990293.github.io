@@ -58,19 +58,19 @@
 				},
 				{
 					"kind": "block",
-					"type": "logic_compare"
+					"type": "attribute"
 				},
 				{
 					"kind": "block",
-					"type": "logic_compare"
+					"type": "ban"
 				},
 				{
 					"kind": "block",
-					"type": "math_number"
+					"type": "ban-ip"
 				},
 				{
 					"kind": "block",
-					"type": "text"
+					"type": "banlist"
 				},
 				{
 					"kind": "block",
@@ -112,7 +112,7 @@
 				},
 				{
 					"kind": "category",
-					"name": "實體座標",
+					"name": "座標",
 					"colour": HUE_ENTITY,
 					"contents": [
 						{

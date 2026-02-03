@@ -38,12 +38,19 @@ app.set('view engine', 'ejs');
 app.set('views', './template');
 
 
-
 // 路由模組 & 路由掛載
-const toolsRouter = require('./router/tools.js')(ROOT);
-const pythonRouter = require('./router/python.js')(ROOT);
-app.use('/tools', toolsRouter);
-app.use('/python', pythonRouter);
+var Routers = [];
+fs.readdirSync(path.join(ROOT, 'router')).forEach(file => {
+	var router = require(path.join(ROOT, 'router', file))(ROOT)
+	Routers.push(router);
+	app.use(`/${file.replace('.js','')}`, router);
+});
+// const tutorialsRouter = require('./router/tools.js')(ROOT);
+// const toolsRouter = require('./router/tools.js')(ROOT);
+// const pythonRouter = require('./router/python.js')(ROOT);
+// app.use('/tutorials', tutorialsRouter);
+// app.use('/tools', toolsRouter);
+// app.use('/python', pythonRouter);
 
 // Serve favicon
 app.get('/favicon.png', (req, res) => {

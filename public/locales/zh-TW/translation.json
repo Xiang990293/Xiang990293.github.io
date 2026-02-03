@@ -2,19 +2,48 @@
     "team": {
         "name": "立方漣漪研究社"
     },
-
-    "tools.root.title": "所有工具",
-    "tools.root.description": "這裡列出了所有本網頁提供的工具",
-
-    "tools.mathemagic.title": "魔數",
-    "tools.mathemagic.description": "這裡列出了一些常用的數學輔助工具，這些工具可以幫助你進行數學計算、圖形繪製和其他數學相關的任務。",
-
-    "tools.minecraft.title": "我的世界",
-    "tools.minecraft.description": "前往我的世界類工具",
-
-    "tools.encryptorial.title": "加密",
-    "tools.encryptorial.description": "前往加密類工具",
-    
-    "tools.misc.title": "雜項",
-    "tools.misc.description": "前往雜項類工具"
+	"tools": {	
+		"root": {
+			"title": "所有工具",
+			"description": "這裡列出了所有本網頁提供的工具"
+		},
+		"mathemagic": {
+			"title": "魔數",
+			"description": "這裡列出了一些常用的數學輔助工具，這些工具可以幫助你進行數學計算、圖形繪製和其他數學相關的任務。"
+		},
+		"minecraft": {
+			"title": "我的世界",
+			"description": "前往我的世界類工具"
+		},
+		"encryptorial": {
+			"title": "加密",
+			"description": "前往加密類工具"
+		},
+		"misc": {
+			"title": "雜項",
+			"description": "前往雜項類工具"
+		}
+	},
+	"tutorials": {
+		"root": {
+			"title": "所有教學",
+			"description": "這裡列出了所有本網頁提供的教學"
+		},
+		"technology": {
+			"title": "科技",
+			"description": "這裡列出了一些常見的科技相關教學，這些教學可以幫助你在科技領域解決任務。"
+		},
+		"minecraft": {
+			"title": "我的世界",
+			"description": "前往我的世界類工具"
+		},
+		"encryptorial": {
+			"title": "加密",
+			"description": "前往加密類工具"
+		},
+		"misc": {
+			"title": "雜項",
+			"description": "前往雜項類工具"
+		}	
+	}
 }

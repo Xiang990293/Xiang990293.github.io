@@ -1,4 +1,4 @@
-﻿# This is the document especially for Blockly For Minecraft Project
+﻿# This is the document for Blockly For Minecraft Project
 
 NOTICE: Although this is a sub-project of Xiang990293.github.io, the versioning is apart from it, please keep it in mind.
 
@@ -276,7 +276,6 @@ Blockly.Blocks["Example_if"] = {
 	},
 }
 ```
-
 
 ## 2. Field Definitions
 
