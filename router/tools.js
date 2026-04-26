@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs').promises;
 const i18next = require('i18next');
 
 // 匯出路由
@@ -17,6 +17,7 @@ module.exports = (root) => {
 		res.render('general_template', data);
 	})
 
+	
 	router.get('/:genre', (req, res) => {
 		const folderName = req.params.genre;
 		const folderPath = path.join(root, `public/tools/${folderName}`);
@@ -87,6 +88,7 @@ module.exports = (root) => {
 
 		// res.render('general_template', data);
 	});
+
 
 	router.get('/:genre/:name', (req, res) => {
 		const genre = req.params.genre;

@@ -2,236 +2,261 @@
 <html lang="zh-tw">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title id="title">立方漣漪研究社 首頁</title>
-    <link rel="stylesheet" href="./css/entry.css" />
-    <link rel="icon" href="/favicon.png" />
-    <style>
-        header {
-            height: 100vh;
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title id="title">立方漣漪研究社 首頁</title>
+	<link rel="stylesheet" href="./css/entry.css" />
+	<link rel="icon" href="/favicon.png" />
+	<style>
+		header {
+			height: 100vh;
 
-            #current-image-container {
-                transition: opacity 0.5s ease-in-out;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 1;
-                background-position: center;
-                background-size: cover;
-            }
+			#current-image-container {
+				transition: opacity 0.5s ease-in-out;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 1;
+				background-position: center;
+				background-size: cover;
+			}
 
-            #next-image-container {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 0;
-                background-position: center;
-                background-size: cover;
-            }
-        }
+			#next-image-container {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 0;
+				background-position: center;
+				background-size: cover;
+			}
+		}
 
-        .big-title {
-            z-index: 2;
-            animation-name: none;
-            background-color: rgba(255, 255, 255, 0.5);
-            text-align: center;
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%, -100%);
-            font-size: 100px;
-            width: auto;
-        }
+		.big-title {
+			z-index: 2;
+			animation-name: none;
+			background-color: rgba(255, 255, 255, 0.5);
+			text-align: center;
+			position: absolute;
+			left: 50%;
+			transform: translate(-50%, -100%);
+			font-size: 100px;
+			width: auto;
+		}
 
-        #header-contents {
-            z-index: 2;
-            position: relative;
-            top: 50%;
-            width: 100%;
-        }
+		#header-contents {
+			z-index: 2;
+			position: relative;
+			top: 50%;
+			width: 100%;
+		}
 
-        main {
-            section {
-                padding: 10px;
-                display: flex;
-                align-content: center;
-                justify-content: space-evenly;
-                /* background: var(--main-sections-ground-color); */
-                background-image: url(https://www.fractalcamo.com/uploads/5/9/0/2/5902948/s189772745713394276_p3856_i147_w750.jpeg);
+		main {
+			section {
+				padding: 10px;
+				display: flex;
+				align-content: center;
+				justify-content: space-evenly;
+				/* background: var(--main-sections-ground-color); */
+				background-image: url(https://www.fractalcamo.com/uploads/5/9/0/2/5902948/s189772745713394276_p3856_i147_w750.jpeg);
 
-                .news {
-                    margin: 10px;
-                    display: flex;
-                    flex-direction: row;
-                    overflow-x: auto;
-                    overflow-y: hidden;
-                    scrollbar-width: none;
-                }
+				.news {
+					margin: 10px;
+					display: flex;
+					flex-direction: row;
+					overflow-x: auto;
+					overflow-y: hidden;
+					scrollbar-width: none;
+				}
 
-                .news::-webkit-scrollbar {
-                    display: none;
-                    /* for Chrome and Safari */
-                }
-            }
-        }
-    </style>
+				.news::-webkit-scrollbar {
+					display: none;
+					/* for Chrome and Safari */
+				}
+			}
+		}
+	</style>
 </head>
 
 <body onload="ShowTime();">
-    <header>
-        <div id="header-contents">
-            <h1 class="big-title"><a href="/home">
-                    <div>立方漣漪</div>
-                    <div>研究社</div>
-                </a></h1>
-            <label class="switch" id="dark-mode">
-                <input type="checkbox" onclick="darkmode()" title="dark mode" placeholder="" />
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div id="next-image-container"></div>
-        <div id="current-image-container"></div>
-    </header>
-    <main>
-        <div>新工具</div>
-        <section class="news new_tools">
-            <button onclick="window.location.href='/tools/mathemagic/manual_speed_calculator';">新工具-人工速度計算機</button>
-            <button onclick="window.location.href='/news2.html';">新工具-合成配方流程圖</button>
-        </section>
-        <div>新遊戲</div>
-        <section class="news new_game">
-            <button onclick="window.location.href='/mini_game/manual_speed_calculator/manual_speed_calculator';">新工具-人工速度計算機</button>
-            <button onclick="window.location.href='/news2.html';">新工具-合成配方流程圖</button>
-        </section>
-    </main>
-    <%-include('footer.html')%>
+	<header>
+		<div id="header-contents">
+			<h1 class="big-title"><a href="/home">
+					<div>立方漣漪</div>
+					<div>研究社</div>
+				</a></h1>
+			<label class="switch" id="dark-mode">
+				<input type="checkbox" onclick="darkmode()" title="dark mode" placeholder="" />
+				<span class="slider round"></span>
+			</label>
+		</div>
+		<div id="next-image-container"></div>
+		<div id="current-image-container"></div>
+	</header>
+	<main>
+		<div>新工具</div>
+		<section class="news new_tools">
+		</section>
+		<div>新遊戲</div>
+		<section class="news new_game">
+		</section>
+	</main>
+	<%-include('footer.html')%>
 
-    <script> // album.js
-        const albumContainer = document.getElementById('current-image-container');
-        const nextImageContainer = document.getElementById('next-image-container');
+		<script> // album.js
+			const albumContainer = document.getElementById('current-image-container');
+			const nextImageContainer = document.getElementById('next-image-container');
 
-        var albumtry = async () => {
-            try {
-                const res = await fetch('/all_album')
-                const result = await res.json()
-                return result.pics;
-            } catch (error) {
-                return [
-                    '2024-10-04_00.15.48.png',
-                    '2024-10-04_00.35.51.png',
-                    '2024-10-04_00.36.06.png',
-                    '2024-10-04_00.36.14.png',
-                    '2024-10-04_00.36.39.png',
-                    '2024-10-04_00.36.47.png',
-                    '2024-10-04_00.36.57.png',
-                    '2024-10-04_00.37.10.png',
-                    '2024-10-04_00.37.20.png',
-                    '2024-10-04_00.37.48.png',
-                    '2024-10-04_00.38.11.png',
-                    '2024-10-04_00.38.24.png',
-                    '2024-10-04_00.39.35.png',
-                    '2024-10-04_00.39.49.png',
-                    '2024-10-04_00.39.58.png',
-                    '2024-10-04_00.40.16.png',
-                    '2024-10-04_00.41.13.png',
-                    '2024-10-04_00.41.45.png',
-                    '2024-10-04_00.41.51.png',
-                    '2024-10-04_00.43.55.png',
-                    '2024-10-04_00.44.28.png',
-                    '2024-10-04_00.44.39.png',
-                    '2024-10-04_00.44.49.png',
-                    '2024-10-04_00.45.02.png',
-                    '2024-10-04_00.45.13.png',
-                    '2024-10-04_00.45.50.png',
-                    '2024-10-04_00.47.49.png',
-                    '2024-10-04_00.48.17.png',
-                    '2024-10-04_00.49.01.png',
-                    '2024-10-04_00.49.10.png',
-                    '2024-10-04_00.49.21.png',
-                    '2024-10-04_00.49.32.png',
-                    '2024-10-04_00.49.47.png',
-                    '2024-10-04_00.50.08.png',
-                    '2024-10-04_00.50.21.png',
-                    '2024-10-04_00.51.34.png',
-                    '2024-10-04_00.51.45.png',
-                    '2024-10-04_00.52.05.png',
-                    '2024-10-04_00.52.24.png',
-                    '2024-10-04_00.52.33.png',
-                    '2024-10-04_00.52.40.png',
-                    '2024-10-04_00.54.23.png',
-                    '2024-10-04_00.54.37.png',
-                    '2024-10-04_00.54.45.png',
-                    '2024-10-04_00.55.43.png',
-                    '2024-10-04_01.18.19.png',
-                    '2024-10-04_01.21.40.png',
-                    '2024-10-08_18.21.26.png'
-                ];
-            }
-        }
+			var albumtry = async () => {
+				try {
+					const res = await fetch('/all_album')
+					const result = await res.json()
+					return result.pics;
+				} catch (error) {
+					return [
+						'2024-10-04_00.15.48.png',
+						'2024-10-04_00.35.51.png',
+						'2024-10-04_00.36.06.png',
+						'2024-10-04_00.36.14.png',
+						'2024-10-04_00.36.39.png',
+						'2024-10-04_00.36.47.png',
+						'2024-10-04_00.36.57.png',
+						'2024-10-04_00.37.10.png',
+						'2024-10-04_00.37.20.png',
+						'2024-10-04_00.37.48.png',
+						'2024-10-04_00.38.11.png',
+						'2024-10-04_00.38.24.png',
+						'2024-10-04_00.39.35.png',
+						'2024-10-04_00.39.49.png',
+						'2024-10-04_00.39.58.png',
+						'2024-10-04_00.40.16.png',
+						'2024-10-04_00.41.13.png',
+						'2024-10-04_00.41.45.png',
+						'2024-10-04_00.41.51.png',
+						'2024-10-04_00.43.55.png',
+						'2024-10-04_00.44.28.png',
+						'2024-10-04_00.44.39.png',
+						'2024-10-04_00.44.49.png',
+						'2024-10-04_00.45.02.png',
+						'2024-10-04_00.45.13.png',
+						'2024-10-04_00.45.50.png',
+						'2024-10-04_00.47.49.png',
+						'2024-10-04_00.48.17.png',
+						'2024-10-04_00.49.01.png',
+						'2024-10-04_00.49.10.png',
+						'2024-10-04_00.49.21.png',
+						'2024-10-04_00.49.32.png',
+						'2024-10-04_00.49.47.png',
+						'2024-10-04_00.50.08.png',
+						'2024-10-04_00.50.21.png',
+						'2024-10-04_00.51.34.png',
+						'2024-10-04_00.51.45.png',
+						'2024-10-04_00.52.05.png',
+						'2024-10-04_00.52.24.png',
+						'2024-10-04_00.52.33.png',
+						'2024-10-04_00.52.40.png',
+						'2024-10-04_00.54.23.png',
+						'2024-10-04_00.54.37.png',
+						'2024-10-04_00.54.45.png',
+						'2024-10-04_00.55.43.png',
+						'2024-10-04_01.18.19.png',
+						'2024-10-04_01.21.40.png',
+						'2024-10-08_18.21.26.png'
+					];
+				}
+			}
 
 
-        /**
-        * Initializes the album display by preloading images and setting up an image rotation
-        * mechanism. This function fetches the list of album images, preloads them, and then
-        * continuously changes the displayed image at a set interval, creating a slideshow effect.
-        * It updates the background images of designated containers to cycle through the album images.
-        */
+			/**
+			* Initializes the album display by preloading images and setting up an image rotation
+			* mechanism. This function fetches the list of album images, preloads them, and then
+			* continuously changes the displayed image at a set interval, creating a slideshow effect.
+			* It updates the background images of designated containers to cycle through the album images.
+			*/
 
 
-        async function initAlbum() {
-            const albumImages = await albumtry();
-            const preloadedImages = albumImages.map((image) => {
-                const img = new Image();
-                img.src = 'web_content/home/header_background/' + image;
-                return img;
-            });
+			async function initAlbum() {
+				const albumImages = await albumtry();
+				const preloadedImages = albumImages.map((image) => {
+					const img = new Image();
+					img.src = 'web_content/home/header_background/' + image;
+					return img;
+				});
 
-            const IMAGE_INTERVAL = 5000; // Define a constant for the interval value
+				const IMAGE_INTERVAL = 5000; // Define a constant for the interval value
 
-            let currentImageIndex = 0;
+				let currentImageIndex = 0;
 
-            function changeAlbumImage() {
-                if (albumImages.length === 0) {
-                    console.error('albumImages array is empty');
-                    return;
-                }
+				function changeAlbumImage() {
+					if (albumImages.length === 0) {
+						console.error('albumImages array is empty');
+						return;
+					}
 
-                const currentImage = preloadedImages[currentImageIndex];
-                const nextImage = preloadedImages[(currentImageIndex + 1) % albumImages.length];
+					const currentImage = preloadedImages[currentImageIndex];
+					const nextImage = preloadedImages[(currentImageIndex + 1) % albumImages.length];
 
-                albumContainer.style.backgroundImage = `url(${currentImage.src})`;
-                albumContainer.style.opacity = 1; // Set opacity to 1 for the current image
+					albumContainer.style.backgroundImage = `url(${currentImage.src})`;
+					albumContainer.style.opacity = 1; // Set opacity to 1 for the current image
 
-                nextImageContainer.style.backgroundImage = `url(${nextImage.src})`;
-                nextImageContainer.style.opacity = 1; // Set opacity to 0 for the next image
+					nextImageContainer.style.backgroundImage = `url(${nextImage.src})`;
+					nextImageContainer.style.opacity = 1; // Set opacity to 0 for the next image
 
-                setTimeout(() => {
-                    albumContainer.style.opacity = 0; // Set opacity to 0 for the current image
-                    setTimeout(() => {
-                        albumContainer.style.backgroundImage = `url(${nextImage.src})`;
-                        albumContainer.style.opacity = 1;
-                        currentImageIndex = (currentImageIndex + 1) % albumImages.length;
-                    }, 500);
-                }, 500);
+					setTimeout(() => {
+						albumContainer.style.opacity = 0; // Set opacity to 0 for the current image
+						setTimeout(() => {
+							albumContainer.style.backgroundImage = `url(${nextImage.src})`;
+							albumContainer.style.opacity = 1;
+							currentImageIndex = (currentImageIndex + 1) % albumImages.length;
+						}, 500);
+					}, 500);
 
 
 
-            }
+				}
 
-            setInterval(changeAlbumImage, IMAGE_INTERVAL);
-        }
+				setInterval(changeAlbumImage, IMAGE_INTERVAL);
+			}
 
-        window.addEventListener('DOMContentLoaded', () => {
-            initAlbum();
-        });
-    </script>
-    <script> // news.js
+			window.addEventListener('DOMContentLoaded', () => {
+				initAlbum();
+			});
+		</script>
+		<script> // news.js
+			async function generateButtons(containerSelector, folderPath) {
+				try {
+					// 假設伺服器有目錄列舉，獲取資料夾內容
+					const response = await fetch(zzzzzzzzzz.join("total_list", folderPath));
+					const html = await response.text();
 
-    </script>
+					// 解析目錄HTML，提取.html檔案
+					const parser = new DOMParser();
+					const doc = parser.parseFromString(html, 'text/html');
+					const links = Array.from(doc.querySelectorAll('a[href$=".html"]'))
+						.map(a => a.href.split('/').pop()); // 只取檔名
+
+					const container = document.querySelector(containerSelector);
+					container.innerHTML = ''; // 清空
+
+					links.forEach(filename => {
+						const button = document.createElement('button');
+						button.textContent = `新工具 - ${filename.replace('.html', '')}`;
+						button.onclick = () => window.location.href = path.join(folderPath, filename);
+						container.appendChild(button);
+					});
+				} catch (error) {
+					console.error('無法讀取資料夾:', error);
+				}
+			}
+
+			// 使用範例
+			generateButtons('.news.new_tools', 'tools');
+			generateButtons('.news.new_game', 'mini_game');
+
+		</script>
 </body>
 
 </html>
