@@ -5,88 +5,108 @@ const path = require('path');
 const fs = require('fs');
 const i18next = require('i18next');
 
+const cheerio = require('cheerio');
+
 // 匯出路由
 module.exports = (root) => {
 	router.get('/', async (req, res) => {
-		data = {
-			title: '實用工具 - 立方漣漪研究社',
-			heading: '實用工具',
-			content: fs.readFileSync(path.join(root, "public/tools/tools.html"), 'utf8') //tools.html
+		let genres = [];
+
+		try {
+			genres = await fs.promises.readdir(path.join(root, 'public/tools'), { withFileTypes: true });
+			genres = genres.filter(dirent => dirent.isDirectory()).map(dirent => {
+				const genre = dirent.name;
+				const title = i18next.t(`tools.${genre}.title`) || genre;
+				const description = i18next.t(`tools.${genre}.description`) || genre;
+				return {
+					genre,
+					title,
+					description,
+					link: `/tools/${genre}`
+				};
+			});
+		} catch (err) {
+			console.error('讀取 tools 目錄失敗:', err);
+			return res.status(500).send('伺服器錯誤');
 		}
 
-		res.render('general_template', data);
+		const data = {
+			title: `${i18next.t(`tools.root.title`)} - 立方漣漪研究社`,
+			heading: `${i18next.t('tools.root.title')}`,
+			description: `${i18next.t('tools.root.description')}`,
+			type: 'tools',
+			genres
+		}
+
+		res.render('auto_grid_template', { layout: 'general_template', ...data });
 	})
 
-	
-	router.get('/:genre', (req, res) => {
+
+	router.get('/:genre', async (req, res) => {
+		/*
+			note:
+			genre is a folder name under public/tools
+			and the page list out all html files in public/tools/<genre>/
+			but auto_grid_template needs the parameters to be in the form of {title, heading, description, type, genres}
+			where genres is a list of {genre, title, description, link}
+
+			in this case, "genre" is the tool name, instead of <genre> name.
+			tool name is under public/tools/<genre>/
+			so public/tools/<genre>/"genre".
+		*/
+
 		const folderName = req.params.genre;
 		const folderPath = path.join(root, `public/tools/${folderName}`);
 
-		fs.readdir(folderPath, (err, files) => {
-			if (err) return res.status(404).send('Folder not found');
+		try {
+			tools = await fs.promises.readdir(folderPath, { withFileTypes: true });
+			tools = tools.filter(files => files.name.endsWith('.html')).map(files => async () => {
+				const filePath = path.join(folderPath, files.name);
 
-			// the list of non root.html html files
-			const htmlFiles = files.filter(f => f.endsWith('.html'));
-			const otherHtmlFiles = htmlFiles.filter(f => f !== 'root.html');
+				const {title, description} = await fs.promises.readFile(filePath, 'utf-8').then(data => {
+					// 在你的 Promise 內用
+					const $ = cheerio.load(data);
 
-			Promise.all(otherHtmlFiles.map(file => {
-				return new Promise((resolve, reject) => {
-					const filePath = path.join(folderPath, file);
-					fs.readFile(filePath, 'utf-8', (err, data) => {
-						if (err) return reject(err);
+					// 用 DOM 方式抓 title
+					const titleEl = $('title').text().trim();
+					if (titleEl) title = titleEl;
 
-						let title = null;
-						const titleMatch = data.match(/<title>(.*?)<\/title>/i);
-						if (titleMatch) title = titleMatch[1];
-						else {
-							const h1Match = data.match(/<h1>(.*?)<\/h1>/i);
-							if (h1Match) title = h1Match[1];
-						}
-						if (!title) title = file.replace(".html", "");
-
-						let description = null;
-						const descMatch = data.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']\s*\/?>/i);
-						if (descMatch) description = descMatch[1];
-
-						if (!description) description = title.replace(".html", "") + `的工具`;
-
-						// console.log(`${file.replace(".html","")}`);
-						resolve({ name: file.replace(".html", ""), title, description });
-					});
-				});
-			})).then(details => {
-				// 先渲染root.ejs (內容部分)成 HTML 字串
-				res.render(
-					'tools_root',
-					{
-						files: details,
-						list_title: i18next.t(`tools.${folderName}.title`),
-						list_description: i18next.t(`tools.${folderName}.title`),
-						genre: folderName
-					},
-					(err, html) => {
-						if (err) return res.status(500).send("模板渲染錯誤: " + err);
-
-						// 再用general_template.ejs作為布局，插入body內容
-						res.render('general_template', {
-							title: `${i18next.t(`tools.${folderName}.title`)} - ${i18next.t('team.name')}`,
-							content: html,
-							heading: i18next.t(`tools.${folderName}.title`)
-						});
+					// 若沒有 title，再用 h1
+					if (!title) {
+						const h1El = $('h1').text().trim();
+						if (h1El) title = h1El;
 					}
-				);
-			}).catch((err) => {
-				res.status(500).send('讀取檔案錯誤' + err);
+
+					if (!title) title = files.name.replace(".html", "");
+
+					const descEl = $('meta[name="description"]').attr('content').trim();
+					if (descEl) description = descEl[1];
+
+					if (!description) description = title.replace(".html", "") + `的工具`;
+				});
+
+				const tool = files.name;
+				return {
+					genre: tool,
+					title,
+					description,
+					link: `/tools/${genre}/${tool}`
+				};
 			});
-		});
+		} catch (err) {
+			console.error('讀取 tools 目錄失敗:', err);
+			return res.status(500).send('伺服器錯誤');
+		}
 
-		// data = {
-		//     title: `${genre} - 立方漣漪研究社`,
-		//     heading: `${genre}`,
-		//     content: fs.readFileSync(path.join(root, `public/tools/${genre}/root.html`), 'utf8')
-		// }
+		const data = {
+			title: `${i18next.t(`tools.${folderName}.title`)}`,
+			heading: `${i18next.t(`tools.${folderName}.title`)}`,
+			description: `${i18next.t(`tools.${folderName}.description`)}`,
+			type: 'tools',
+			genres: await Promise.all(tools)
+		}
 
-		// res.render('general_template', data);
+		res.render('auto_grid_template', { layout: 'general_template', ...data });
 	});
 
 

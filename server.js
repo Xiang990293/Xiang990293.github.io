@@ -19,22 +19,26 @@ const ipynb_to_html = require('./modules/ipynb_to_html.js')(ROOT);
 // Serve static files from public
 const path = require('path');
 const express = require("express");
+const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const fs = require("fs");
 const cookieParser = require('cookie-parser');
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.static(path.join(ROOT, 'public')));
 app.use('/web_content', express.static('web_content'));
 app.use('/code_tutorial', express.static('code_tutorial'));
 app.use('/template', express.static('template'));
 app.use('/src/assets', express.static('assets'));
-app.use('/npm', express.static(path.join(__dirname, '/node_modules/')));
+app.use('/npm', express.static(path.join(ROOT, '/node_modules/')));
+app.use('/mini_game', express.static('/public/mini_game'));
 
 app.use(cookieParser());
 
-// # express.js setting: view engine
+// # express.js setting: view engine`
 // 使用 EJS 作為模板引擎
 const ejs = require('ejs');
 app.set('view engine', 'ejs');
+app.use(expressLayouts);
 app.set('views', './template');
 
 
@@ -54,7 +58,7 @@ fs.readdirSync(path.join(ROOT, 'router')).forEach(file => {
 
 // Serve favicon
 app.get('/favicon.png', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'assets', 'favicon.png'));
+    res.sendFile(path.join(ROOT, 'public', 'assets', 'favicon.png'));
 });
 
 // send rendom picture in home album
@@ -85,11 +89,15 @@ app.get('/all_album', (req, res) => {
     })
 });
 
-// **outdated
+// !deprecated
 app.get('/personal_web', (req, res) => {
     // console.log("GET req recieved:" + req.url)
 
-    res.sendFile(path.join(__dirname, 'home.html'));
+    res.sendFile(path.join(ROOT, 'home.html'));
+});
+
+app.get('/mini_game', (req, res) => {
+	res.sendFile(path.join(ROOT, 'public/mini_game/mini_game.html'));
 });
 
 app.get('/template_test', (req, res) => {
@@ -102,6 +110,7 @@ app.get(['/', '/home.html', '/home'], (req, res) => {
     res.render('home');
 });
 
+// !deprecated
 app.get('/member_intro', (req, res) => {
     data = {
         title: '團隊成員 - 立方漣漪研究社',

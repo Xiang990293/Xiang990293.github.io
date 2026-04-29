@@ -3,18 +3,19 @@
     <input class="text_field" type="text" name="username" placeholder="Username 使用者名稱" required />
     <input class="text_field" type="password" name="password" placeholder="Password 密碼" required />
     <input class="button" type="submit" value="Submit 提交" />
-    <div id="errorMsg" style="color: rgb(200, 39, 39); margin-top: 10px;"></div>
-    <div id="other_options" style="color: white; margin-top: 10px;"><a href="/register">註冊</a>|<a href="/forgot_password">忘記密碼</a></div>
+    <div id="errorMsg"></div>
+    <div id="other_options"><a href="/register">註冊</a>|<a href="/forgot_password">忘記密碼</a></div>
 </form>
 <script>
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+	const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault(); // 阻止表單預設提交行為
 
         errorMsg.textContent = ''; // 清空錯誤訊息
 
         const data = {
-            username: document.getElementById('loginForm').username.value,
-            password: document.getElementById('loginForm').password.value
+            username: loginForm.getElementById('username').value,
+            password: loginForm.getElementById('password').value
         };
 
         // get cookie
@@ -46,3 +47,13 @@
         }
     });
 </script>
+<style>
+	#errorMsg {
+		color: rgb(200, 39, 39);
+		margin-top: 10px;
+	}
+	#other_options {
+		color: white;
+		margin-top: 10px;
+	}
+</style>

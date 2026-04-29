@@ -1,0 +1,11 @@
+﻿<h2><%= heading %></h2>
+<p><%= description %></p>
+
+<section id="<%= type %>_genre_list" class="grid-container">
+  <% genres.forEach(genre => { %>
+    <button type="button" class="grid-element genre" onclick="window.location.href='<%= genre.link %>'">
+      <h3><%= genre.title %></h3>
+      <p><%= genre.description %></p>
+    </button>
+  <% }); %>
+</section>

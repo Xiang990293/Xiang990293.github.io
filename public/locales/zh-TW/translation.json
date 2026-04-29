@@ -17,7 +17,7 @@
 		},
 		"encryptorial": {
 			"title": "加密",
-			"description": "前往加密類工具"
+			"description": "前往加密工具"
 		},
 		"misc": {
 			"title": "雜項",
@@ -39,11 +39,21 @@
 		},
 		"encryptorial": {
 			"title": "加密",
-			"description": "前往加密類工具"
+			"description": "前往加密工具"
 		},
 		"misc": {
 			"title": "雜項",
 			"description": "前往雜項類工具"
 		}	
+	},
+	"mini_game": {
+		"root": {
+			"title": "所有迷你遊戲",
+			"description": "這裡列出了所有本網頁提供的迷你遊戲"
+		},
+		"2187": {
+			"title": "2187",
+			"description": "前往 2187"
+		}
 	}
 }

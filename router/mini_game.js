@@ -11,28 +11,28 @@ module.exports = (root) => {
 		let genres = [];
 		
 		try {
-			genres = await fs.promises.readdir(path.join(root, 'public/tutorials'), { withFileTypes: true });
+			genres = await fs.promises.readdir(path.join(root, 'public/mini_game'), { withFileTypes: true });
 			genres = genres.filter(dirent => dirent.isDirectory()).map(dirent => {
 				const genre = dirent.name;
-				const title = i18next.t(`tutorials.${genre}.title`) || genre;
-				const description = i18next.t(`tutorials.${genre}.description`) || genre;
+				const title = i18next.t(`mini_game.${genre}.title`) || genre;
+				const description = i18next.t(`mini_game.${genre}.description`) || genre;
 				return { 
 					genre, 
 					title, 
 					description,
-					link: `/tutorials/${genre}`
+					link: `/mini_game/${genre}`
 				};
 			});
 		} catch (err) {
-			console.error('讀取 tutorials 目錄失敗:', err);
+			console.error('讀取 mini_game 目錄失敗:', err);
 			return res.status(500).send('伺服器錯誤');
 		}
 		
 		const data = {
-			title: `${i18next.t(`tutorials.root.title`)} - 立方漣漪研究社`,
-			heading: `${i18next.t('tutorials.root.title')}`,
-			description: `${i18next.t('tutorials.root.description')}`,
-			type: 'tutorials',
+			title: `${i18next.t(`mini_game.root.title`)} - 立方漣漪研究社`,
+			heading: `${i18next.t('mini_game.root.title')}`,
+			description: `${i18next.t('mini_game.root.description')}`,
+			type: 'mini_game',
 			genres
 		}
 		
@@ -41,7 +41,7 @@ module.exports = (root) => {
 
 	router.get('/:genre', (req, res) => {
 		const folderName = req.params.genre;
-		const folderPath = path.join(root, `public/tutorials/${folderName}`);
+		const folderPath = path.join(root, `public/mini_game/${folderName}`);
 
 		fs.readdir(folderPath, (err, files) => {
 			if (err) return res.status(404).send('Folder not found');
@@ -69,7 +69,7 @@ module.exports = (root) => {
 						const descMatch = data.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']\s*\/?>/i);
 						if (descMatch) description = descMatch[1];
 
-						if (!description) description = title.replace(".html", "") + `的工具`;
+						if (!description) description = title.replace(".html", "") + `的小遊戲`;
 
 						// console.log(`${file.replace(".html","")}`);
 						resolve({ name: file.replace(".html", ""), title, description });
@@ -78,11 +78,11 @@ module.exports = (root) => {
 			})).then(details => {
 				// 先渲染root.ejs (內容部分)成 HTML 字串
 				res.render(
-					'tutorials_root',
+					'mini_game_root',
 					{
 						files: details,
-						list_title: i18next.t(`tutorials.${folderName}.title`),
-						list_description: i18next.t(`tutorials.${folderName}.description`),
+						list_title: i18next.t(`mini_game.${folderName}.title`),
+						list_description: i18next.t(`mini_game.${folderName}.description`),
 						genre: folderName
 					},
 					(err, html) => {
@@ -90,9 +90,9 @@ module.exports = (root) => {
 
 						// 再用general_template.ejs作為布局，插入body內容
 						res.render('general_template', {
-							title: `${i18next.t(`tutorials.${folderName}.title`)} - ${i18next.t('team.name')}`,
+							title: `${i18next.t(`mini_game.${folderName}.title`)} - ${i18next.t('team.name')}`,
 							content: html,
-							heading: i18next.t(`tutorials.${folderName}.title`)
+							heading: i18next.t(`mini_game.${folderName}.title`)
 						});
 					}
 				);
@@ -104,7 +104,7 @@ module.exports = (root) => {
 		// data = {
 		//     title: `${genre} - 立方漣漪研究社`,
 		//     heading: `${genre}`,
-		//     content: fs.readFileSync(path.join(root, `public/tutorials/${genre}/root.html`), 'utf8')
+		//     content: fs.readFileSync(path.join(root, `public/mini_game/${genre}/root.html`), 'utf8')
 		// }
 
 		// res.render('general_template', data);
@@ -114,7 +114,7 @@ module.exports = (root) => {
 		const genre = req.params.genre;
 		const tutorialName = req.params.name;
 
-		const page = path.join(root, `public/tutorials/${genre}/${tutorialName}.html`);
+		const page = path.join(root, `public/mini_game/${genre}/${tutorialName}.html`);
 
 		new Promise((resolve, reject) => {
 			fs.readFile(page, 'utf-8', (err, data) => {
@@ -133,7 +133,7 @@ module.exports = (root) => {
 				const descMatch = data.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']\s*\/?>/i);
 				if (descMatch) description = descMatch[1];
 
-				if (!description) description = title.replace(".html", "") + `的教學`;
+				if (!description) description = title.replace(".html", "") + `的小遊戲`;
 
 				// console.log(`${file.replace(".html","")}`);
 				resolve({ name: tutorialName.replace(".html", ""), title, description });
@@ -143,12 +143,12 @@ module.exports = (root) => {
 			data = {
 				heading: details.title,
 				title: `${genre} - ${details.title}`,
-				content: fs.readFileSync(path.join(root, `public/tutorials/${genre}/${tutorialName}.html`), 'utf8')
+				content: fs.readFileSync(path.join(root, `public/mini_game/${genre}/${tutorialName}.html`), 'utf8')
 			}
 
 			res.render('general_template', data);
 		}).catch((err) => {
-			res.status(404).send('找不到該教學' + err);
+			res.status(404).send('找不到該小遊戲' + err);
 		});
 	});
 
