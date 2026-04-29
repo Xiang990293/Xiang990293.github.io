@@ -4,7 +4,6 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const i18next = require('i18next');
-
 const cheerio = require('cheerio');
 
 // 匯出路由
@@ -67,8 +66,6 @@ module.exports = (root) => {
 
 				const data = await fs.promises.readFile(filePath, 'utf-8');
 				const $ = cheerio.load(data);
-
-				// 用 DOM 方式抓 title
 				let title = null;
 				const titleEl = $('title').text().trim();
 				if (titleEl) title = titleEl;
@@ -114,44 +111,30 @@ module.exports = (root) => {
 
 	router.get('/:genre/:name', (req, res) => {
 		const genre = req.params.genre;
-		const toolName = req.params.name;
+		const tool = req.params.name;
 
-		const page = path.join(root, `public/tools/${genre}/${toolName}.html`);
+		const page = path.join(root, `public/tools/${genre}/${tool}.html`);
+		let data = null;
 
-		new Promise((resolve, reject) => {
-			fs.readFile(page, 'utf-8', (err, data) => {
-				if (err) return reject(err);
+		try {
+			file = fs.readFileSync(page, 'utf-8')
+			const $ = cheerio.load(file);
+			const title = $('title').text() || $('h1').text() || tool.replace(".html", "");
+			const description = $('meta[name="description"]').attr('content') || title.replace(".html", "") + `的工具`;
 
-				let title = null;
-				const titleMatch = data.match(/<title>(.*?)<\/title>/i);
-				if (titleMatch) title = titleMatch[1];
-				else {
-					const h1Match = data.match(/<h1>(.*?)<\/h1>/i);
-					if (h1Match) title = h1Match[1];
-				}
-				if (!title) title = toolName.replace(".html", "");
+			data =  {
+				heading: title,
+				title,
+				description,
+				body: file
+			};
+			
+		} catch (err) {
+			console.error('讀取 tools 目錄失敗:', err);
+			return res.status(500).send('伺服器錯誤');
+		}
 
-				let description = null;
-				const descMatch = data.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']\s*\/?>/i);
-				if (descMatch) description = descMatch[1];
-
-				if (!description) description = title.replace(".html", "") + `的工具`;
-
-				// console.log(`${file.replace(".html","")}`);
-				resolve({ name: toolName.replace(".html", ""), title, description });
-			});
-		}).then(details => {
-
-			data = {
-				heading: details.title,
-				title: `${genre} - ${details.title}`,
-				body: fs.readFileSync(path.join(root, `public/tools/${genre}/${toolName}.html`), 'utf8')
-			}
-
-			res.render('general_template', data);
-		}).catch((err) => {
-			res.status(404).send('找不到該工具' + err);
-		});
+		res.render('direct_body', {layout: "general_template", ...data});
 	});
 
 

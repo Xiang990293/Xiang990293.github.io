@@ -1,103 +1,541 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/template/general_template.css" />
-    <link rel="icon" href="/assets/favicon.png" />
-    <link rel="stylesheet" href="/lib/mathquill-0.10.1/mathquill.css" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/template/general_template.css" />
+	<link rel="icon" href="/assets/favicon.png" />
+	<link rel="stylesheet" href="/lib/mathquill-0.10.1/mathquill.css" />
 </head>
+
 <body onload="ShowTime();">
-    <%-include('header.html')%>
-    <main id="contents">
-        <%- body %>
-    </main>
-    <%-include('footer.html')%>
+	<%-include('header.html')%>
+		<main id="contents">
+			<%- body %>
+		</main>
+		<%-include('footer.html')%>
 
 </body>
 <script>
-    // <button class="導航欄-btn" onclick="window.location.href='/home';">首頁</button> 
-    function darkmode() {
-        var element = document.body;
-        element.classList.toggle("dark-mode");
-    }
-
+	// <button class="導航欄-btn" onclick="window.location.href='/home';">首頁</button> 
+	function darkmode() {
+		var element = document.body;
+		element.classList.toggle("dark-mode");
+	}
+	
 </script>
 <style>
+	@import url("/template/font.css");
 
-    html, body {
-        height:100%;
-        margin: 0px;
-        padding: 0px;
-        box-sizing: border-box;
-    }
+	html,
+	body {
+		height: 100%;
+		margin: 0px;
+		padding: 0px;
+		box-sizing: border-box;
+	}
 
-    body {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+	body {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
 
-    main#contents {
-        flex: 1 0 auto;
-    }
+	main#contents {
+		flex: 1 0 auto;
+	}
 
-    footer {
-        background-color: gray;
-        width: 100%;
-        margin-top: 0;
+	footer {
+		background-color: gray;
+		width: 100%;
+		margin-top: 0;
 
-    }
+	}
 
-    #contents {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: white;
-    }
+	#contents {
+		font-family: Arial, sans-serif;
+		margin: 20px;
+		background-color: white;
+	}
 
-    .grid-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        /* 水平和垂直間距一致 */
-        justify-content: center;
-        /* 水平置中對齊 */
-        align-content: center;
-        /* 多行垂直置中 */
-    }
+	.grid-container {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		/* 水平和垂直間距一致 */
+		justify-content: center;
+		/* 水平置中對齊 */
+		align-content: center;
+		/* 多行垂直置中 */
+	}
 
-    .grid-element {
-        flex: 0 0 250px;
-        /* 固定寬度250px */
-        height: 200px;
-        /* 固定高度250px，寬高一致 */
-        padding: 16px;
-        background-color: #f0f0f0;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        text-align: left;
-        transition: background-color 0.3s;
-        box-sizing: border-box;
-        /* padding不影響尺寸 */
-        display: flex;
-        flex-direction: column;
-        /* 讓h3, p垂直排列 */
-        justify-content: flex-start;
-    }
+	.grid-element {
+		flex: 0 0 250px;
+		/* 固定寬度250px */
+		height: 200px;
+		/* 固定高度250px，寬高一致 */
+		padding: 16px;
+		background-color: #f0f0f0;
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
+		text-align: left;
+		transition: background-color 0.3s;
+		box-sizing: border-box;
+		/* padding不影響尺寸 */
+		display: flex;
+		flex-direction: column;
+		/* 讓h3, p垂直排列 */
+		justify-content: flex-start;
+	}
 
-    .grid-element:hover {
-        background-color: #e0e0e0;
-    }
+	.grid-element:hover {
+		background-color: #e0e0e0;
+	}
 
-    @media (max-width: 600px) {
-        .grid-element {
-            flex: 1 1 100%;
-            /* 手機螢幕上寬度100% */
-            height: auto;
-            /* 高度自適應 */
-        }
-    }
+	
+	
+	body {
+		margin: 0px;
+		overflow-x: hidden;
+		font-family: Minecraft, sans-serif;
+	}
+	
+	@keyframes timer {
+		from {
+			position: relative;
+			right: 0px;
+			bottom: 0px;
+			opacity: 1
+		}
+		
+		to {
+			position: relative;
+			right: 0px;
+			bottom: 0px;
+			opacity: 1
+		}
+	}
+
+
+
+	@keyframes big-circle {
+		from {
+			position: absolute;
+		}
+	}
+
+	@keyframes title-slide-in {
+		from {
+			position: relative;
+			left: -80px;
+			opacity: 0
+		}
+
+		to {
+			position: relative;
+			left: 20px;
+			opacity: 1
+		}
+	}
+
+	.頁首 {
+		border: 2px solid rgb(43, 195, 76);
+		background-color: rgb(43, 195, 76);
+		padding: 5px;
+	}
+
+	.big-title {
+		animation-name: title-slide-in;
+		animation-duration: 3s;
+		animation-iteration-count: 1;
+		position: relative;
+		left: 20px;
+		width: 400px;
+	}
+	
+	
+	
+	@keyframes change-button-height {
+		from {
+			border: 10px solid rgb(33, 160, 160);
+			background-color: rgb(33, 160, 160);
+			color: white;
+			font-size: 15px;
+			height: 50px;
+		}
+
+		to {
+			border: 10px solid yellow;
+			background-color: yellow;
+			color: black;
+			font-size: 15px;
+			height: 60px;
+		}
+	}
+
+
+	#側導航欄 {
+		display: block;
+		width: 200px;
+		background-color: rgb(8, 209, 216);
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		height: 100%;
+		/* Full height */
+		position: 0;
+		/* Make it stick, even on scroll */
+		overflow: auto;
+		/* Enable scrolling if the sidenav has too much content */
+		
+		li h3 {
+			margin: 0px;
+			width: 200px;
+			background-color: rgb(109, 146, 226);
+			color: black;
+			text-align: center;
+		}
+		
+		li {
+			position: relative;
+			color: rgb(8, 209, 216);
+			padding: 0px;
+
+			ul {
+				color: rgb(8, 209, 216);
+				padding: 0px;
+				left: 5px;
+				margin-right: 0px;
+				margin-left: 10px;
+			}
+
+			button {
+				color: white;
+				border: 0px;
+				text-decoration-line: none;
+				background-color: rgb(8, 209, 216);
+				width: 100%;
+				left: 5px;
+				top: 5px;
+				bottom: 5px;
+				text-align: left;
+				height: 40px;
+			}
+			
+			button:hover {
+				animation-name: change-button-color;
+				animation-duration: 0.3s;
+				animation-iteration-count: 1;
+				border: 0px solid yellow;
+				background-color: yellow;
+				color: black;
+				cursor: pointer;
+				left: 5px;
+			}
+		}
+	}
+	
+	@keyframes change-button-color {
+		from {
+			background-color: rgb(8, 209, 216);
+			color: white;
+		}
+		
+		to {
+			background-color: yellow;
+			color: black;
+		}
+	}
+
+	#middle {
+		display: flex;
+		height: max-content;
+		bottom: 0px;
+	}
+
+	#siderPage {
+		width: 200px;
+	}
+
+	#without_footer {
+		min-height: 100vb;
+	}
+	
+	#content_text {
+		scroll-behavior: auto;
+		padding: 5px;
+		width: max;
+		flex: 1;
+	}
+	
+	#content {
+		visibility: hidden;
+		height: 0px;
+		width: 0px;
+	}
+	
+	/* The switch - the box around the slider */
+	.switch {
+		position: relative;
+		display: inline-block;
+		width: 60px;
+		height: 34px;
+	}
+
+	/* Hide default HTML checkbox */
+	.switch input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+	
+	/* The slider */
+	.slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #ccc;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
+	
+	.slider:before {
+		position: absolute;
+		content: "";
+		height: 26px;
+		width: 26px;
+		left: 4px;
+		bottom: 4px;
+		background-color: white;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
+	
+	/* dark mode switch */
+	input:checked+.slider {
+		background-color: black;
+	}
+	
+	input:focus+.slider {
+		box-shadow: 0 0 1px #2196F3;
+	}
+	
+	input:checked+.slider:before {
+		-webkit-transform: translateX(26px);
+		-ms-transform: translateX(26px);
+		transform: translateX(26px);
+		background-color: #777;
+	}
+
+	/* Rounded sliders */
+	.slider.round {
+		border-radius: 34px;
+	}
+
+	.slider.round:before {
+		border-radius: 50%;
+	}
+
+	
+
+	.text-to-button {
+		color: blue;
+		text-decoration-line: underline;
+	}
+
+	:hover .text-to-button {
+		cursor: pointer;
+	}
+	
+	/* #without_footer {
+	min-height: 100vb;
+}
+*/
+
+
+/* NEW CSS RECOMMENDED */
+
+body {
+		margin: 0px;
+		overflow-x: hidden;
+		/* Hide horizontal scrollbars*/
+	}
+
+	button {
+		border: 0px;
+		border-radius: 30px;
+	}
+
+	header {
+		background-color: var(--primary-color);
+		color: var(--text-color);
+		padding: 5px;
+
+		/* Dark Mode switch */
+		.switch {
+			position: relative;
+			display: inline-block;
+			width: 60px;
+			height: 34px;
+
+			input {
+				/* Hide default HTML checkbox */
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+
+			input:checked+.slider {
+				background-color: black;
+			}
+
+			input:focus+.slider {
+				box-shadow: 0 0 1px #2196F3;
+			}
+			
+			input:checked+.slider:before {
+				-webkit-transform: translateX(26px);
+				-ms-transform: translateX(26px);
+				transform: translateX(26px);
+				background-color: #777;
+			}
+			
+			.slider {
+				/* The slider */
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+				-webkit-transition: .4s;
+				transition: .4s;
+			}
+			
+			.slider:before {
+				position: absolute;
+				content: "";
+				height: 26px;
+				width: 26px;
+				left: 4px;
+				bottom: 4px;
+				background-color: white;
+				-webkit-transition: .4s;
+				transition: .4s;
+			}
+
+			/* Rounded sliders */
+			.slider.round {
+				border-radius: 34px;
+			}
+			
+			.slider.round:before {
+				border-radius: 50%;
+			}
+		}
+	}
+
+	.big-title {
+		animation-name: title-slide-in;
+		animation-duration: 3s;
+		animation-iteration-count: 1;
+		position: relative;
+		left: 20px;
+		width: 400px;
+
+		a {
+			color: var(--text-color);
+			text-decoration-line: none;
+		}
+	}
+	
+	
+	
+	main {
+		flex-grow: 1;
+	}
+
+	/* dark mode */
+	#dark-mode {
+		/* switch style*/
+		position: fixed;
+		right: 10px;
+		top: 10px;
+	}
+	
+	.dark-mode {
+		background-color: var(--background-color);
+		color: var(--text-color);
+		;
+	}
+
+	/* animation */
+	
+	@keyframes title-slide-in {
+		from {
+			position: relative;
+			left: -80px;
+			opacity: 0
+		}
+		
+		to {
+			position: relative;
+			left: 20px;
+			opacity: 1
+		}
+	}
+
+	/* custom properties */
+	:root {
+		/* light mode */
+		--primary-color: #2bc34c;
+		--navi-color: rgb(0, 195, 255);
+		--navi-hover-color: rgb(0, 195, 255);
+		--navi-secondary-color: #6ccd93;
+		--sidebar-color: #446e89;
+		--main-sections-ground-color: #564429;
+		--background-color: #6cbacd;
+		--text-color: black;
+		--footer-color: lightgray;
+	}
+
+	.dark-mode {
+		/* dark mode */
+		--primary-color: #43a959;
+		--navi-color: rgb(14, 87, 109);
+		--navi-hover-color: rgb(0, 195, 255);;
+		--navi-secondary-color: #6ccd93;
+		--sidebar-color: #6cbacd;
+		--main-sections-ground-color: #564429;
+		--background-color: #333;
+		--text-color: white;
+		--footer-color: #696969;
+	}
+
+	@media (max-width: 768px) {
+		body {
+			font-size: 16px;
+		}
+
+		.grid-container {
+			gap: 8px;
+			width: 100%;
+			flex-direction: column;
+		}
+
+		.grid-container .grid-element {
+			width: 100%;
+			height: auto;
+			padding: 10px;
+			font-size: large;
+		}
+	}
 </style>
 
 </html>
