@@ -37,7 +37,7 @@ module.exports = (root) => {
 			genres
 		}
 
-		res.render('auto_grid_template', { layout: 'general_template', ...data });
+		res.render('auto_grid_template', data);
 	})
 
 	router.get('/:genre', async (req, res) => {
@@ -71,7 +71,7 @@ module.exports = (root) => {
 				const descEl = $('meta[name="description"]').attr('content');
 				if (descEl) description = descEl;
 
-				if (!description) description = title.replace(".html", "") + `的工具`;
+				if (!description) description = title.replace(".html", "") + '的遊戲';
 
 				const game = file.replace('.html', '');
 
@@ -95,8 +95,36 @@ module.exports = (root) => {
 			genres: games
 		}
 
-		res.render('auto_grid_template', { layout: 'general_template', ...data });
+		res.render('auto_grid_template', data);
 
+	});
+
+	router.get('/:genre/:name', (req, res) => {
+		const genre = req.params.genre;
+		const mini_game = req.params.name;
+
+		const page = path.join(root, `public/mini_game/${genre}/${mini_game}.html`);
+		let data = null;
+
+		try {
+			file = fs.readFileSync(page, 'utf-8')
+			const $ = cheerio.load(file);
+			const title = $('title').text() || $('h1').text() || mini_game.replace(".html", "");
+			const description = $('meta[name="description"]').attr('content') || title.replace(".html", "") + `的遊戲`;
+
+			data = {
+				heading: title,
+				title,
+				description,
+				body: file
+			};
+
+		} catch (err) {
+			console.error('讀取 mini_game 目錄失敗:', err);
+			return res.status(500).send('伺服器錯誤');
+		}
+
+		res.render('general_template', { layout: false, ...data });
 	});
 
 	return router

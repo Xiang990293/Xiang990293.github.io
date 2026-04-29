@@ -10,11 +10,11 @@
 </head>
 
 <body onload="ShowTime();">
-	<%-include('header.html')%>
+	<%- include('header.ejs') %>
 		<main id="contents">
 			<%- body %>
 		</main>
-		<%-include('footer.html')%>
+		<%- include('footer.ejs') %>
 
 </body>
 <script>
@@ -154,27 +154,6 @@
 		left: 20px;
 		width: 400px;
 	}
-	
-	
-	
-	@keyframes change-button-height {
-		from {
-			border: 10px solid rgb(33, 160, 160);
-			background-color: rgb(33, 160, 160);
-			color: white;
-			font-size: 15px;
-			height: 50px;
-		}
-
-		to {
-			border: 10px solid yellow;
-			background-color: yellow;
-			color: black;
-			font-size: 15px;
-			height: 60px;
-		}
-	}
-
 
 	#側導航欄 {
 		display: block;
@@ -440,33 +419,9 @@ body {
 			}
 		}
 	}
-
-	.big-title {
-		animation-name: title-slide-in;
-		animation-duration: 3s;
-		animation-iteration-count: 1;
-		position: relative;
-		left: 20px;
-		width: 400px;
-
-		a {
-			color: var(--text-color);
-			text-decoration-line: none;
-		}
-	}
-	
-	
 	
 	main {
 		flex-grow: 1;
-	}
-
-	/* dark mode */
-	#dark-mode {
-		/* switch style*/
-		position: fixed;
-		right: 10px;
-		top: 10px;
 	}
 	
 	.dark-mode {
@@ -496,7 +451,7 @@ body {
 		/* light mode */
 		--primary-color: #2bc34c;
 		--navi-color: rgb(0, 195, 255);
-		--navi-hover-color: rgb(0, 195, 255);
+		--navi-hover-color: yellow;
 		--navi-secondary-color: #6ccd93;
 		--sidebar-color: #446e89;
 		--main-sections-ground-color: #564429;
@@ -509,7 +464,7 @@ body {
 		/* dark mode */
 		--primary-color: #43a959;
 		--navi-color: rgb(14, 87, 109);
-		--navi-hover-color: rgb(0, 195, 255);;
+		--navi-hover-color: rgb(139, 139, 29);
 		--navi-secondary-color: #6ccd93;
 		--sidebar-color: #6cbacd;
 		--main-sections-ground-color: #564429;

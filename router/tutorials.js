@@ -37,7 +37,7 @@ module.exports = (root) => {
 			genres
 		}
 
-		res.render('auto_grid_template', { layout: 'general_template', ...data });
+		res.render('auto_grid_template', data);
 	})
 
 	router.get('/:genre', async (req, res) => {
@@ -115,7 +115,7 @@ module.exports = (root) => {
 			return res.status(500).send('伺服器錯誤');
 		}
 
-		res.render('direct_body', {layout: "general_template", ...data});
+		res.render('general_template', {layout: false, ...data});
 	});
 
 	return router

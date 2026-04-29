@@ -134,7 +134,7 @@ module.exports = (root) => {
 			return res.status(500).send('伺服器錯誤');
 		}
 
-		res.render('direct_body', {layout: "general_template", ...data});
+		res.render("general_template", {layout: false, ...data});
 	});
 
 

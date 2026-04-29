@@ -40,6 +40,7 @@ const ejs = require('ejs');
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('views', './template');
+app.set('layout', 'general_template');
 
 
 // 路由模組 & 路由掛載
@@ -96,81 +97,58 @@ app.get('/personal_web', (req, res) => {
     res.sendFile(path.join(ROOT, 'home.html'));
 });
 
-app.get('/mini_game', (req, res) => {
-	res.sendFile(path.join(ROOT, 'public/mini_game/mini_game.html'));
-});
-
+// !deprecated
 app.get('/template_test', (req, res) => {
-    const data = query_handler(req.query);
+    let data = query_handler(req.query);
 
     res.render('general_template', data);
 });
 
 app.get(['/', '/home.html', '/home'], (req, res) => {
-    res.render('home');
-});
-
-// !deprecated
-app.get('/member_intro', (req, res) => {
-    data = {
-        title: '團隊成員 - 立方漣漪研究社',
-        heading: '團隊成員',
-        content: fs.readFileSync(path.join(ROOT, "public/member_intro.html"), 'utf8') //tools.html
-    }
-
-    res.render('general_template', data);
+	res.render('home', {layout: false})
 });
 
 app.get('/team_intro', (req, res) => {
-    data = {
+    res.render('general_template', {
         title: '關於團隊 - 立方漣漪研究社',
         heading: '關於團隊',
-        content: fs.readFileSync(path.join(ROOT, "public/team_intro.html"), 'utf8')
-    }
-
-    res.render('general_template', data);
+		body: fs.readFileSync(path.join(ROOT, "public/team_intro.html"), 'utf8')
+    });
 });
 
 app.get('/login', (req, res) => {
-    data = {
+    res.render('login_system', {
         title: '登入 - 立方漣漪研究社',
         form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/login.html"), 'utf8')
-    }
-
-    res.render('login_system', data);
+    });
 });
 
 app.get('/register', (req, res) => {
-    data = {
+    res.render('login_system', {
         title: '註冊 - 立方漣漪研究社',
         form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/register.html"), 'utf8')
-    }
-
-    res.render('login_system', data);
+    });
 });
 
 app.get('/forgot_password', (req, res) => {
-    data = {
+    res.render('login_system', {
         title: '忘記密碼 - 立方漣漪研究社',
         form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/forgot_password.html"), 'utf8')
-    }
-
-    res.render('login_system', data);
+    });
 });
 
 app.get('/reset_password', (req, res) => {
-    data = {
+    res.render('login_system', {
         title: '重設密碼 - 立方漣漪研究社',
         form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/reset_password.html"), 'utf8')
-    }
-
-    res.render('login_system', data);
+    });
 });
 
 app.get('/test_python', (req, res) => {
     data = {
         title: 'nan py - 立方漣漪研究社',
-        form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/test_python.html"), 'utf8')
+        form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/test_python.html"), 'utf8'),
+		body: fs.readFileSync(path.join(ROOT, "template/login_system.ejs"), 'utf8')
     }
 
     res.sendFile(path.join(ROOT, "public/test_python.html"));
@@ -184,8 +162,6 @@ app.get('/user/:id', (req, res) => {
         return;
     }
     res.send(`User ID: ${userId}`);
-
-    // res.render('user_profile', { userId });
 });
 
 

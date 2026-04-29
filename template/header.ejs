@@ -1,0 +1,245 @@
+﻿<header id="headerPage">
+	<div class="頁首">
+		<h1 class="big-title"><a href="/home">
+				<%= heading %>
+			</a></h1>
+		<label class="switch" id="dark-mode">
+			<input type="checkbox" onclick="darkmode()" title="dark mode" placeholder="" />
+			<span class="slider round"></span>
+		</label>
+	</div>
+	<nav class="導航欄">
+		<button class="hamburger" onclick="toggleMenu()">☰</button>
+		<ul class="nav-menu">
+			<li><a href="/team_intro">關於團隊</a></li>
+			<li><a href="/mini_game">小遊戲</a></li>
+			<li><a href="/tools">工具</a></li>
+			<li><a href="/tutorials">教學</a></li>
+			<li><a href="/login">管理員登入</a></li>
+		</ul>
+		<div class="menu-overlay"></div>
+	</nav>
+
+	<!--
+	<nav class="導航欄">
+        <button onclick="window.location.href='/team_intro';">關於團隊</button>
+        <button onclick="window.location.href='/mini_game';">小遊戲</button>
+        <button onclick="window.location.href='/tools';">工具</button>
+        <button onclick="window.location.href='/tutorials';">教學</button>
+        <button onclick="window.location.href='/login';">管理員登入</button>
+    </nav> -->
+</header>
+<script>
+	function toggleMenu() {
+		const menu = document.querySelector('.nav-menu');
+		const overlay = document.querySelector('.menu-overlay');
+		const darkmode_button = document.querySelector('#dark-mode');
+		menu.classList.toggle('active');
+		overlay.classList.toggle('active');
+		darkmode_button.classList.toggle('active');
+	}
+
+	// 點擊外部關閉（點擊遮罩）
+	document.querySelector('.menu-overlay').addEventListener('click', function () {
+		document.querySelector('.nav-menu').classList.remove('active');
+		document.querySelector('.menu-overlay').classList.remove('active');
+		document.querySelector('#dark-mode').classList.remove('active');
+	});
+
+	// 點擊連結關閉
+	document.querySelectorAll('.nav-menu a').forEach(link => {
+		link.addEventListener('click', () => {
+			document.querySelector('.nav-menu').classList.remove('active');
+			document.querySelector('.menu-overlay').classList.remove('active');
+			document.querySelector('#dark-mode').classList.remove('active');
+		});
+	});
+</script>
+<style>
+	.導航欄 {
+		display: flex;
+		justify-content: space-around;
+		position: relative;
+		height: 60px;
+		background-color: var(--navi-color);
+
+		a:hover {
+			border: 10px solid var(--navi-hover-color);
+			background-color: var(--navi-hover-color);
+			color: var(--text-color);
+			flex: 1;
+			cursor: pointer;
+		}
+
+		a {
+			border: 10px solid rgb(33, 160, 160);
+			background-color: rgb(33, 160, 160);
+			color: white;
+			flex: 1;
+			border-radius: 0px 0px 0px 0px;
+			width: 100%;
+			text-decoration-line: none;
+		}
+	}
+
+	.hamburger {
+		display: none;
+	}
+
+	.nav-menu {
+		display: flex;
+		list-style: none;
+		justify-content: space-around;
+		align-items: center;
+		margin: 0;
+		padding: 0;
+
+		width: 100%;
+
+		li {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+
+			a {
+				text-align: center;
+
+			}
+		}
+	}
+
+	@media (max-width: 768px) {
+
+		.導航欄 {
+			position: fixed;
+			display: flex;
+			right: 10px;
+			top: 10px;
+			width: 50px;
+			height: 50px;
+			justify-content: space-around;
+			border-radius: 12%;
+		}
+
+		.hamburger {
+			align-items: center;
+			justify-content: center;
+			display: block;
+			background: none;
+			border: none;
+			font-size: 24px;
+			cursor: pointer;
+			color: var(--text-color);
+		}
+
+		.nav-menu {
+			position: fixed;
+			top: 0;
+			right: -80%;
+			width: 80vw;
+			height: 100vh;
+			background-color: var(--navi-color);
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+			z-index: 1;
+			transition-duration: 0.3s;
+			transform: translateX(100%);
+		}
+
+		.nav-menu.active {
+			right: 0;
+			transition-duration: 0.3s;
+			transform: translateX(0)
+		}
+
+		.nav-menu li {
+			width: 100%;
+			padding: 20px 0;
+			text-align: center;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		}
+
+
+		.nav-menu a {
+			border: none;
+			background: none;
+			color: white;
+			font-size: 18px;
+			height: auto;
+			padding: 15px 20px;
+			width: auto;
+		}
+
+		/* 新增遮罩層 */
+		.menu-overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 0;
+		}
+
+		.menu-overlay.active {
+			display: block;
+		}
+		
+		/* dark mode */
+		#dark-mode {
+			/* switch style*/
+			position: fixed;
+			right: 10px;
+			transform: translateX(120%);
+			transition-duration: 0.3s;
+			top: 10px;
+			z-index: 1;
+		}
+
+		#dark-mode.active {
+			right: 10px;
+			transform: translateX(0px);
+			transition-duration: 0.3s;
+		}
+	}
+
+	@keyframes nav-button-hover {
+		from {
+			border: 10px solid var(--navi-color);
+			background-color: var(--navi-color);
+			color: var(--text-color);
+		}
+
+		to {
+			border: 10px solid var(--navi-hover-color);
+			background-color: var(--navi-hover-color);
+			color: var(--text-color);
+		}
+	}
+
+	.big-title {
+		animation-name: title-slide-in;
+		animation-duration: 3s;
+		animation-iteration-count: 1;
+		position: relative;
+		left: 20px;
+		width: 400px;
+	
+		a {
+			color: var(--text-color);
+			text-decoration-line: none;
+		}
+	}
+
+	/* dark mode */
+	#dark-mode {
+		/* switch style*/
+		position: fixed;
+		right: 10px;
+		top: 10px;
+		z-index: 1;
+	}
+</style>
