@@ -59,40 +59,42 @@ module.exports = (root) => {
 		const folderPath = path.join(root, `public/tools/${folderName}`);
 
 		try {
-			tools = await fs.promises.readdir(folderPath, { withFileTypes: true });
-			tools = tools.filter(files => files.name.endsWith('.html')).map(files => async () => {
-				const filePath = path.join(folderPath, files.name);
+			tools = await fs.promises.readdir(folderPath, { withFileTypes: true })
+			tools = tools.filter(files => files.isFile() && files.name.endsWith('.html'));
+			tools = await Promise.all(tools.map(async files => {
+				const file = files.name;
+				const filePath = path.join(folderPath, file);
 
-				const {title, description} = await fs.promises.readFile(filePath, 'utf-8').then(data => {
-					// 在你的 Promise 內用
-					const $ = cheerio.load(data);
+				const data = await fs.promises.readFile(filePath, 'utf-8');
+				const $ = cheerio.load(data);
 
-					// 用 DOM 方式抓 title
-					const titleEl = $('title').text().trim();
-					if (titleEl) title = titleEl;
+				// 用 DOM 方式抓 title
+				let title = null;
+				const titleEl = $('title').text().trim();
+				if (titleEl) title = titleEl;
 
-					// 若沒有 title，再用 h1
-					if (!title) {
-						const h1El = $('h1').text().trim();
-						if (h1El) title = h1El;
-					}
+				// 若沒有 title，再用 h1
+				if (!title) {
+					const h1El = $('h1').text().trim();
+					if (h1El) title = h1El;
+				}
 
-					if (!title) title = files.name.replace(".html", "");
+				if (!title) title = files.name.replace(".html", "");
 
-					const descEl = $('meta[name="description"]').attr('content').trim();
-					if (descEl) description = descEl[1];
+				let description = null;
+				const descEl = $('meta[name="description"]').attr('content');
+				if (descEl) description = descEl;
 
-					if (!description) description = title.replace(".html", "") + `的工具`;
-				});
+				if (!description) description = title.replace(".html", "") + `的工具`;
 
-				const tool = files.name;
+				const tool = file.replace('.html', '');
 				return {
 					genre: tool,
 					title,
 					description,
-					link: `/tools/${genre}/${tool}`
+					link: `/tools/${folderName}/${tool}`
 				};
-			});
+			}));
 		} catch (err) {
 			console.error('讀取 tools 目錄失敗:', err);
 			return res.status(500).send('伺服器錯誤');
@@ -143,7 +145,7 @@ module.exports = (root) => {
 			data = {
 				heading: details.title,
 				title: `${genre} - ${details.title}`,
-				content: fs.readFileSync(path.join(root, `public/tools/${genre}/${toolName}.html`), 'utf8')
+				body: fs.readFileSync(path.join(root, `public/tools/${genre}/${toolName}.html`), 'utf8')
 			}
 
 			res.render('general_template', data);
