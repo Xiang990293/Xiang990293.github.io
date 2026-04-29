@@ -58,27 +58,48 @@
 <style>
 	.導航欄 {
 		display: flex;
-		justify-content: space-around;
 		position: relative;
 		height: 60px;
 		background-color: var(--navi-color);
 
-		a:hover {
-			border: 10px solid var(--navi-hover-color);
-			background-color: var(--navi-hover-color);
-			color: var(--text-color);
-			flex: 1;
-			cursor: pointer;
-		}
+		.nav-menu {
+			/*share on both platforms*/
+			list-style: none;
 
-		a {
-			border: 10px solid rgb(33, 160, 160);
-			background-color: rgb(33, 160, 160);
-			color: white;
-			flex: 1;
-			border-radius: 0px 0px 0px 0px;
+			align-items: center;
+			margin: 0px;
+			padding: 0px;
+			height: 100%;
 			width: 100%;
-			text-decoration-line: none;
+			display: flex;
+			flex-direction: row;
+
+			li {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+
+
+				a {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 100%;
+					height: 100%;
+					text-align: center;
+					background-color: var(--navi-color);
+					color: var(--text-color);
+					border-radius: 0px 0px 0px 0px;
+					text-decoration-line: none;
+				}
+
+				a:hover {
+					background-color: var(--navi-hover-color);
+					color: var(--text-color);
+					cursor: pointer;
+				}
+			}
 		}
 	}
 
@@ -86,27 +107,7 @@
 		display: none;
 	}
 
-	.nav-menu {
-		display: flex;
-		list-style: none;
-		justify-content: space-around;
-		align-items: center;
-		margin: 0;
-		padding: 0;
 
-		width: 100%;
-
-		li {
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-
-			a {
-				text-align: center;
-
-			}
-		}
-	}
 
 	@media (max-width: 768px) {
 
@@ -117,8 +118,42 @@
 			top: 10px;
 			width: 50px;
 			height: 50px;
-			justify-content: space-around;
+			justify-content: center;
 			border-radius: 12%;
+
+			.nav-menu {
+				position: fixed;
+				top: 0;
+				right: -30%;
+				width: 30vw;
+				height: 100vh;
+				background-color: var(--navi-color);
+				flex-direction: column;
+				justify-content: center;
+				align-items: last baseline;
+				box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+				z-index: 1;
+				transition-duration: 0.3s;
+				transform: translateX(100%);
+
+
+				li {
+					text-align: center;
+					height: auto;
+					width: 100%;
+				}
+
+				a {
+					display: flex;
+					justify-content: right;
+					align-items: right;
+					border: none;
+					background: none;
+					color: white;
+					font-size: 25px;
+					padding: 15px 20px;
+				}
+			}
 		}
 
 		.hamburger {
@@ -132,44 +167,10 @@
 			color: var(--text-color);
 		}
 
-		.nav-menu {
-			position: fixed;
-			top: 0;
-			right: -80%;
-			width: 80vw;
-			height: 100vh;
-			background-color: var(--navi-color);
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
-			z-index: 1;
-			transition-duration: 0.3s;
-			transform: translateX(100%);
-		}
-
 		.nav-menu.active {
 			right: 0;
 			transition-duration: 0.3s;
 			transform: translateX(0)
-		}
-
-		.nav-menu li {
-			width: 100%;
-			padding: 20px 0;
-			text-align: center;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-		}
-
-
-		.nav-menu a {
-			border: none;
-			background: none;
-			color: white;
-			font-size: 18px;
-			height: auto;
-			padding: 15px 20px;
-			width: auto;
 		}
 
 		/* 新增遮罩層 */
@@ -187,7 +188,7 @@
 		.menu-overlay.active {
 			display: block;
 		}
-		
+
 		/* dark mode */
 		#dark-mode {
 			/* switch style*/
@@ -206,20 +207,6 @@
 		}
 	}
 
-	@keyframes nav-button-hover {
-		from {
-			border: 10px solid var(--navi-color);
-			background-color: var(--navi-color);
-			color: var(--text-color);
-		}
-
-		to {
-			border: 10px solid var(--navi-hover-color);
-			background-color: var(--navi-hover-color);
-			color: var(--text-color);
-		}
-	}
-
 	.big-title {
 		animation-name: title-slide-in;
 		animation-duration: 3s;
@@ -227,7 +214,7 @@
 		position: relative;
 		left: 20px;
 		width: 400px;
-	
+
 		a {
 			color: var(--text-color);
 			text-decoration-line: none;

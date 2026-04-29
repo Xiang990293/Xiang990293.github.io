@@ -118,6 +118,7 @@ app.get('/team_intro', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login_system', {
+		layout: false,
         title: '登入 - 立方漣漪研究社',
         form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/login.html"), 'utf8')
     });
@@ -125,6 +126,7 @@ app.get('/login', (req, res) => {
 
 app.get('/register', (req, res) => {
     res.render('login_system', {
+		layout: false,
         title: '註冊 - 立方漣漪研究社',
         form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/register.html"), 'utf8')
     });
@@ -132,6 +134,7 @@ app.get('/register', (req, res) => {
 
 app.get('/forgot_password', (req, res) => {
     res.render('login_system', {
+		layout: false,
         title: '忘記密碼 - 立方漣漪研究社',
         form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/forgot_password.html"), 'utf8')
     });
@@ -139,6 +142,7 @@ app.get('/forgot_password', (req, res) => {
 
 app.get('/reset_password', (req, res) => {
     res.render('login_system', {
+		layout: false,
         title: '重設密碼 - 立方漣漪研究社',
         form_type_and_logic: fs.readFileSync(path.join(ROOT, "public/reset_password.html"), 'utf8')
     });

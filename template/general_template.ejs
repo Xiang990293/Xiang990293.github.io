@@ -164,8 +164,6 @@
 		margin: 0;
 		height: 100%;
 		/* Full height */
-		position: 0;
-		/* Make it stick, even on scroll */
 		overflow: auto;
 		/* Enable scrolling if the sidenav has too much content */
 		
@@ -207,24 +205,11 @@
 				animation-name: change-button-color;
 				animation-duration: 0.3s;
 				animation-iteration-count: 1;
-				border: 0px solid yellow;
-				background-color: yellow;
+				background-color: var(--navi-hover-color);
 				color: black;
 				cursor: pointer;
 				left: 5px;
 			}
-		}
-	}
-	
-	@keyframes change-button-color {
-		from {
-			background-color: rgb(8, 209, 216);
-			color: white;
-		}
-		
-		to {
-			background-color: yellow;
-			color: black;
 		}
 	}
 
@@ -337,9 +322,9 @@
 */
 
 
-/* NEW CSS RECOMMENDED */
+	/* NEW CSS RECOMMENDED */
 
-body {
+	body {
 		margin: 0px;
 		overflow-x: hidden;
 		/* Hide horizontal scrollbars*/
