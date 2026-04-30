@@ -1,0 +1,42 @@
+<body>
+	<h3>hi, TRTC</h3>
+	<div class="container layer0"></div>
+</body>
+
+</html>
+<script>
+	const times = 30;  // 移動次數
+	for (let i = 0; i < times; i++) {
+		const container = document.querySelector(`.layer${i}`);
+		container.innerHTML += `
+			<h3>hi, TRTC</h3>
+			<div class="container layer${i + 1}">
+			</div>
+		`;
+	}
+</script>
+<style>
+	main {
+		border-color: black;
+		border-width: 2px;
+		border-style: solid;
+		display: flex;
+		flex-direction: column;
+	}
+
+	h3 {
+		margin: 0px;
+	}
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		border-color: black;
+		border-width: 2px;
+		border-style: solid;
+		transform: scale(0.999);
+		width: 100%;
+		flex: 1;
+		height: 100%;
+	}
+</style>

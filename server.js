@@ -90,6 +90,14 @@ app.get('/all_album', (req, res) => {
     })
 });
 
+app.get("/TRTC", (req, res) => {
+	res.render("TRTC", {
+		layout: "general_template", 
+		title: "The Recursive TRTC Creation", 
+		heading: "The Recursive TRTC Creation"
+	});
+});
+
 // !deprecated
 app.get('/personal_web', (req, res) => {
     // console.log("GET req recieved:" + req.url)

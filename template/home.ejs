@@ -12,7 +12,7 @@
 <body onload="ShowTime();">
 	<header>
 		<div id="header-contents">
-			<h1 class="big-title"><a href="/home">
+			<h1 id="myBtn" class="big-title"><a>
 					<div>立方漣漪</div>
 					<div>研究社</div>
 				</a></h1>
@@ -187,6 +187,25 @@
 	generateButtons('.news.new_game', 'mini_game');
 
 </script>
+<script> // Totally Regardless TRTC Code
+	const KEY = 'btnClickCount';
+	let clickCount = parseInt(localStorage.getItem(KEY) || '0');
+
+	document.getElementById('myBtn').addEventListener('click', () => {
+		if (clickCount >= 9) {
+			clickCount = 0; // 重置計數器
+			localStorage.setItem(KEY, clickCount);
+			location.href = '/TRTC';
+
+			return
+		}
+
+		clickCount++;
+		localStorage.setItem(KEY, clickCount);
+		location.reload();  // 重新載入
+
+	});
+</script>
 <style>
 	header {
 		height: 100vh;
@@ -256,6 +275,10 @@
 				display: none;
 				/* for Chrome and Safari */
 			}
+		}
+
+		#timer {
+			display: none;
 		}
 	}
 </style>
