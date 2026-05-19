@@ -1,0 +1,125 @@
+<!DOCTYPE html5>
+<html lang="zh-tw">
+
+<head>
+    <meta content="text/html" charset="UTF-8">
+    <title>IRIS OUT 動作口令 填空</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <h1>IRIS OUT 動作口令 填空 (每個字 1 分​/共 174 分)</h1>
+    <div id="textarea">
+        <div contenteditable="true" id="cloze" class="editable">
+□□<br>□□<br>□□□□<br>□□□<br><br>A%<br>□□ □□ □□ □□
+□□□<br>□□-□□ □□-□□ □□-□□ □□□<br>□-□-□-□ □-□-□-□<br>□□-□□ □□□<br>□□□ □□□ □□□□ _______<br><br>B%<br>□□-□□
+□□-□□<br>□□□□ □□-□ ____<br>□□ □□ □-□-□-□<br>□-□ □□ □□ □<br><br>C%<br>□□ *4<br>□□ □□ □□ □□<br>□□□□ □□□
+□□□□<br><br>□□□□<br><br>B%<br>□□-□□ □□-□□<br>□□□□ □□-□ ____<br>□□ □□ □-□-□-□<br>□-□ □□ □□ □<br><br>C%<br>□□
+*4<br>□□ □□ □□ □□<br>□□□□ □□□ □□□□<br><br>□□□</div>
+        <div contenteditable="true" id="answer" class="editable">這裡是答案區</div>
+    </div>
+    <br>
+    <div id="button_list">
+        <button id="show_answer" type="button">對答案</button>
+        <button id="reset" type="button">重設</button>
+    </div>
+
+</body>
+
+</html>
+<script>
+
+    // Simple word-level diff highlighting
+    function compareAndHighlight(editor1, editor2) {
+        const lines1 = editor1.innerText.trim().split("\n");
+        const lines2 = editor2.innerText.trim().split("\n");
+
+        const maxLines = Math.max(lines1.length, lines2.length);
+        
+        editor1.innerText = ""
+        for (let i = 0; i < maxLines; i++) {
+            const line1 = lines1[i] || "";
+            const line2 = lines2[i] || "";
+
+            const maxLength = Math.max(line1.length, line2.length);
+
+            const chars1 = line1.split("")
+            const chars2 = line2.split("")
+            for (let j = 0; j < maxLength; j++) {
+                const char1 = chars1[j] || ""
+                const char2 = chars2[j] || ""
+
+                
+                if (char1 !== char2) {
+                    editor1.innerHTML += `<span class="highlight">${char1}</span>`;
+                } else {
+                    editor1.innerHTML += char1;
+                }
+            }
+            editor1.innerHTML += "<br>";
+
+            // Update editor2 lines
+            //const child2 = editor2.childNodes[i] || document.createElement('div');
+            //if (line1 !== line2) {
+            //    child2.innerHTML = `<span class="diff">${line2}</span>`;
+            //} else {
+            //    child2.innerHTML = line2;
+            //}
+            //if (!editor2.childNodes[i]) editor2.appendChild(child2);
+        }
+    }
+
+    document.getElementById("show_answer").addEventListener("click", () => {
+        const cloze = document.getElementById("cloze");
+        const answer = document.getElementById("answer");
+        answer.innerHTML = "翅膀<br>害羞<br>雙手下壓<br>往上摸<br><br>A%<br>打咩 攤手 點肩 揮手 去去去<br>愛心-鞦韆 拍頭-肩膀 右勾-左勾 發芽了<br>上-右-上-左 左-抓-右-抓<br>左打-右打 切切切<br>手摸頭 熱死了 愛心爆炸 Irisout<br><br>B%<br>右飛-左飛 右搖-左搖<br>左中中右 左捲-收 boom<br>換邊 抹手 點-拉-轉-咚<br>拉-拉 畫8 舉手 轉<br><br>C%<br>搭轉 *4<br>左踩 右踩 左伸 右收<br>轉手合手 開花了 華麗轉身<br><br>再來一次<br><br>B%<br>右飛-左飛 右搖-左搖<br>左中中右 左捲-收 boom<br>換邊 抹手 點-拉-轉-咚<br>拉-拉 畫8 舉手 轉<br><br>C%<br>搭轉 *4<br>左踩 右踩 左伸 右收<br>轉手合手 開花了 華麗轉身<br><br>看回來";
+        compareAndHighlight(cloze, answer);
+    });
+
+
+    document.getElementById("reset").addEventListener("click", () => {
+        const cloze = document.getElementById("cloze");
+        const answer = document.getElementById("answer");
+        answer.innerHTML = "這裡是答案區";
+        cloze.innerHTML = "□□<br>□□<br>□□□□<br>□□□<br><br>A%<br>□□ □□ □□ □□ □□□<br>□□-□□ □□-□□ □□-□□ □□□<br>□-□-□-□ □-□-□-□<br>□□-□□ □□□<br>□□□ □□□ □□□□ _______<br><br>B%<br>□□-□□ □□-□□<br>□□□□ □□-□ ____<br>□□ □□ □-□-□-□<br>□-□ □□ □□ □<br><br>C%<br>□□ *4<br>□□ □□ □□ □□<br>□□□□ □□□ □□□□<br><br>□□□□<br><br>B%<br>□□-□□ □□-□□<br>□□□□ □□-□ ____<br>□□ □□ □-□-□-□<br>□-□ □□ □□ □<br><br>C%<br>□□ *4<br>□□ □□ □□ □□<br>□□□□ □□□ □□□□<br><br>□□□"
+    });
+</script>
+<style>
+    .editable {
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 45%;
+        min-height: 100px;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .highlight {
+        background-color: yellow;
+    }
+
+    #compare-btn {
+        display: block;
+        margin: 20px 0;
+    }
+
+    #button_list {
+        display: inline-flex;
+        width: 100%;
+        justify-content: space-around;
+
+        button {
+            width: 20%
+        }
+    }
+
+    @media (max-width: 768px) {
+        #textarea{
+            display: flex;
+            flex-direction: column;
+            .editable {
+                width: auto;
+            }
+        }
+	}
+</style>
