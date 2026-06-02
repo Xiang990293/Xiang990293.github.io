@@ -156,9 +156,9 @@ app.get('/reset_password', (req, res) => {
     });
 });
 
-app.get('/irisout_web', (req, res) => {
-    res.send(fs.readFileSync(path.join(ROOT, "public/irisout_web.html"), 'utf8'));
-});
+// app.get('/irisout_web', (req, res) => {
+//     res.send(fs.readFileSync(path.join(ROOT, "public/irisout_web.html"), 'utf8'));
+// });
 
 app.get('/test_python', (req, res) => {
     data = {

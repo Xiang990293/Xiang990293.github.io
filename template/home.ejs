@@ -12,10 +12,14 @@
 <body onload="ShowTime();">
 	<header>
 		<div id="header-contents">
-			<h1 id="myBtn" class="big-title"><a>
-					<div>立方漣漪</div>
-					<div>研究社</div>
-				</a></h1>
+			<div id="title-background">
+				<h1 id="myBtn" class="big-title">
+					<a>
+						<div>立方漣漪</div>
+						<div>研究社</div>
+					</a>
+				</h1>
+			</div>
 			<label class="switch" id="dark-mode">
 				<input type="checkbox" onclick="darkmode()" title="dark mode" placeholder="" />
 				<span class="slider round"></span>
@@ -236,16 +240,28 @@
 		}
 	}
 
-	.big-title {
-		z-index: 2;
-		animation-name: none;
+	#title-background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 		background-color: rgba(255, 255, 255, 0.5);
+		z-index: 3;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.big-title {
+		z-index: 4;
+		animation-name: none;
 		text-align: center;
 		position: absolute;
-		left: 50%;
-		transform: translate(-50%, -100%);
 		font-size: 100px;
-		width: auto;
+
+		left: 50%;
+		transform: translate(-50%, -25%);
 	}
 
 	#header-contents {
