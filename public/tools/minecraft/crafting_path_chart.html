@@ -1,3 +1,7 @@
+<head>
+	<title>合成路徑圖</title>
+	<meta name="description" content="選擇一個項目，看看你能夠在不計算的情況下，背誦到什麼程度？">
+</head>
 <div id="chart-container">
 	<svg xmlns="http://www.w3.org/2000/svg" versoin="1.1" id="connections-container">
 		<!-- <defs>
@@ -10,12 +14,6 @@
 <script src="https://unpkg.com/gojs/release/go.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
-	var title = document.getElementById("title")
-	title.innerHTML = "麥快研究團隊 - 工具";
-	var btitle = document.getElementsByClassName("big-title")[0]
-	btitle.innerHTML = "工具 - 合成路徑圖";
-	// var subtitle = document.getElementById("subtitle")
-	// subtitle.innerHTML = "顯示所有的配方";
 
 	var dragOffsetX, dragOffsetY;
 	function drag(event) {

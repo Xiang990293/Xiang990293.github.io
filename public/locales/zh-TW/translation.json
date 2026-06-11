@@ -13,7 +13,11 @@
 		},
 		"minecraft": {
 			"title": "我的世界",
-			"description": "前往我的世界類工具"
+			"description": "前往我的世界類工具",
+			"command_simulater": {
+				"title": "指令模擬器",
+				"description": "前往指令模擬器"
+			}
 		},
 		"encryptorial": {
 			"title": "加密",

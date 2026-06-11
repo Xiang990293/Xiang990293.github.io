@@ -31,11 +31,21 @@
 	<main>
 		<div>新工具</div>
 		<section class="news new_tools">
-			
+			<% tools.forEach(tool => { %>
+				<button onclick="location.href='/tools/<%= tool.path %>'">
+					<%= tool.genre %>-
+					<%= tool.title %>
+				</button>
+			<% }) %>
 		</section>
 		<div>新遊戲</div>
 		<section class="news new_game">
-			
+			<% mini_games.forEach(game => { %>
+				<button onclick="location.href='/mini_game/<%= game.path %>'">
+					<%= game.genre %>-
+					<%= game.title %>
+				</button>
+			<% }) %>
 		</section>
 	</main>
 	<%- include('footer.ejs') %>
@@ -161,38 +171,6 @@
 		initAlbum();
 	});
 </script>
-<script> // generate news panel dinamically
-	async function generateButtons(containerSelector, folderPath) {
-		try {
-			// 假設伺服器有目錄列舉，獲取資料夾內容
-			const response = await fetch(zzzzzzzzzz.join("total_list", folderPath));
-			const html = await response.text();
-
-			// 解析目錄HTML，提取.html檔案
-			const parser = new DOMParser();
-			const doc = parser.parseFromString(html, 'text/html');
-			const links = Array.from(doc.querySelectorAll('a[href$=".html"]'))
-				.map(a => a.href.split('/').pop()); // 只取檔名
-
-			const container = document.querySelector(containerSelector);
-			container.innerHTML = ''; // 清空
-
-			links.forEach(filename => {
-				const button = document.createElement('button');
-				button.textContent = `新工具 - ${filename.replace('.html', '')}`;
-				button.onclick = () => window.location.href = path.join(folderPath, filename);
-				container.appendChild(button);
-			});
-		} catch (error) {
-			console.error('無法讀取資料夾:', error);
-		}
-	}
-
-	// 使用範例
-	generateButtons('.news.new_tools', 'tools');
-	generateButtons('.news.new_game', 'mini_game');
-
-</script>
 <script> // Totally Regardless TRTC Code
 	const KEY = 'btnClickCount';
 	let clickCount = parseInt(localStorage.getItem(KEY) || '0');
@@ -213,16 +191,51 @@
 	});
 </script>
 <style>
+	body {
+		padding: 0px;
+	}
+
 	header {
 		height: 100vh;
+
+		#header-contents {
+			z-index: 2;
+			position: relative;
+			top: 50%;
+			width: 100%;
+
+			#title-background {
+				position: absolute;
+				top: -5px;
+				left: -5px;
+				width: 100vw;
+				height: 100vh;
+				transform: translate(0%, -50%);
+				background-color: rgba(255, 255, 255, 0.5);
+				z-index: 3;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				.big-title {
+					z-index: 4;
+					width: 100vw;
+					animation-name: none;
+					text-align: center;
+					position: absolute;
+					font-size: 100px;
+					transform: translate(0%, -10%);
+				}
+			}
+		}
 
 		#current-image-container {
 			transition: opacity 0.5s ease-in-out;
 			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
+			top: 0px;
+			left: 0px;
+			width: 100vw;
+			height: 100vh;
 			z-index: 1;
 			background-position: center;
 			background-size: cover;
@@ -230,45 +243,14 @@
 
 		#next-image-container {
 			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
+			top: 0px;
+			left: 0px;
+			width: 100vw;
+			height: 100vh;
 			z-index: 0;
 			background-position: center;
 			background-size: cover;
 		}
-	}
-
-	#title-background {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(255, 255, 255, 0.5);
-		z-index: 3;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.big-title {
-		z-index: 4;
-		animation-name: none;
-		text-align: center;
-		position: absolute;
-		font-size: 100px;
-
-		left: 50%;
-		transform: translate(-50%, -25%);
-	}
-
-	#header-contents {
-		z-index: 2;
-		position: relative;
-		top: 50%;
-		width: 100%;
 	}
 
 	main {

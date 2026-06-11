@@ -15,9 +15,42 @@ require('dotenv').config();
 const ipynb_to_html = require('./modules/ipynb_to_html.js')(ROOT);
 
 
+
+const path = require('path');
+const i18next = require('i18next');
+const i18nBackend = require('i18next-fs-backend');
+// const LangDetector = require('i18next-browser-languagedetector');
+const zhTW = path.join(ROOT, 'public/locales/{{lng}}/{{ns}}.json');
+
+i18next
+    .use(i18nBackend)
+    // .use(LangDetector)
+    .init({
+        fallbackLng: 'zh-TW',
+        fallbackNS: 'translation',
+        backend: {
+            loadPath: zhTW
+            // path.join(ROOT, 'locales/{{lng}}/{{ns}}.json')
+        },
+        debug: true,
+        detection: {
+            // order and from where user language should be detected
+            order: [],
+            caches: [] // we do not want to cache the language
+        },
+        interpolation: {
+            escapeValue: false // not needed for express as it escapes by default
+        }
+    },(err, t) => {
+        if (err) return console.log('something went wrong loading', err);
+        console.log(t('team.name', {lng: "zh-TW"}), "翻譯功能上線"); // -> same as i18next.t
+});
+
+
+
+
 // # express.js setting: static files
 // Serve static files from public
-const path = require('path');
 const express = require("express");
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
@@ -112,8 +145,12 @@ app.get('/template_test', (req, res) => {
     res.render('general_template', data);
 });
 
-app.get(['/', '/home.html', '/home'], (req, res) => {
-	res.render('home', {layout: false})
+app.get(['/', '/home.html', '/home'], async (req, res) => {
+
+    const tools = get_pages_inside_dir('public/tools');
+    const mini_games = get_pages_inside_dir('public/mini_game');
+
+    res.render('home', { tools, mini_games, layout: false});
 });
 
 app.get('/team_intro', (req, res) => {
@@ -391,38 +428,40 @@ function query_handler(querys) {
     return result;
 }
 
+const cheerio = require('cheerio');
+function get_pages_inside_dir(original_dir, current_dir, list) {
+	if (!current_dir) {
+		current_dir = original_dir;
+	}
 
+	if (!list) {
+		list = [];
+	}
 
-const i18next = require('i18next');
-const i18nBackend = require('i18next-fs-backend');
-// const LangDetector = require('i18next-browser-languagedetector');
-const zhTW = path.join(ROOT, 'public/locales/{{lng}}/{{ns}}.json');
+	const entries = fs.readdirSync(current_dir, { withFileTypes: true });
 
-i18next
-    .use(i18nBackend)
-    // .use(LangDetector)
-    .init({
-        fallbackLng: 'zh-TW',
-        fallbackNS: 'translation',
-        backend: {
-            loadPath: zhTW
-            // path.join(ROOT, 'locales/{{lng}}/{{ns}}.json')
-        },
-        debug: true,
-        detection: {
-            // order and from where user language should be detected
-            order: [],
-            caches: [] // we do not want to cache the language
-        },
-        interpolation: {
-            escapeValue: false // not needed for express as it escapes by default
+	for (const entry of entries) {
+        const fullPath = path.join(current_dir, entry.name);
+
+        if (entry.isDirectory()) {
+            // 是目錄 → 遞迴進去
+            get_pages_inside_dir(original_dir, fullPath, list);
+        } else if (entry.isFile() && entry.name.endsWith('.html')) {
+			const file = fs.readFileSync(fullPath, 'utf8');
+			const $ = cheerio.load(file);
+            // 是 .html 檔案 → 加進陣列
+            list.push({
+                fullPath,
+				genre: i18next.t(`${original_dir.replace("public/", "")}.${entry.parentPath.replace(original_dir+"/","").replace("/",".")}.title`), // 取出 genre (tools, mini_game, ...)
+                path: fullPath.replace(path.join(original_dir) + '/', '').replace('.html', ''), // 去掉根目錄的路徑
+                filename: entry.name,
+                title: $('title').text() || $('h1').text() || entry.name.replace(".html", ""),
+            });
         }
-    },(err, t) => {
-        if (err) return console.log('something went wrong loading', err);
-        console.log(t('team.name', {lng: "zh-TW"}), "翻譯功能上線"); // -> same as i18next.t
-});
+    }
 
-
+    return list;
+}
 
 app.listen(port, () => {
     console.log(`伺服器開始運行! 在 http://${ip}:${port}`);
